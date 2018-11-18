@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'OABluetooth_Example' do
+  pod 'OABluetooth', :path => '../'
+
+  target 'OABluetooth_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
