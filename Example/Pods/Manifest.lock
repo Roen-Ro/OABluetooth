@@ -1,5 +1,5 @@
 PODS:
-  - OABluetooth (0.1.0):
+  - OABluetooth (1.0.0):
     - ObjcExtensionProperty
   - ObjcExtensionProperty (1.1.0)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  OABluetooth: ac904b19ae7bc012dbd130f753077cee4109c68a
+  OABluetooth: 812ccd654e85ae15c758556c321e54d420143850
   ObjcExtensionProperty: 537370dc3d6937c9ed35bab58af3ed976b79e5aa
 
 PODFILE CHECKSUM: 4562ab5a3347e87c0111b9b7694a4b2c539e7ac1

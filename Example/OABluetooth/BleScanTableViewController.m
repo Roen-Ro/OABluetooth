@@ -7,12 +7,12 @@
 //
 
 #import "BleScanTableViewController.h"
-#import "OABleCentralManager.h"
+#import "OABTCentralManager.h"
 #import "BleViewController.h"
 #import "ProgressButton.h"
 
 @interface BleScanTableViewController ()<OABlePeripheralManagerDelegate>
-@property (nonatomic, strong) OABleCentralManager *centralManager;
+@property (nonatomic, strong) OABTCentralManager *centralManager;
 @property (nonatomic, strong) NSArray<CBPeripheral *> *deviceList;
 @end
 
@@ -36,7 +36,7 @@
     self.tableView.tableFooterView = _prgBtn;
     
     
-    self.centralManager = [[OABleCentralManager alloc] initWitPeripheralAdvertiseID:nil];
+    self.centralManager = [[OABTCentralManager alloc] initWitPeripheralAdvertiseID:nil];
     
     //use block or delegate
     

@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OABleCentralManager.h"
+#import "OABTCentralManager.h"
 
 
 
 @interface BleViewController : UIViewController
 
--(instancetype)initWithPeripheral:(CBPeripheral *)per andManager:(OABleCentralManager *)manager;
+-(instancetype)initWithPeripheral:(CBPeripheral *)per andManager:(OABTCentralManager *)manager;
 
 @end
 

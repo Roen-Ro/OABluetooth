@@ -7,7 +7,7 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@class OABleCentralManager;
+@class OABTCentralManager;
 
 @interface CBCharacteristic (OABLInternal)
 
@@ -19,7 +19,7 @@
 
 @interface CBPeripheral (OABLInternal)
 
-@property (nullable, nonatomic, weak) OABleCentralManager *centralManager;
+@property (nullable, nonatomic, weak) OABTCentralManager *centralManager;
 
 @property (nonatomic) int interRssiValue;
 

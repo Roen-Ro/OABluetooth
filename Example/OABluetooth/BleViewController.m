@@ -7,13 +7,13 @@
 //
 
 #import "BleViewController.h"
-#import "OABleCentralManager.h"
+#import "OABTCentralManager.h"
 #import "CBPeripheral+OABLE.h"
 #import "ProgressButton.h"
 
 @interface BleViewController ()<OABlePeripheralManagerDelegate>
 
-@property (nonatomic, strong) OABleCentralManager *centalManager;
+@property (nonatomic, strong) OABTCentralManager *centalManager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
 @property (weak, nonatomic) IBOutlet ProgressButton *connectBtn;
 @property (weak, nonatomic) IBOutlet UILabel *rssiLabel;
@@ -22,7 +22,7 @@
 
 @implementation BleViewController
 
--(instancetype)initWithPeripheral:(CBPeripheral *)per andManager:(OABleCentralManager *)manager
+-(instancetype)initWithPeripheral:(CBPeripheral *)per andManager:(OABTCentralManager *)manager
 {
     self = [super init];
     self.centalManager = manager;
@@ -113,7 +113,7 @@
 
 
 
--(void)centralManager:(OABleCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral
+-(void)centralManager:(OABTCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral
 {
     [self updateConnectionBtn];
 }

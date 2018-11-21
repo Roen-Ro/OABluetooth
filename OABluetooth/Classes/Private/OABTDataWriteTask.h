@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OABleDataWriteTask : NSObject
+@interface OABTDataWriteTask : NSObject
 
 @property (nullable, nonatomic, strong) NSData *pendingData; // data pending, need to be wrote
 @property (nullable, nonatomic, copy) void(^responseBlock)(BOOL success);

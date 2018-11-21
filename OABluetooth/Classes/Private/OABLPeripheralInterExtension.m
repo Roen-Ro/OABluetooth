@@ -8,7 +8,7 @@
 #import "OABLPeripheralInterExtension.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
-@class OABleCentralManager;
+@class OABTCentralManager;
 @implementation CBCharacteristic (OABLInternal)
 
 __SETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, setFinishedSubArributeDiscover, numberWithBool:)
@@ -27,7 +27,7 @@ __SETTER_PRIMITIVE(int, interRssiValue, setInterRssiValue, numberWithInt:)
 __GETTER_PRIMITIVE(int, interRssiValue, intValue)
 
 __SETTER_WEAK(centralManager, setCentralManager)
-__GETTER_WEAK(OABleCentralManager, centralManager)
+__GETTER_WEAK(OABTCentralManager, centralManager)
 
 @end
 

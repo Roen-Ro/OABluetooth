@@ -8,7 +8,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 
 
-@class OABleCentralManager;
+@class OABTCentralManager;
 @interface CBPeripheral (OABLE)
 
 //the max data bytes length limit for writing to characteristics and descriptors, default is 125(bytes), all data with length greater than this value will be splitted into smaller pakcetes for writing tasks.\

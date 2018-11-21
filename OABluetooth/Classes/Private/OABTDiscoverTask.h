@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OABLDiscoverTask : NSObject
+@interface OABTDiscoverTask : NSObject
 
 @property (nonatomic, copy) void (^block)(NSError *error);
 @property (nonatomic, copy) NSArray <NSString *> *discoverIDs;

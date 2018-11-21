@@ -1,5 +1,5 @@
 //
-//  OABleCentralManager.m
+//  OABLECentralManager.m
 //  OutdoorAssistantApplication
 //
 //  Created by 罗亮富 on 2018/11/10.
@@ -7,12 +7,13 @@
 //
 
 #import <objc/runtime.h>
-#import "OABleCentralManager.h"
-#import "OABleDataWriteTask.h"
-#import "OABLDiscoverTask.h"
+#import "OABTCentralManager.h"
+#import "OABTDataWriteTask.h"
+#import "OABTDiscoverTask.h"
 #import "NSMutableDictionary+Appending.h"
 #import "OABLPeripheralInterExtension.h"
 #import "CBPeripheral+OABLE.h"
+#import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
 #define PERIPHERAL_DISCONNECTED_ERROR [NSError errorWithDomain:@"peripheral not connected" code:-102 userInfo:nil]
 #define WEAK_SELF __weak typeof(self) weakSelf = self
@@ -21,7 +22,7 @@
 
 #pragma mark- OABlePeripheralManager
 
-@implementation OABleCentralManager
+@implementation OABTCentralManager
 {
 @private
     CBCentralManager *_centralManager;
@@ -434,7 +435,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 {
     NSString *key = peripheral.identifier.UUIDString;
     NSArray *allTasks = [self.discoverServiceTaskkQueue objectsForKey:key];
-    for( OABLDiscoverTask *task in allTasks)
+    for( OABTDiscoverTask *task in allTasks)
     {
         if(task.block)
             task.block(error);
@@ -449,7 +450,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     NSArray *allTasks = [self.discoverServiceTaskkQueue objectsForKey:key];
     if(allTasks.count > 0)
     {
-        OABLDiscoverTask *task = allTasks.firstObject;
+        OABTDiscoverTask *task = allTasks.firstObject;
         if(task.block)
             task.block(error);
         
@@ -460,7 +461,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
         [self inter_discoverServiceWtihTask:[allTasks objectAtIndex:1] forPeripheral:peripheral];
 }
 
--(void)inter_discoverServiceWtihTask:(nullable OABLDiscoverTask *)task forPeripheral:(CBPeripheral *)peripheral
+-(void)inter_discoverServiceWtihTask:(nullable OABTDiscoverTask *)task forPeripheral:(CBPeripheral *)peripheral
 {
     NSMutableArray *svs = [NSMutableArray arrayWithCapacity:task.discoverIDs.count];
     for(NSString *s in task.discoverIDs)
@@ -473,7 +474,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 
 -(void)discoverService:(nullable NSArray <NSString *> *)serviceIDs forPeripheral:(CBPeripheral *)peripheral completion:(void (^)(NSError *error))block
 {
-    OABLDiscoverTask *task = [[OABLDiscoverTask alloc] init];
+    OABTDiscoverTask *task = [[OABTDiscoverTask alloc] init];
     task.block = block;
     task.discoverIDs = serviceIDs;
     [self.discoverServiceTaskkQueue addObject:task forKey:peripheral.identifier.UUIDString];
@@ -526,7 +527,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
                     completion:(void (^)( NSError *error))block
 {
     //self.discoverCharateristicTaskkQueueMap
-    OABLDiscoverTask *task = [[OABLDiscoverTask alloc] init];
+    OABTDiscoverTask *task = [[OABTDiscoverTask alloc] init];
     task.block = block;
     task.discoverIDs = charaterIDs;
     NSString *key = [self keyForServiceID:service.UUID.UUIDString ofPeripheral:service.peripheral];
@@ -539,7 +540,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     return key;
 }
 
--(void)inter_discoverCharacteristicTask:(OABLDiscoverTask *)task ofService:(nonnull CBService *)service
+-(void)inter_discoverCharacteristicTask:(OABTDiscoverTask *)task ofService:(nonnull CBService *)service
 {
     NSMutableArray *charaIds = [NSMutableArray arrayWithCapacity:task.discoverIDs.count];
     for(NSString *s in task.discoverIDs)
@@ -556,7 +557,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     for(NSString *key in taskKeys)
     {
         NSArray *tasks = [self.discoverCharateristicTaskkQueueMap objectsForKey:key];
-        for(OABLDiscoverTask *task in tasks)
+        for(OABTDiscoverTask *task in tasks)
         {
             if(task.block)
                 task.block(PERIPHERAL_DISCONNECTED_ERROR);
@@ -910,7 +911,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     
     NSString *key = [self keyForServiceID:service.UUID.UUIDString ofPeripheral:service.peripheral];
     NSArray *tasks = [self.discoverCharateristicTaskkQueueMap objectsForKey:key];
-    OABLDiscoverTask *task = tasks.firstObject;
+    OABTDiscoverTask *task = tasks.firstObject;
     if(task)
     {
         if(task.block)
@@ -919,7 +920,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     }
     if(tasks.count > 1)
     {
-        OABLDiscoverTask *task1 = [tasks objectAtIndex:1]; //tasks是拷贝出来的，且有一次对object的移除操作，所以这里index是1
+        OABTDiscoverTask *task1 = [tasks objectAtIndex:1]; //tasks是拷贝出来的，且有一次对object的移除操作，所以这里index是1
         [self inter_discoverCharacteristicTask:task1 ofService:service];
     }
     else
@@ -997,8 +998,8 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 
     if(tasks.count > 0 )
     {
-        OABleDataWriteTask *task = tasks.firstObject;
-        OABleDataWriteTask *continueTask = nil;
+        OABTDataWriteTask *task = tasks.firstObject;
+        OABTDataWriteTask *continueTask = nil;
 
         if(task.pendingData.length == 0 )
         {
@@ -1042,11 +1043,11 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForDescriptor:(CBDescriptor *)descriptor error:(nullable NSError *)error
 {
     NSString *k = [self keyForDescriptor:descriptor];
-    NSArray <OABleDataWriteTask *> *allTasks = [self.descriptorWriteBlockMapQueue objectsForKey:k];
+    NSArray <OABTDataWriteTask *> *allTasks = [self.descriptorWriteBlockMapQueue objectsForKey:k];
     if(allTasks.count > 0 )
     {
-        OABleDataWriteTask *taskToContinue = nil;
-        OABleDataWriteTask *task = allTasks.firstObject;
+        OABTDataWriteTask *taskToContinue = nil;
+        OABTDataWriteTask *task = allTasks.firstObject;
         if(task.pendingData.length == 0 )
         {
             [self inter_finishWriteOfTask:task forDescriptor:descriptor withError:error];
@@ -1126,7 +1127,7 @@ forCharacteristic:(CBCharacteristic *)chara
         return;
     }
     
-    OABleDataWriteTask *task = [[OABleDataWriteTask alloc] init];
+    OABTDataWriteTask *task = [[OABTDataWriteTask alloc] init];
     task.pendingData = data;
     task.responseBlock = response;
     task.isWritting = NO;
@@ -1191,7 +1192,7 @@ forCharacteristic:(CBCharacteristic *)chara
 }
 
 
--(BOOL)inter_writeCharacTask:(OABleDataWriteTask *)task forCharacteristic:(CBCharacteristic *)characteristic
+-(BOOL)inter_writeCharacTask:(OABTDataWriteTask *)task forCharacteristic:(CBCharacteristic *)characteristic
 {
     CBPeripheral *pe = characteristic.service.peripheral;
     NSData *wData = [self extracNextPaketDataFromTask:task];
@@ -1208,7 +1209,7 @@ forCharacteristic:(CBCharacteristic *)chara
 
 
 
--(void)inter_finisthWriteTask:(OABleDataWriteTask *)task success:(BOOL)success forCharacteristic:(CBCharacteristic *)characteristic
+-(void)inter_finisthWriteTask:(OABTDataWriteTask *)task success:(BOOL)success forCharacteristic:(CBCharacteristic *)characteristic
 {
     task.isWritting = NO;
     
@@ -1227,7 +1228,7 @@ forCharacteristic:(CBCharacteristic *)chara
     for(NSString *key in allKeys)
     {
          NSArray *tasks = [self.writeCharcWithResponseTaskQueueMap objectsForKey:key];
-        for(OABleDataWriteTask *tsk in tasks)
+        for(OABTDataWriteTask *tsk in tasks)
         {
             if(tsk.responseBlock)
                 tsk.responseBlock(NO);
@@ -1267,7 +1268,7 @@ forCharacteristic:(CBCharacteristic *)chara
         return;
     }
     
-    OABleDataWriteTask *task = [[OABleDataWriteTask alloc] init];
+    OABTDataWriteTask *task = [[OABTDataWriteTask alloc] init];
     task.pendingData = data;
     task.responseBlock = response;
     task.isWritting = NO;
@@ -1287,7 +1288,7 @@ forCharacteristic:(CBCharacteristic *)chara
 
 }
 
--(void)inter_writeDescriptorTask:(OABleDataWriteTask *)task forDescriptor:(nonnull CBDescriptor *)descriptor
+-(void)inter_writeDescriptorTask:(OABTDataWriteTask *)task forDescriptor:(nonnull CBDescriptor *)descriptor
 {
     CBPeripheral *pe = descriptor.characteristic.service.peripheral;
     NSData *wData = [self extracNextPaketDataFromTask:task];
@@ -1295,7 +1296,7 @@ forCharacteristic:(CBCharacteristic *)chara
     [pe writeValue:wData forDescriptor:descriptor];
 }
 
--(void)inter_finishWriteOfTask:(OABleDataWriteTask *)task forDescriptor:(nonnull CBDescriptor *)descriptor withError:(NSError *)error
+-(void)inter_finishWriteOfTask:(OABTDataWriteTask *)task forDescriptor:(nonnull CBDescriptor *)descriptor withError:(NSError *)error
 {
     task.isWritting = NO;
     if(task.responseBlock)
@@ -1312,7 +1313,7 @@ forCharacteristic:(CBCharacteristic *)chara
     for(NSString *k in allKeys)
     {
         NSArray *allTasks = [self.descriptorWriteBlockMapQueue objectsForKey:k];
-        for(OABleDataWriteTask *task in allTasks)
+        for(OABTDataWriteTask *task in allTasks)
         {
             if(task.responseBlock)
                 task.responseBlock(NO);
@@ -1383,7 +1384,7 @@ forCharacteristic:(CBCharacteristic *)chara
     return intv;
 }
 
--(NSData *)extracNextPaketDataFromTask:(OABleDataWriteTask *)task
+-(NSData *)extracNextPaketDataFromTask:(OABTDataWriteTask *)task
 {
     NSUInteger len = task.maxLen;
     NSData *wData = task.pendingData;

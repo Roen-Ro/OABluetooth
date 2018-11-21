@@ -1,5 +1,5 @@
 //
-//  OABleCentralManager.h
+//  OABLECentralManager.h
 //  OutdoorAssistantApplication
 //
 //  Created by 罗亮富 on 2018/11/10.
@@ -21,32 +21,32 @@ typedef enum {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class OABleCentralManager;
+@class OABTCentralManager;
 
 //根据你个人喜好，可以选择使用block或delegate方式
 @protocol OABlePeripheralManagerDelegate <NSObject>
 
 //this delegate method will be invoked whenever power on/off or authrization status change
--(void)centralManagerDidChangeState:(OABleCentralManager *)manager;
+-(void)centralManagerDidChangeState:(OABTCentralManager *)manager;
 
 //this delegate method will be invoked on new peripherals were discovered
--(void)centralManager:(OABleCentralManager *)manager didDiscoveredNewPeripherals:(NSArray <CBPeripheral *>*)peripherals;
+-(void)centralManager:(OABTCentralManager *)manager didDiscoveredNewPeripherals:(NSArray <CBPeripheral *>*)peripherals;
 
 //连接断开、建立连接、连接完成
 //invoked whenever connection state changed.
--(void)centralManager:(OABleCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral;
+-(void)centralManager:(OABTCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral;
 
 //when ever notify data received
--(void)centralManager:(OABleCentralManager *)manager didReceiveDatafromCharacteristic:(CBCharacteristic *)charateristic;
+-(void)centralManager:(OABTCentralManager *)manager didReceiveDatafromCharacteristic:(CBCharacteristic *)charateristic;
 
 @end
 
 /*!
- *  @class OABleCentralManager
+ *  @class OABLECentralManager
  *
  *  @discussion Manage peripherals' connection, discovery and data communications with specialfied OABleDiscoverOption.
  */
-@interface OABleCentralManager : NSObject<CBCentralManagerDelegate,CBPeripheralDelegate>
+@interface OABTCentralManager : NSObject<CBCentralManagerDelegate,CBPeripheralDelegate>
 
 
 -(instancetype)init NS_UNAVAILABLE;

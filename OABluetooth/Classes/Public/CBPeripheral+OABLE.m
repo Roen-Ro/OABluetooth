@@ -6,7 +6,7 @@
 //
 
 #import "CBPeripheral+OABLE.h"
-#import "OABleCentralManager.h"
+#import "OABTCentralManager.h"
 #import "OABLPeripheralInterExtension.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
