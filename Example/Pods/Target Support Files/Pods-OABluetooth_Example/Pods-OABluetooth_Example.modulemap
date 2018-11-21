@@ -1,0 +1,6 @@
+framework module Pods_OABluetooth_Example {
+  umbrella header "Pods-OABluetooth_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

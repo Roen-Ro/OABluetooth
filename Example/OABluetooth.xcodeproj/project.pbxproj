@@ -13,7 +13,6 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* OAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* OAAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* OAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* OAViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -21,7 +20,10 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		9F3265E221A574C700D86BD2 /* ProgressButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3265E021A574C700D86BD2 /* ProgressButton.m */; };
+		9F3265E821A574E200D86BD2 /* BleScanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3265E421A574E200D86BD2 /* BleScanTableViewController.m */; };
+		9F3265E921A574E200D86BD2 /* BleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3265E521A574E200D86BD2 /* BleViewController.m */; };
+		9F3265EA21A574E200D86BD2 /* BleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3265E621A574E200D86BD2 /* BleViewController.xib */; };
 		BF5365FE9F532C6B9F4079D1 /* Pods_OABluetooth_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB71FB3F5C112335CD1390A7 /* Pods_OABluetooth_Tests.framework */; };
 		D921521B1F31C685B3EBD055 /* Pods_OABluetooth_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31E3F7AFDBF4C9630257616 /* Pods_OABluetooth_Example.framework */; };
 /* End PBXBuildFile section */
@@ -50,8 +52,6 @@
 		6003F59B195388D20070C39A /* OABluetooth-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OABluetooth-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* OAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* OAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* OAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* OAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* OABluetooth_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OABluetooth_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -61,12 +61,18 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		744DD6DA12204232B78578F4 /* Pods-OABluetooth_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OABluetooth_Example.release.xcconfig"; path = "Target Support Files/Pods-OABluetooth_Example/Pods-OABluetooth_Example.release.xcconfig"; sourceTree = "<group>"; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9FDA3E8DB3E820C88BA463C6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		9F3265E021A574C700D86BD2 /* ProgressButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressButton.m; sourceTree = "<group>"; };
+		9F3265E121A574C700D86BD2 /* ProgressButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressButton.h; sourceTree = "<group>"; };
+		9F3265E321A574E200D86BD2 /* BleScanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleScanTableViewController.h; sourceTree = "<group>"; };
+		9F3265E421A574E200D86BD2 /* BleScanTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleScanTableViewController.m; sourceTree = "<group>"; };
+		9F3265E521A574E200D86BD2 /* BleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleViewController.m; sourceTree = "<group>"; };
+		9F3265E621A574E200D86BD2 /* BleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BleViewController.xib; sourceTree = "<group>"; };
+		9F3265E721A574E200D86BD2 /* BleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleViewController.h; sourceTree = "<group>"; };
+		9FDA3E8DB3E820C88BA463C6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		AB71FB3F5C112335CD1390A7 /* Pods_OABluetooth_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B411742E1640EDA5FA37A478 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B411742E1640EDA5FA37A478 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D31E3F7AFDBF4C9630257616 /* Pods_OABluetooth_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDE20DC010009072941DC827 /* OABluetooth.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = OABluetooth.podspec; path = ../OABluetooth.podspec; sourceTree = "<group>"; };
+		FDE20DC010009072941DC827 /* OABluetooth.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OABluetooth.podspec; path = ../OABluetooth.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,10 +140,14 @@
 			children = (
 				6003F59C195388D20070C39A /* OAAppDelegate.h */,
 				6003F59D195388D20070C39A /* OAAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* OAViewController.h */,
-				6003F5A6195388D20070C39A /* OAViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
+				9F3265E321A574E200D86BD2 /* BleScanTableViewController.h */,
+				9F3265E421A574E200D86BD2 /* BleScanTableViewController.m */,
+				9F3265E721A574E200D86BD2 /* BleViewController.h */,
+				9F3265E521A574E200D86BD2 /* BleViewController.m */,
+				9F3265E621A574E200D86BD2 /* BleViewController.xib */,
+				9F3265E121A574C700D86BD2 /* ProgressButton.h */,
+				9F3265E021A574C700D86BD2 /* ProgressButton.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -193,7 +203,6 @@
 				3F0B336B542DF025C7AA877F /* Pods-OABluetooth_Tests.debug.xcconfig */,
 				4BFF9F64C7DB06469A3C681E /* Pods-OABluetooth_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -248,6 +257,14 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "zxllf23@163.com";
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 6575PQUVHG;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -277,9 +294,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				9F3265EA21A574E200D86BD2 /* BleViewController.xib in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,12 +366,14 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-OABluetooth_Example/Pods-OABluetooth_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/OABluetooth/OABluetooth.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjcExtensionProperty/ObjcExtensionProperty.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OABluetooth.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExtensionProperty.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -368,9 +387,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F3265E221A574C700D86BD2 /* ProgressButton.m in Sources */,
 				6003F59E195388D20070C39A /* OAAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* OAViewController.m in Sources */,
+				9F3265E921A574E200D86BD2 /* BleViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				9F3265E821A574E200D86BD2 /* BleScanTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,9 +519,11 @@
 			baseConfigurationReference = 52EBFC7605C7377E7E541F50 /* Pods-OABluetooth_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6575PQUVHG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OABluetooth/OABluetooth-Prefix.pch";
 				INFOPLIST_FILE = "OABluetooth/OABluetooth-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -513,9 +536,11 @@
 			baseConfigurationReference = 744DD6DA12204232B78578F4 /* Pods-OABluetooth_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6575PQUVHG;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OABluetooth/OABluetooth-Prefix.pch";
 				INFOPLIST_FILE = "OABluetooth/OABluetooth-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

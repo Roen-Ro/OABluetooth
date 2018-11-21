@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OABluetooth'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'A short description of OABluetooth.'
 
 # This description is used to generate tags and improve search results.
@@ -21,22 +21,19 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/zxllf23@163.com/OABluetooth'
+  s.homepage         = 'https://github.com/Roen-Ro/OABluetooth'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'zxllf23@163.com' => 'zxllf23@163.com' }
-  s.source           = { :git => 'https://github.com/zxllf23@163.com/OABluetooth.git', :tag => s.version.to_s }
+  s.author           = { '罗亮富(Roen)' => 'zxllf23@163.com' }
+  s.source           = { :git => 'https://github.com/Roen-Ro/OABluetooth.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'OABluetooth/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'OABluetooth' => ['OABluetooth/Assets/*.png']
-  # }
+
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'ObjcExtensionProperty'
 end

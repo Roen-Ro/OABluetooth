@@ -1,0 +1,23 @@
+PODS:
+  - OABluetooth (0.1.0):
+    - ObjcExtensionProperty
+  - ObjcExtensionProperty (1.1.0)
+
+DEPENDENCIES:
+  - OABluetooth (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ObjcExtensionProperty
+
+EXTERNAL SOURCES:
+  OABluetooth:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  OABluetooth: ac904b19ae7bc012dbd130f753077cee4109c68a
+  ObjcExtensionProperty: 537370dc3d6937c9ed35bab58af3ed976b79e5aa
+
+PODFILE CHECKSUM: 4562ab5a3347e87c0111b9b7694a4b2c539e7ac1
+
+COCOAPODS: 1.6.0.beta.1

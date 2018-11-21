@@ -1,0 +1,6 @@
+framework module ObjcExtensionProperty {
+  umbrella header "ObjcExtensionProperty-umbrella.h"
+
+  export *
+  module * { export * }
+}

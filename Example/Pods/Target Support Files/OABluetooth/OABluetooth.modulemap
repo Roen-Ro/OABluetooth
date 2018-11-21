@@ -1,0 +1,6 @@
+framework module OABluetooth {
+  umbrella header "OABluetooth-umbrella.h"
+
+  export *
+  module * { export * }
+}

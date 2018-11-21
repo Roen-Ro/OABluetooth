@@ -1,0 +1,27 @@
+{
+  "name": "OABluetooth",
+  "version": "0.1.0",
+  "summary": "A short description of OABluetooth.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/zxllf23@163.com/OABluetooth",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zxllf23@163.com": "zxllf23@163.com"
+  },
+  "source": {
+    "git": "https://github.com/zxllf23@163.com/OABluetooth.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "OABluetooth/Classes/**/*",
+  "dependencies": {
+    "ObjcExtensionProperty": [
+
+    ]
+  }
+}
