@@ -12,13 +12,13 @@
 @interface NSMutableDictionary (Appending)
 
 
-- (void)addObject:(nullable id)anObject forKey:(id <NSCopying>)aKey;
--(void)addUniqueObject:(nullable id)anObject forKey:(id <NSCopying>)aKey;
+- (void)addObject:(nullable id)anObject forKey:(nonnull id <NSCopying>)aKey;
+-(void)addUniqueObject:(nullable id)anObject forKey:(nonnull id <NSCopying>)aKey;
 
-- (void)removeObject:(nonnull id)anObject forKey:(id <NSCopying>)aKey;
-- (void)removeAllObjectsForKey:(id <NSCopying>)aKey;
+- (void)removeObject:(nonnull id)anObject forKey:(nonnull id <NSCopying>)aKey;
+- (void)removeAllObjectsForKey:(nonnull id <NSCopying>)aKey;
 
-- (nullable NSArray *)objectsForKey:(id <NSCopying>)aKey;
+- (nullable NSArray *)objectsForKey:(nonnull id <NSCopying>)aKey;
 
 @end
 

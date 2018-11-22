@@ -37,7 +37,7 @@
 //    }
 //}
 
-- (void)addObject:(nullable id)anObject forKey:(id <NSCopying>)aKey
+- (void)addObject:(nullable id)anObject forKey:(nonnull id <NSCopying>)aKey
 {
     if(!anObject || !aKey)
         return;
@@ -55,7 +55,7 @@
     [ma addObject:anObject];
 }
 
--(void)addUniqueObject:(nullable id)anObject forKey:(id <NSCopying>)aKey
+-(void)addUniqueObject:(nullable id)anObject forKey:(nonnull id <NSCopying>)aKey
 {
     if(!anObject || !aKey)
         return;
@@ -83,7 +83,7 @@
         [ma addObject:anObject];
 }
 
-- (void)removeObject:(nonnull id)anObject forKey:(id <NSCopying>)aKey
+- (void)removeObject:(nonnull id)anObject forKey:(nonnull id <NSCopying>)aKey
 {
     NSMutableArray *ma = [self objectForKey:aKey];
     if([ma isKindOfClass:[NSMutableArray class]])
@@ -94,12 +94,12 @@
     }
 }
 
-- (void)removeAllObjectsForKey:(id <NSCopying>)aKey
+- (void)removeAllObjectsForKey:(nonnull id <NSCopying>)aKey
 {
     [self removeObjectForKey:aKey];
 }
 
-- (nullable NSArray *)objectsForKey:(id <NSCopying>)aKey
+- (nullable NSArray *)objectsForKey:(nonnull id <NSCopying>)aKey
 {
     NSMutableArray *ma = [self objectForKey:aKey];
     if(!ma)

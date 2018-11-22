@@ -51,6 +51,14 @@ forCharacterisct:(nonnull NSString *)charaID
          completion:(void(^)(BOOL success))block;
 
 
+-(void)writeData:(nonnull NSData *)data
+   forDescriptor:(nonnull CBDescriptor *)descriptor
+        response:(void(^)(BOOL success))response;
+
+-(void)readDataForDescriptor:(nonnull CBDescriptor *)descriptor
+                  completion:(void(^)(BOOL))completionBlock;
+
+
 
 -(nullable CBDescriptor *)discoveredDescriptorWithUUID:(nonnull NSString *)descriptorUUIDString
                                 characteristicWithUUID:(nonnull NSString *)characteristicUUIDString

@@ -42,7 +42,7 @@
     
    // [self.centralManager addDelegate:self];
     
-    [self.centralManager setOnBluetoothStateChange:^(OABlePeripheralServiceState state) {
+    [self.centralManager setOnBluetoothStateChange:^(OABTCentralState state) {
         [weakSelf updateState];
     }];
     
@@ -96,9 +96,8 @@
 
 -(void)updateState
 {
-    BOOL p = self.centralManager.state == OABLEStateSearching;
+    BOOL p = self.centralManager.state == OABLECentralStateScanning;
     _prgBtn.inProgress = p;
-    _prgBtn.enabled = (self.centralManager.state >= OABLEStatePoweredOn );
 }
 
 #pragma mark - Table view data source

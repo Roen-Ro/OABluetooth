@@ -11,12 +11,15 @@
 #import "NSObject+MultiDelegates.h"
 
 typedef enum {
-    OABLEStateUnavailable,
-    OABLEStatePoweredOff,
-    OABLEStatePoweredOn,
-    OABLEStateSearching
+    OABTCentralStateUnknow = 0,
+    OABTCentralStateResetting,
+    OABTCentralStateUnsupported,
+    OABTCentralStateUnauthorized,
+    OABTCentralStatePoweredOff,
+    OABTCentralStatePoweredOn,
+    OABLECentralStateScanning
     
-}OABlePeripheralServiceState;
+}OABTCentralState;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -52,29 +55,48 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)init NS_UNAVAILABLE;
 
 //create a new instance with specialfied `advertiseIDs` of periperals that a central manager will scan for, or pass nil for all kind of peripherals;
+
+/**
+ designated initializer
+ @param advertiseID 需要扫描的外设广播id,只有带此广播id的外设才会被扫描到，如果传入nil的话，表示扫描所有类型的外设
+ */
 -(instancetype)initWitPeripheralAdvertiseID:(nullable NSString *)advertiseID;
 
-@property (nonatomic, readonly)  OABlePeripheralServiceState state;
+@property (nonatomic, readonly)  OABTCentralState state;
 
 
-#pragma mark- auto scan/connection
+#pragma mark- auto connection 自动重连
 @property (nonatomic) BOOL autoReconnection; //defualt YES,whether to automatically reconnect to passively disconnected peripherals 是否在被动断开后自动重连
 @property (nonatomic) unsigned int autoReconnectionInterval; //default is 5 second
+-(void)addPeripheralToAutoReconnection:(nonnull CBPeripheral *)peripheral;
+-(void)removeperipheralFromAutoReconnection:(nonnull CBPeripheral *)peripheral;
+
+#pragma mark- auto scan 自动扫描
 @property (nonatomic) unsigned int autoScanInterval; //自动搜索时间间隔,the time in second to start a auto scan since last scan finished, defautl is 5 seconds
 @property (nonatomic) unsigned int scanDuration; //每一次搜索持续时间，the scan last duration each time, default is 3 seconds
 
-@property (nonatomic, copy, readonly) NSSet <NSString *> *autoConnectPeripheralIDs; //自动连接外设UUID列表,一旦搜索到就自动连接，the identifier uuidstring of peripherals which will automatically connected on discovery.
+
+
+
 
 #pragma mark- delegates/blocks
 
 //用delegates的好处是可以多处同时监听，但代码分散
 //implemented in NSObject category,
+
+/**
+ 添加delegate
+ */
 -(void)addDelegate:(id<OABlePeripheralManagerDelegate>)delegate;
+
+/**
+ 移除deletate
+ */
 -(void)removeDelegate:(id<OABlePeripheralManagerDelegate>)delegate;
 
 //block的好处是代码集中，但同时只能有一处监听，如果要多处同时监听这些事件的话，用-addDelegate:方法添加多个delegate
 //Alternatively you can implement OABlePeripheralManagerDelegate's methods by addDelegate(s)
-@property (nonatomic, copy) void (^onBluetoothStateChange)(OABlePeripheralServiceState state);
+@property (nonatomic, copy) void (^onBluetoothStateChange)(OABTCentralState state);
 @property (nonatomic, copy) void (^onNewPeripheralsDiscovered)(NSArray <CBPeripheral *> *peripherals);
 @property (nonatomic, copy) void (^onPeripheralStateChange)(CBPeripheral *peripheral);
 @property (nonatomic, copy) void (^onNewDataNotify)(CBCharacteristic *characteristic);

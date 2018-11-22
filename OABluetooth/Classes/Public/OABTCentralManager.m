@@ -22,6 +22,12 @@
 
 #pragma mark- OABlePeripheralManager
 
+@interface OABTCentralManager ()
+//自动连接外设UUID列表,一旦搜索到就自动连接，the identifier uuidstring of peripherals which will automatically connected on discovery.
+@property (nonatomic, copy, readonly) NSSet <NSString *> *autoConnectPeripheralIDs;
+
+@end
+
 @implementation OABTCentralManager
 {
 @private
@@ -76,7 +82,7 @@
             _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil
                                                                  options:options];
             
-            [self mapState];
+            _state = _centralManager.state;
         }
         
         [self inter_startTimer];
@@ -103,31 +109,6 @@ __GETTER_LAZY(NSMutableDictionary, characteristicDiscoverKeyRecords, [NSMutableD
 __GETTER_LAZY(NSMutableDictionary, descriptorsDiscoverKeyRecords, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, descriptorsReadKeyRecords, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDictionary dictionaryWithCapacity:3])
-
--(void)mapState
-{
-#if DEBUG
-    NSLog(@"_centralManager.state %ld",(long)_centralManager.state);
-#endif
-    switch (_centralManager.state) {
-        case CBManagerStateUnknown:
-        case CBManagerStateResetting:
-        case CBManagerStateUnsupported:
-        case CBManagerStateUnauthorized:
-           _state = OABLEStateUnavailable;
-            break;
-        case CBManagerStatePoweredOff:
-            _state = OABLEStatePoweredOff;
-            break;
-        case CBManagerStatePoweredOn:
-            _state = OABLEStatePoweredOn;
-            break;
-        default:
-             _state = OABLEStateUnavailable;
-            break;
-    }
-}
-
 
 
 #pragma mark- timer
@@ -201,7 +182,31 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 }
 
 #pragma mark- auto connection list
--(NSString *)savePath
+
+-(void)addPeripheralToAutoReconnection:(nonnull CBPeripheral *)peripheral {
+    
+    NSString *path = [self autoConnectionsavePath];
+    NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if(!set)
+        set = [NSMutableSet setWithCapacity:3];
+    
+    [set addObject:peripheral.identifier.UUIDString];
+    
+    [NSKeyedArchiver archiveRootObject:set toFile:path];
+}
+
+-(void)removeperipheralFromAutoReconnection:(nonnull CBPeripheral *)peripheral {
+    
+    NSString *path = [self autoConnectionsavePath];
+    NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if(set)
+    {
+        [set removeObject:peripheral.identifier.UUIDString];
+        [NSKeyedArchiver archiveRootObject:set toFile:path];
+    }
+}
+
+-(NSString *)autoConnectionsavePath
 {
     static NSURL *docUrl;
     if(!docUrl)
@@ -210,7 +215,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 }
 
 -(NSSet<NSString *> *)autoConnectPeripheralIDs {
-    NSString *path = [self savePath];
+    NSString *path = [self autoConnectionsavePath];
     NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if(set.count > 0)
         return [NSSet setWithSet:set];
@@ -218,28 +223,6 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
         return nil;
 }
 
--(void)addAutoConnectedPeripheral:(CBPeripheral *)perl
-{
-    NSString *path = [self savePath];
-    NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if(!set)
-        set = [NSMutableSet setWithCapacity:3];
-    
-    [set addObject:perl.identifier.UUIDString];
-    
-    [NSKeyedArchiver archiveRootObject:set toFile:path];
-}
-
--(void)removeAutoConnectedPeripheral:(CBPeripheral *)perl
-{
-    NSString *path = [self savePath];
-    NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if(set)
-    {
-        [set removeObject:perl.identifier.UUIDString];
-        [NSKeyedArchiver archiveRootObject:set toFile:path];
-    }
-}
 
 #pragma mark- scan
 -(NSString *)scanPeripherals
@@ -247,9 +230,9 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     _scanCountDown = self.scanDuration;
     
     NSString *errorStr = nil;
-    if(_state == OABLEStateUnavailable)
+    if(_state <= OABTCentralStateUnauthorized)
         errorStr = NSLocalizedString(@"Bluetooth service unavailable", nil);
-    else if(_state == OABLEStatePoweredOff)
+    else if(_state == OABTCentralStatePoweredOff)
         errorStr = NSLocalizedString(@"Bluetooth service is powered off", nil);
         
     if(errorStr)
@@ -262,7 +245,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     if(_pehAdvertiseID)
         services = @[[CBUUID UUIDWithString:_pehAdvertiseID]];
     
-    _state = OABLEStateSearching;
+    _state = OABLECentralStateScanning;
     //services 包含的uuid值是设备advertise的ID 可以通过查看 centralManager:didDiscoverPeripheral:advertisementData:RSSI:
     //回调中的 advertisementData 然后读取其中的key值: kCBAdvDataServiceUUIDs
     [_centralManager scanForPeripheralsWithServices:services options:options];
@@ -279,8 +262,10 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     
     [_centralManager stopScan];
     
-    if(_state == OABLEStateSearching)
-        _state = OABLEStatePoweredOn;
+    if(_state == OABLECentralStateScanning)
+        _state = OABTCentralStatePoweredOn;
+    else
+        _state = _centralManager.state;
     
     [self inter_invokeStateChangeBlock];
 }
@@ -341,7 +326,6 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 //for external calls
 -(void)disConnectperipheral:(CBPeripheral *)peripheral
 {
-    [self removeAutoConnectedPeripheral:peripheral];
     [self inter_disConnectperipheral:peripheral];
 }
 
@@ -699,7 +683,6 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
         return;
     
     peripheral.interRssiValue = RSSI.intValue;
-    _state = OABLEStatePoweredOn;
     peripheral.delegate = self;
     
     //情况比较复杂，有时候发现的相同的设备是同一个对象实例，有的时候是identifier相同，但是不同的对象实例
@@ -769,7 +752,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    [self mapState];
+    _state = _centralManager.state;
     if (@available(iOS 10.0, *)) {
         if(_centralManager.state == CBManagerStatePoweredOn)
             [self scanPeripherals];
@@ -795,8 +778,6 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     [self inter_invokeConnectionStatusChangeForPeripheral:peripheral];
     [self inter_invokeConnectionResultBlockForPeripheral:peripheral withError:nil];
     
-    if(self.autoReconnection)
-        [self addAutoConnectedPeripheral:peripheral];
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
