@@ -23,20 +23,41 @@
  defaultValue - a default return value for getter
  */
 
-//instance variable backed lazy getter method macro define\
-Calss is property Objc Class, name is the property name, initializer provide the code to create the object
+
+/**
+ Instance variable backed lazy getter method macro define
+
+ @param Class the property class type
+ @param name the property name (which must have a backed ivar named like _name)
+ @param initializer... the property creation code
+ @return the property value
+ 
+ @example:
+ __GETTER_LAZY(NSArray, members, [NSMutableArray arrayWithObjects:@"Lucy",@"Lily",nil])
+ */
 #define __GETTER_LAZY_IVAR(Class,name,initializer...) -(Class *)name { \
 if(!_##name){             \
 _##name = initializer; \
 } \
-return _##name;\
+return _##name; \
 }
 
 /************
  *getter and setter methods macro defines for dynamic binded varaiables, typically for properties defined in class extensions
  ************/
 
-//dynamic property lazy getter method
+
+/**
+ dynamic property lazy getter method
+
+ @param Class the property class type
+ @param name the property name
+ @param initializer... the property creation code
+ @return the property value
+ 
+ @example:
+ __GETTER_LAZY(NSArray, members, [NSMutableArray arrayWithObjects:@"Lucy",@"Lily",nil])
+ */
 #define __GETTER_LAZY(Class,name,initializer...) -(Class *)name { \
 IMP key = class_getMethodImplementation([self class],@selector(name));\
 id obj = objc_getAssociatedObject(self,key); \
@@ -47,8 +68,18 @@ objc_setAssociatedObject(self, key, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
 return obj;\
 }
 
-//common object type property setter method
-#define __SETTER(name,setter,association) -(void)setter:(id)name { \
+
+/**
+ common object type property setter method
+
+ @param name the property name
+ @param setter the setter method name
+ @param association objc_AssociationPolicy type value
+ @return none
+ @example
+ __SETTER(members, setMembers, OBJC_ASSOCIATION_RETAIN)
+ */
+#define __SETTER(name,setter,association) -(void)setter (id)name { \
 IMP key = class_getMethodImplementation([self class],@selector(name));\
 objc_setAssociatedObject(self, key, name, association);\
 }
@@ -59,6 +90,31 @@ IMP key = class_getMethodImplementation([self class],@selector(name));\
 id obj = objc_getAssociatedObject(self,key); \
 return obj;\
 }
+
+//
+
+/**
+ common object type property setter method with additional costomize code after setting
+ 
+ @param name proerty name
+ @param setter peroperty setter method
+ @param association objc_AssociationPolicy type value
+ @param customizeCode... additional user code after  setting
+ 
+ @example
+ __SETTER_CUSTOMIZE(tableView, setTableView, OBJC_ASSOCIATION_RETAIN, {
+     UITableView *tbv = tableView;
+     tbv.dataSource = self;
+     tbv.delegate = self;
+ })
+ 
+ */
+#define __SETTER_CUSTOMIZE(name,setter,association,customizeCode...) -(void)setter (id)name { \
+IMP key = class_getMethodImplementation([self class],@selector(name)); \
+objc_setAssociatedObject(self, key, name, association); \
+customizeCode \
+}
+
 
 //common object type property getter method provide a default return value
 #define __GETTER_DEFAULT(Class,name,defaultValue) -(Class *)name { \
@@ -71,7 +127,7 @@ return defaultValue; \
 }
 
 //common weak object type property setter method
-#define __SETTER_WEAK(name,setter) -(void)setter:(id)name { \
+#define __SETTER_WEAK(name,setter) -(void)setter (id)name { \
 IMP key = class_getMethodImplementation([self class],@selector(name));\
 if(name) { \
 WeakReference *p = objc_getAssociatedObject(self, key);\
@@ -85,6 +141,22 @@ else \
 objc_setAssociatedObject(self, key, nil, OBJC_ASSOCIATION_RETAIN); \
 }
 
+//common weak object type property setter method with additional costomize code after setting
+#define __SETTER_WEAK_CUSTOMIZE(name,setter,customizeCode...) -(void)setter (id)name { \
+IMP key = class_getMethodImplementation([self class],@selector(name));\
+if(name) { \
+WeakReference *p = objc_getAssociatedObject(self, key);\
+if(!p) { \
+p = [WeakReference alloc]; \
+objc_setAssociatedObject(self, key, p, OBJC_ASSOCIATION_RETAIN);\
+} \
+p.weakObj = name; \
+} \
+else \
+objc_setAssociatedObject(self, key, nil, OBJC_ASSOCIATION_RETAIN); \
+customizeCode \
+}
+
 //common weak object type property getter method
 #define __GETTER_WEAK(Class,name) -(Class *)name { \
 IMP key = class_getMethodImplementation([self class],@selector(name));\
@@ -93,7 +165,7 @@ return p.weakObj; \
 }
 
 //primitive type property setter method
-#define __SETTER_PRIMITIVE(type,name,setter,NSNumberMethod) -(void)setter:(type)name { \
+#define __SETTER_PRIMITIVE(type,name,setter,NSNumberMethod) -(void)setter (type)name { \
 IMP key = class_getMethodImplementation([self class],@selector(name));\
 objc_setAssociatedObject(self, key, [NSNumber NSNumberMethod name], OBJC_ASSOCIATION_RETAIN_NONATOMIC);\
 }
@@ -103,6 +175,13 @@ objc_setAssociatedObject(self, key, [NSNumber NSNumberMethod name], OBJC_ASSOCIA
 IMP key = class_getMethodImplementation([self class],@selector(name));\
 NSNumber *num = objc_getAssociatedObject(self,key); \
 return num.NSNumberMethod;\
+}
+
+//primitive type property setter method
+#define __SETTER_PRIMITIVE_CUSTOMIZE(type,name,setter,NSNumberMethod,customizeCode...) -(void)setter (type)name { \
+IMP key = class_getMethodImplementation([self class],@selector(name)); \
+objc_setAssociatedObject(self, key, [NSNumber NSNumberMethod name], OBJC_ASSOCIATION_RETAIN_NONATOMIC); \
+customizeCode \
 }
 
 //primitive type property getter method with a default return value

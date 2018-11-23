@@ -11,10 +11,10 @@
 @class OABTCentralManager;
 @implementation CBCharacteristic (OABLInternal)
 
-__SETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, setFinishedSubArributeDiscover, numberWithBool:)
+__SETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, setFinishedSubArributeDiscover:, numberWithBool:)
 __GETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, boolValue)
 
-__SETTER(interPropertiesDescription, setInterPropertiesDescription, OBJC_ASSOCIATION_COPY)
+__SETTER(interPropertiesDescription, setInterPropertiesDescription:, OBJC_ASSOCIATION_COPY)
 __GETTER(NSString, interPropertiesDescription)
 
 @end
@@ -23,10 +23,10 @@ __GETTER(NSString, interPropertiesDescription)
 @implementation CBPeripheral (OABLInternal)
 
 
-__SETTER_PRIMITIVE(int, interRssiValue, setInterRssiValue, numberWithInt:)
+__SETTER_PRIMITIVE(int, interRssiValue, setInterRssiValue:, numberWithInt:)
 __GETTER_PRIMITIVE(int, interRssiValue, intValue)
 
-__SETTER_WEAK(centralManager, setCentralManager)
+__SETTER_WEAK_CUSTOMIZE(centralManager, setCentralManager:, self.delegate = (OABTCentralManager *)centralManager;)
 __GETTER_WEAK(OABTCentralManager, centralManager)
 
 @end

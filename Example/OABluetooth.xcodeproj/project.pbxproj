@@ -72,7 +72,7 @@
 		AB71FB3F5C112335CD1390A7 /* Pods_OABluetooth_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B411742E1640EDA5FA37A478 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D31E3F7AFDBF4C9630257616 /* Pods_OABluetooth_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDE20DC010009072941DC827 /* OABluetooth.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OABluetooth.podspec; path = ../OABluetooth.podspec; sourceTree = "<group>"; };
+		FDE20DC010009072941DC827 /* OABluetooth.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OABluetooth.podspec; path = ../OABluetooth.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

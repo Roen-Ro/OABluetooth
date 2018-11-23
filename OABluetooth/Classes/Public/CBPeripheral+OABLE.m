@@ -14,7 +14,7 @@
 @implementation CBPeripheral (OABLE)
 
 
-__SETTER_PRIMITIVE(unsigned int, dataWritePakcetMaxLengthLimit,setDataWritePakcetMaxLengthLimit,numberWithInt:)
+__SETTER_PRIMITIVE(unsigned int, dataWritePakcetMaxLengthLimit,setDataWritePakcetMaxLengthLimit:,numberWithInt:)
 __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intValue)
 
 -(int)rssiValue
@@ -22,8 +22,59 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
     return self.interRssiValue;
 }
 
+#pragma mark- data transfer
+/**
+ write data to a OABTPort no need to response, this is only available for CBCharacteristic port (correspoding writeWithoutResponseCharacteristic)
+ 向一个OABTPort端口发送数据, 发送成功与否都不需要响应，对应writeWithoutResponseCharacteristic类型,只针对代表CBCharacteristic类型的端口有效
+ */
+-(void)writeData:(nonnull NSData *)data toPort:(OABTPort *)port
+{
+    
+}
 
 
+/**
+ write data to a OABTPort with response
+ 向一个OABTPort端口发送数据, 发送成功与否都在block回调得到结果
+ */
+-(void)writeData:(nonnull NSData *)data
+          toPort:(OABTPort *)port
+        response:(nullable void(^)(NSError *error))response
+{
+    
+}
+
+
+/**
+ Read data from a OABTPort
+ 读取端口数据
+ */
+-(void)readDataFromPort:(OABTPort *)pot completion:(nullable void(^)(NSData *data, NSError *error))completionBlock
+{
+    
+}
+
+
+/**
+ Set the data notify block on port, this is only available for CBCharacteristic port
+ 设置外设端口消息通知block，当外设指定端口有主动向主机发送数据的时候，设定的block会得到回调，只对代表CBCharacteristic类型的端口有效
+ */
+-(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)pot
+{
+    
+}
+
+
+/**
+ Enable/disable data notify for a CBCharacteristic port (not available for CBDescription port)
+ 开启/关闭端口监听功能，只针对CBCharacteristic类型端口有效
+ */
+-(void)enableNotify:(BOOL)enable forPort:(OABTPort *)pot completion:(void(^)(BOOL success))block
+{
+    
+}
+
+#pragma mark-
 
 -(nullable CBDescriptor *)discoveredDescriptorWithUUID:(nonnull NSString *)descriptorUUIDString
                                 characteristicWithUUID:(nonnull NSString *)characteristicUUIDString
@@ -85,5 +136,15 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 
 
 
+
+@end
+
+
+@implementation CBCharacteristic (OABLE)
+
+-(NSString *)propertiesDescription
+{
+    return self.interPropertiesDescription;
+}
 
 @end
