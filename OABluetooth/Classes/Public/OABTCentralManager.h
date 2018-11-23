@@ -54,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(instancetype)init NS_UNAVAILABLE;
 
-//create a new instance with specialfied `advertiseIDs` of periperals that a central manager will scan for, or pass nil for all kind of peripherals;
 
 /**
  designated initializer
@@ -66,43 +65,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark- auto connection 自动重连
-@property (nonatomic) BOOL autoReconnection; //defualt YES,whether to automatically reconnect to passively disconnected peripherals 是否在被动断开后自动重连
+
+ //defualt YES,whether to automatically reconnect to passively disconnected peripherals 是否在被动断开后自动重连
+@property (nonatomic) BOOL autoReconnection;
 @property (nonatomic) unsigned int autoReconnectionInterval; //default is 5 second
+
 -(void)addPeripheralToAutoReconnection:(nonnull CBPeripheral *)peripheral;
 -(void)removeperipheralFromAutoReconnection:(nonnull CBPeripheral *)peripheral;
 
 #pragma mark- auto scan 自动扫描
-@property (nonatomic) unsigned int autoScanInterval; //自动搜索时间间隔,the time in second to start a auto scan since last scan finished, defautl is 5 seconds
-@property (nonatomic) unsigned int scanDuration; //每一次搜索持续时间，the scan last duration each time, default is 3 seconds
 
-
-
-
+//自动搜索时间间隔,the time in second to start a auto scan since last scan finished, defautl is 5 seconds
+@property (nonatomic) unsigned int autoScanInterval;
+//每一次搜索持续时间，the scan last duration each time, default is 3 seconds
+@property (nonatomic) unsigned int scanDuration;
 
 #pragma mark- delegates/blocks
 
 //用delegates的好处是可以多处同时监听，但代码分散
 //implemented in NSObject category,
-
-/**
- 添加delegate
- */
+// 添加delegate
 -(void)addDelegate:(id<OABlePeripheralManagerDelegate>)delegate;
-
-/**
- 移除deletate
- */
+//移除deletate
 -(void)removeDelegate:(id<OABlePeripheralManagerDelegate>)delegate;
 
 //block的好处是代码集中，但同时只能有一处监听，如果要多处同时监听这些事件的话，用-addDelegate:方法添加多个delegate
-//Alternatively you can implement OABlePeripheralManagerDelegate's methods by addDelegate(s)
+//Alternatively you can implement OABlePeripheralManagerDelegate's methods by -addDelegate:
 @property (nonatomic, copy) void (^onBluetoothStateChange)(OABTCentralState state);
 @property (nonatomic, copy) void (^onNewPeripheralsDiscovered)(NSArray <CBPeripheral *> *peripherals);
 @property (nonatomic, copy) void (^onPeripheralStateChange)(CBPeripheral *peripheral);
 @property (nonatomic, copy) void (^onNewDataNotify)(CBCharacteristic *characteristic);
 
 #pragma mark- scan and connection
-//外设搜索
 //-centralManager:didDiscoverPeripheral: delegate method will be invoked on every new peripheral discovered
 -(NSString *)scanPeripherals;
 -(void)stopScanPeripherals;
@@ -135,11 +129,11 @@ NS_ASSUME_NONNULL_BEGIN
                  forPeripheral:(nonnull CBPeripheral *)peripheral
                     completion:(nullable void (^)(NSError *error))block;
 
+
+#pragma mark- read/ write
+
 -(void)readRSSIForPeripheral:(nonnull CBPeripheral *)peripheral
                   completion:(nullable void (^)(int rssi, NSError *error))block;
-
-
-#pragma mark- data transfer
 
 //write data for writeWithoutResponseCharacteristic
 -(void)writeData:(nonnull NSData *)data forCharacteristic:(nonnull CBCharacteristic *)chara;

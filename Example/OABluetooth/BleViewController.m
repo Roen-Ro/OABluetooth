@@ -53,7 +53,6 @@
     
     char *s = "Hello world, this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data  this is BLE data data data  this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data  this is BLE data data data  this is BLE data data data  Hello world, this is BLE data data data Hello world bling bling bling hahhahhah hohoi how wndn da";
     
-    int len  = strlen(s);
     
     CBCharacteristic *chr = [self.peripheral discoveredCharacteristicWithUUID:@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F" ofService:@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"];
     if(chr)

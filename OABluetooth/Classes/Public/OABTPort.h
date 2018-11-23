@@ -21,7 +21,7 @@
  Create a OABTPort with a peripheral's serviceID,charateristicID,and descriptionID(optional), when a nil value is passed to descriptionID, the port represents some kind of CBCharacteristic; when a non null value is passed to descriptionID, the port represents some kind of CBDescription.
 
  */
-+(instancetype)portWithServiceID:(nonnull NSString *)serviceID
++(nonnull instancetype)portWithServiceID:(nonnull NSString *)serviceID
                 characteristicID:(nonnull NSString *)charateristicID
                    descriptionID:(nullable NSString *)descriptionID;
 
@@ -30,7 +30,7 @@
  创建并返回一个代表CBCharacteristic信息的端口
  Create a port represents CBCharacteristic infomation
  */
-+(instancetype)portWithServiceID:(nonnull NSString *)serviceID
++(nonnull instancetype)portWithServiceID:(nonnull NSString *)serviceID
                 characteristicID:(nonnull NSString *)charateristicID;
 
 
