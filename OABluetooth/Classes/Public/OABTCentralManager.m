@@ -16,7 +16,7 @@
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
 #define PERIPHERAL_DISCONNECTED_ERROR [NSError errorWithDomain:@"peripheral not connected" code:-102 userInfo:nil]
-#define WEAK_SELF __weak typeof(self) weakSelf = self
+#define OABT_UNKNOW_ERROR [NSError errorWithDomain:@"unknown" code:-81 userInfo:nil]
 
 #define  DEFAULT_WRITE_LEN 125
 
@@ -59,7 +59,7 @@
     {
         _pehAdvertiseID = [advertiseID copy];
         
-        self.autoReconnection = YES;
+        self.enableAutoReconnection = YES;
         self.autoScanInterval = 5;
         self.scanDuration = 3;
         self.autoReconnectionInterval = 5;
@@ -342,7 +342,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 
 -(void)inter_autoReconnection
 {
-    if(self.autoReconnection)
+    if(self.isAutoReconnectionEnabled)
     {
         for(CBPeripheral *peripheral in self.discoveredPeripherals)
         {
@@ -491,11 +491,14 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     else
     {
         WEAK_SELF;
-        [self discoverService:@[serviceID] forPeripheral:peripheral completion:^(NSError * _Nonnull error) {
+        [self discoverService:@[serviceID] forPeripheral:peripheral completion:^(NSError *error) {
             if(!error)
             {
                 CBService *tService1 = [peripheral discoveredServiceWithUUID:serviceID];
-                [weakSelf inter_discoverCharacteristics:charaterIDs ofService:tService1 completion:block];
+                if(tService1)
+                    [weakSelf inter_discoverCharacteristics:charaterIDs ofService:tService1 completion:block];
+                else if(block)
+                    block([NSError errorWithDomain:[NSString stringWithFormat:@"service of %@ uuid not found",serviceID] code:-112 userInfo:nil]);
             }
             else {
                 if(block)
@@ -510,7 +513,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
                      ofService:(nonnull CBService *)service
                     completion:(void (^)( NSError *error))block
 {
-    //self.discoverCharateristicTaskkQueueMap
+
     OABTDiscoverTask *task = [[OABTDiscoverTask alloc] init];
     task.block = block;
     task.discoverIDs = charaterIDs;
@@ -526,6 +529,9 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 
 -(void)inter_discoverCharacteristicTask:(OABTDiscoverTask *)task ofService:(nonnull CBService *)service
 {
+#if DEBUG
+    NSLog(@"-->discoverCharacteristic:%@ for service:%@",task.discoverIDs,service);
+#endif
     NSMutableArray *charaIds = [NSMutableArray arrayWithCapacity:task.discoverIDs.count];
     for(NSString *s in task.discoverIDs)
     {
@@ -684,7 +690,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     
     peripheral.interRssiValue = RSSI.intValue;
     peripheral.delegate = self;
-    
+    peripheral.centralManager = self;
     //情况比较复杂，有时候发现的相同的设备是同一个对象实例，有的时候是identifier相同，但是不同的对象实例
     if(![_discoveredPeripherals containsObject:peripheral])
     {
@@ -710,13 +716,15 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     
     [self inter_invokePeripheralsDiscoveredDelegate:@[peripheral]];
     
-    if(self.autoReconnection) //make auto connections
+    if(self.isAutoReconnectionEnabled) //make auto connections
     {
         NSSet *autoConnectSet = self.autoConnectPeripheralIDs;
         if([autoConnectSet containsObject:peripheral.identifier.UUIDString])
             [self inter_connectPeripheral:peripheral];
     }
 }
+
+__GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArray arrayWithCapacity:3])
 
 - (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)state
 {
@@ -725,25 +733,30 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 #endif
     
     NSArray *restores = [state objectForKey:@"kCBRestoredPeripherals"];
-    
     for(CBPeripheral *per in restores)
     {
         per.delegate = self;
-        
-        if(per.state == CBPeripheralStateConnected)
-        {
+        per.centralManager = self;
+        if(per.state == CBPeripheralStateConnected) {
             [_connectedPeripherals addObject:per];
+        }
+        else if(per.state == CBPeripheralStateConnecting) {
+            if(central.state == CBCentralManagerStatePoweredOn)
+                [central cancelPeripheralConnection:per]; //有些设备，会一直处于connecting状态
+            else {
+                [self.connectingPeripheralsOnRestoreState addObject:per];
+            }
         }
         else
         {
-            if(self.autoReconnection) //make auto connections
+            if(self.isAutoReconnectionEnabled) //make auto connections
             {
                 NSSet *autoConnectSet = self.autoConnectPeripheralIDs;
                 if([autoConnectSet containsObject:per.identifier.UUIDString])
                     [self inter_connectPeripheral:per];
             }
         }
-      
+
         [_discoveredPeripherals addObject:per];
     }
     
@@ -764,6 +777,12 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
             [self scanPeripherals];
         else
             [self stopScanPeripherals];
+    }
+    
+    if(central.state == CBCentralManagerStatePoweredOn) {
+        for(CBPeripheral *lostPeripherals in self.connectingPeripheralsOnRestoreState) {
+            [central cancelPeripheralConnection:lostPeripherals];
+        }
     }
     
     [self inter_invokeStateChangeBlock];
@@ -791,10 +810,10 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     [self inter_failAllServiceDiscoverBlocks:error forPeripheral:peripheral];
     [self inter_failAllCharacteristicsDiscoverBlocksForPeripheral:peripheral];
     [self inter_failAllDescriptorDiscoverBlocksForPeripheral:peripheral];
-    [self inter_failAllReadBlocksForPeripheral:peripheral];
-    [self inter_failAllWriteBlocksForPeripheral:peripheral];
-    [self inter_failAllDescriptorReadBlocksForPeripheral:peripheral];
-    [self inter_failAllDescriptorWriteBlocksForPeripheral:peripheral];
+    [self inter_failAllReadBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllWriteBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllDescriptorReadBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllDescriptorWriteBlocksForPeripheral:peripheral error:error];
     [self inter_invokeAllRssiReadBlocksForPeripheral:peripheral value:0 withError:error];
 }
 
@@ -831,10 +850,10 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     [self inter_failAllServiceDiscoverBlocks:error forPeripheral:peripheral];
     [self inter_failAllCharacteristicsDiscoverBlocksForPeripheral:peripheral];
     [self inter_failAllDescriptorDiscoverBlocksForPeripheral:peripheral];
-    [self inter_failAllReadBlocksForPeripheral:peripheral];
-    [self inter_failAllWriteBlocksForPeripheral:peripheral];
-    [self inter_failAllDescriptorReadBlocksForPeripheral:peripheral];
-    [self inter_failAllDescriptorWriteBlocksForPeripheral:peripheral];
+    [self inter_failAllReadBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllWriteBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllDescriptorReadBlocksForPeripheral:peripheral error:error];
+    [self inter_failAllDescriptorWriteBlocksForPeripheral:peripheral error:error];
     [self inter_invokeAllRssiReadBlocksForPeripheral:peripheral value:0 withError:error];
     
 }
@@ -954,10 +973,9 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     else //read value
     {
         NSArray *blcks = [self.charcDataReadBlockMap objectsForKey:aKey];
-        for(void (^blk)(BOOL) in blcks)
+        for(void (^blk)(NSError *) in blcks)
         {
-            if(blk)
-                blk(error==nil);
+            blk(error);
         }
         
         [self.charcDataReadBlockMap removeAllObjectsForKey:aKey];
@@ -984,7 +1002,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 
         if(task.pendingData.length == 0 )
         {
-            [self inter_finisthWriteTask:task success:YES forCharacteristic:characteristic];
+            [self inter_finisthWriteTask:task forCharacteristic:characteristic error:error];
             if(tasks.count > 1)
                 continueTask = [tasks objectAtIndex:1];
         }
@@ -1002,9 +1020,9 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 {
     NSString *key = [self keyForCharacteristic:characteristic];
     NSArray *blks = [self.notifySettingBlockMap objectsForKey:key];
-    for( void(^blk)(BOOL) in blks)
+    for( void(^blk)(NSError *) in blks)
     {
-        blk(error == nil);
+        blk(error);
     }
     [self.notifySettingBlockMap removeAllObjectsForKey:key];
 }
@@ -1014,9 +1032,10 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     NSString *k = [self keyForDescriptor:descriptor];
 
     NSArray *blocks = [self.descriptorReadBlockMapQueue objectsForKey:k];
-    for(void(^blk)(BOOL) in blocks)
-        blk(YES);
-    
+    for(void(^blk)(NSError *) in blocks) {
+        blk(error);
+    }
+
     [self.descriptorReadBlockMapQueue removeAllObjectsForKey:k];
     [self.descriptorsReadKeyRecords removeObject:k forKey:peripheral.identifier.UUIDString];
 }
@@ -1040,7 +1059,6 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 
         if(taskToContinue)
             [self inter_writeDescriptorTask:taskToContinue forDescriptor:descriptor];
-    
     }
 }
 
@@ -1098,12 +1116,12 @@ forCharacteristic:(CBCharacteristic *)chara
     }
 }
 
--(void)writeData:(nonnull NSData *)data forCharacteristic:(nonnull CBCharacteristic *)chara response:(void(^)(BOOL success))response
+-(void)writeData:(nonnull NSData *)data forCharacteristic:(nonnull CBCharacteristic *)chara response:(void(^)(NSError *error))response
 {
     if(data.length == 0 || !chara)
     {
         if(response)
-            response(NO);
+            response(OABT_UNKNOW_ERROR);
         
         return;
     }
@@ -1128,7 +1146,7 @@ forCharacteristic:(CBCharacteristic *)chara
 }
 
 
--(void)readDataforCharacteristic:(CBCharacteristic *)chara completion:(void(^)(BOOL))completionBlock
+-(void)readDataforCharacteristic:(CBCharacteristic *)chara completion:(void(^)(NSError *))completionBlock
 {
     if(completionBlock)
     {
@@ -1139,15 +1157,13 @@ forCharacteristic:(CBCharacteristic *)chara
     
     if(chara.isNotifying)
     {
-        [self enableNotify:NO forCharacteristic:chara completion:^(BOOL success) {
-            if(success)
-            {
+        [self enableNotify:NO forCharacteristic:chara completion:^(NSError *error) {
+            if(!error)
                 [chara.service.peripheral readValueForCharacteristic:chara];
-            }
             else
             {
                 if(completionBlock)
-                    completionBlock(NO);
+                    completionBlock(error);
             }
         }];
     }
@@ -1164,7 +1180,7 @@ forCharacteristic:(CBCharacteristic *)chara
     [chara.service.peripheral setNotifyValue:YES forCharacteristic:chara];
 }
 
--(void)enableNotify:(BOOL)enable forCharacteristic:(CBCharacteristic *)chara completion:(void(^)(BOOL success))block
+-(void)enableNotify:(BOOL)enable forCharacteristic:(CBCharacteristic *)chara completion:(void(^)(NSError *))block
 {
     [chara.service.peripheral setNotifyValue:enable forCharacteristic:chara];
     
@@ -1190,12 +1206,12 @@ forCharacteristic:(CBCharacteristic *)chara
 
 
 
--(void)inter_finisthWriteTask:(OABTDataWriteTask *)task success:(BOOL)success forCharacteristic:(CBCharacteristic *)characteristic
+-(void)inter_finisthWriteTask:(OABTDataWriteTask *)task forCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     task.isWritting = NO;
     
     if(task.responseBlock)
-        task.responseBlock(success);
+        task.responseBlock(error);
     
     NSString *aKey = [self keyForCharacteristic:characteristic];
     [self.writeCharcWithResponseTaskQueueMap removeObject:task forKey:aKey];
@@ -1203,7 +1219,7 @@ forCharacteristic:(CBCharacteristic *)chara
     
 }
                        
--(void)inter_failAllWriteBlocksForPeripheral:(CBPeripheral *)peripheral
+-(void)inter_failAllWriteBlocksForPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
     NSArray *allKeys = [self.characteristicDataWriteKeyRecords objectsForKey:peripheral.identifier.UUIDString];
     for(NSString *key in allKeys)
@@ -1212,7 +1228,7 @@ forCharacteristic:(CBCharacteristic *)chara
         for(OABTDataWriteTask *tsk in tasks)
         {
             if(tsk.responseBlock)
-                tsk.responseBlock(NO);
+                tsk.responseBlock(error);
         }
         [self.writeCharcWithResponseTaskQueueMap removeAllObjectsForKey:key];
     }
@@ -1220,16 +1236,15 @@ forCharacteristic:(CBCharacteristic *)chara
     [self.characteristicDataWriteKeyRecords removeAllObjectsForKey:peripheral.identifier.UUIDString];
 }
 
--(void)inter_failAllReadBlocksForPeripheral:(CBPeripheral *)peripheral {
+-(void)inter_failAllReadBlocksForPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     
     NSArray *allKeys = [self.characteristicDataReadKeyRecords objectsForKey:peripheral.identifier.UUIDString];
     for(NSString *key in allKeys)
     {
         NSArray *blocks = [self.charcDataReadBlockMap objectsForKey:key];
-        for(void (^blk)(BOOL) in blocks)
+        for(void (^blk)(NSError *) in blocks)
         {
-            if(blk)
-                blk(NO);
+            blk(error);
         }
         [self.charcDataReadBlockMap removeAllObjectsForKey:key];
     }
@@ -1240,12 +1255,12 @@ forCharacteristic:(CBCharacteristic *)chara
 
 -(void)writeData:(nonnull NSData *)data
    forDescriptor:(nonnull CBDescriptor *)descriptor
-        response:(void(^)(BOOL success))response
+        response:(void(^)(NSError *error))response
 {
     if(data.length == 0  || !descriptor)
     {
         if(response)
-            response(NO);
+            response(OABT_UNKNOW_ERROR);
         return;
     }
     
@@ -1281,14 +1296,14 @@ forCharacteristic:(CBCharacteristic *)chara
 {
     task.isWritting = NO;
     if(task.responseBlock)
-        task.responseBlock(error==nil);
+        task.responseBlock(error);
     
     NSString *k = [self keyForDescriptor:descriptor];
     [self.descriptorWriteBlockMapQueue removeObject:task forKey:k];
     [self.descriptorsWriteKeyRecords removeObject:k forKey:descriptor.characteristic.service.peripheral.identifier.UUIDString];
 }
 
--(void)inter_failAllDescriptorWriteBlocksForPeripheral:(CBPeripheral *)peripheral
+-(void)inter_failAllDescriptorWriteBlocksForPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
     NSArray *allKeys = [self.descriptorsWriteKeyRecords objectsForKey:peripheral.identifier.UUIDString];
     for(NSString *k in allKeys)
@@ -1297,7 +1312,7 @@ forCharacteristic:(CBCharacteristic *)chara
         for(OABTDataWriteTask *task in allTasks)
         {
             if(task.responseBlock)
-                task.responseBlock(NO);
+                task.responseBlock(error);
         }
         
         [self.descriptorWriteBlockMapQueue removeAllObjectsForKey:k];
@@ -1307,7 +1322,7 @@ forCharacteristic:(CBCharacteristic *)chara
 }
 
 
--(void)readDataForDescriptor:(nonnull CBDescriptor *)descriptor completion:(void(^)(BOOL))completionBlock
+-(void)readDataForDescriptor:(nonnull CBDescriptor *)descriptor completion:(void(^)(NSError *))completionBlock
 {
     NSString *k = [self keyForDescriptor:descriptor];
     if(completionBlock)
@@ -1319,15 +1334,15 @@ forCharacteristic:(CBCharacteristic *)chara
     [descriptor.characteristic.service.peripheral readValueForDescriptor:descriptor];
 }
 
--(void)inter_failAllDescriptorReadBlocksForPeripheral:(CBPeripheral *)peripheral
+-(void)inter_failAllDescriptorReadBlocksForPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
     NSArray *allKeys = [self.descriptorsReadKeyRecords objectsForKey:peripheral.identifier.UUIDString];
     for(NSString *k in allKeys)
     {
         NSArray *blocks = [self.descriptorReadBlockMapQueue objectsForKey:k];
-        for(void(^blk)(BOOL) in blocks)
+        for(void(^blk)(NSError *) in blocks)
         {
-            blk(NO);
+            blk(error);
         }
         
         [self.descriptorReadBlockMapQueue removeAllObjectsForKey:k];

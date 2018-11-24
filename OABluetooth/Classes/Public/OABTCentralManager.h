@@ -10,6 +10,9 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "NSObject+MultiDelegates.h"
 
+
+#define WEAK_SELF __weak typeof(self) weakSelf = self
+
 typedef enum {
     OABTCentralStateUnknow = 0,
     OABTCentralStateResetting,
@@ -67,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark- auto connection 自动重连
 
  //defualt YES,whether to automatically reconnect to passively disconnected peripherals 是否在被动断开后自动重连
-@property (nonatomic) BOOL autoReconnection;
+@property (nonatomic, getter = isAutoReconnectionEnabled) BOOL enableAutoReconnection;
 @property (nonatomic) unsigned int autoReconnectionInterval; //default is 5 second
 
 -(void)addPeripheralToAutoReconnection:(nonnull CBPeripheral *)peripheral;
@@ -112,53 +115,6 @@ NS_ASSUME_NONNULL_BEGIN
 -centralManager:didChangeStateForPeripheral: delegate method will be invoked on every peripheral disconnected
 -(void)disConnectperipheral:(nonnull CBPeripheral *)peripheral;
 
-//serviceID the service uuid string, null for all services
--(void)discoverService:(nullable NSArray <NSString *> *)serviceID
-         forPeripheral:(nonnull CBPeripheral *)peripheral
-            completion:(nullable void (^)(NSError *error))block;
-
-
--(void)discoverCharacteristics:(nullable NSArray <NSString *> *)charaterIDs
-                     ofService:(nonnull NSString *)serviceID
-                 forPeripheral:(nonnull CBPeripheral *)peripheral
-                    completion:(nullable void (^)(NSError *error))block;
-
-
--(void)discoverDescriptorsForCharacteristic:(nonnull NSString *)charaterID
-                     ofService:(nonnull NSString *)serviceID
-                 forPeripheral:(nonnull CBPeripheral *)peripheral
-                    completion:(nullable void (^)(NSError *error))block;
-
-
-#pragma mark- read/ write
-
--(void)readRSSIForPeripheral:(nonnull CBPeripheral *)peripheral
-                  completion:(nullable void (^)(int rssi, NSError *error))block;
-
-//write data for writeWithoutResponseCharacteristic
--(void)writeData:(nonnull NSData *)data forCharacteristic:(nonnull CBCharacteristic *)chara;
-
-//write data for writeCharacteristic
--(void)writeData:(nonnull NSData *)data forCharacteristic:(nonnull CBCharacteristic *)chara  response:(void(^)(BOOL success))response;
-
-//read data from readCharacteristic
--(void)readDataforCharacteristic:(nonnull CBCharacteristic *)chara completion:(void(^)(BOOL))completionBlock;
-
-//set data notify block for given CBCharacteristic
--(void)setDataNotifyBlock:(void(^)(NSData *data))block forCharacteristic:(CBCharacteristic *)chara;
-
-//enable/disable data notify for characteristic, block will be invokded on completion to indicate success or failure
--(void)enableNotify:(BOOL)enable
-  forCharacteristic:(CBCharacteristic *)chara
-         completion:(void(^)(BOOL success))block;
-
-
--(void)writeData:(nonnull NSData *)data
-   forDescriptor:(nonnull CBDescriptor *)descriptor
-        response:(void(^)(BOOL success))response;
-
--(void)readDataForDescriptor:(nonnull CBDescriptor *)descriptor
-                  completion:(void(^)(BOOL))completionBlock;
 
 @end
 

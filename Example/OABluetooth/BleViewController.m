@@ -53,22 +53,13 @@
     
     char *s = "Hello world, this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data  this is BLE data data data  this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data Hello world, this is BLE data data data  this is BLE data data data  this is BLE data data data  Hello world, this is BLE data data data Hello world bling bling bling hahhahhah hohoi how wndn da";
     
+    OABTPort *port = [OABTPort portWithServiceID:@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2" characteristicID:@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F"];
+    NSUInteger len = strlen(s);
+    NSData *d = [NSData dataWithBytes:s length:len];
+    [self.peripheral writeData:d toPort:port completion:^(NSError *error) {
+        NSLog(@"writeData:-------error:%@-----",error);
+    }];
     
-    CBCharacteristic *chr = [self.peripheral discoveredCharacteristicWithUUID:@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F" ofService:@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"];
-    if(chr)
-        [self.centalManager writeData:[NSData dataWithBytes:s length:len] forCharacteristic:chr response:^(BOOL success) {
-            NSLog(@"---------------Write sucuceess %d",success);
-        }];
-    else
-    {
-        [self.centalManager discoverCharacteristics:@[@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F"] ofService:@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2" forPeripheral:self.peripheral completion:^(NSError * _Nonnull error) {
-            
-            CBCharacteristic *c = [self.peripheral discoveredCharacteristicWithUUID:@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F" ofService:@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"];
-            [self.centalManager writeData:[NSData dataWithBytes:s length:len] forCharacteristic:c response:^(BOOL success) {
-                NSLog(@"--IN BLOCK Write sucuceess %d error:%@",success,error);
-            }];
-        }];
-    }
 }
 
 
@@ -79,6 +70,7 @@
     else
         [self.centalManager connectPeripheral:self.peripheral completion:^(NSError * _Nonnull error) {
             [self updateConnectionBtn];
+            [self.centalManager addPeripheralToAutoReconnection:self.peripheral];
         }];
     
     self.connectBtn.enabled = NO;
@@ -86,28 +78,28 @@
 
 - (IBAction)discoverService:(id)sender {
     
-    
-    for(int i=0; i<1; i++)
-    {
-        NSLog(@"to discover %d",i);
-        [self.centalManager discoverService:@[@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"] forPeripheral:self.peripheral completion:^(NSError * _Nonnull error) {
-            
-            NSLog(@"%d discoverService: error %@",i,error);
-        }];
-    }
+//
+//    for(int i=0; i<1; i++)
+//    {
+//        NSLog(@"to discover %d",i);
+//        [self.centalManager discoverService:@[@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"] forPeripheral:self.peripheral completion:^(NSError * _Nonnull error) {
+//
+//            NSLog(@"%d discoverService: error %@",i,error);
+//        }];
+//    }
 
 }
 
 
 - (IBAction)readRssi:(id)sender {
-    
-    [self performSelector:@selector(readRssi:) withObject:nil afterDelay:1];
-    [self.centalManager readRSSIForPeripheral:self.peripheral completion:^(int value, NSError * error) {
-        if(error)
-            self.rssiLabel.text = error.description;
-        else
-            self.rssiLabel.text = [NSString stringWithFormat:@"rssi:%d",value];
-    }];
+//    
+//    [self performSelector:@selector(readRssi:) withObject:nil afterDelay:1];
+//    [self.centalManager readRSSIForPeripheral:self.peripheral completion:^(int value, NSError * error) {
+//        if(error)
+//            self.rssiLabel.text = error.description;
+//        else
+//            self.rssiLabel.text = [NSString stringWithFormat:@"rssi:%d",value];
+//    }];
 }
 
 

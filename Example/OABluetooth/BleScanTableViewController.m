@@ -29,7 +29,7 @@
     
     _prgBtn = [[ProgressButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     [_prgBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_prgBtn setTintColor:[UIColor blueColor]];
+    [_prgBtn setBackgroundColor:[UIColor colorWithWhite:0.5 alpha:0.3]];
     [_prgBtn addTarget:self action:@selector(startScan:) forControlEvents:UIControlEventTouchUpInside];
     [_prgBtn setTitle:@"Scan" forState:UIControlStateNormal];
     [_prgBtn setTitle:@"Scaning..." forState:UIControlStateInProgress];

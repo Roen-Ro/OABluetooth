@@ -10,32 +10,6 @@
 
 @implementation NSMutableDictionary (Appending)
 
-#warning test
-//+ (void)initialize
-//{
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//
-//        Class class = NSClassFromString(@"__NSDictionaryM");
-//
-//        SEL originalSelector = @selector(setObject:forKey:);
-//        SEL swizzledSelector = @selector(m_setObject:forKey:);
-//        method_exchangeImplementations(class_getInstanceMethod(class, originalSelector), class_getInstanceMethod(class, swizzledSelector));
-//
-//
-//    });
-//}
-//
-//- (void)m_setObject:(id)anObject forKey:(id <NSCopying>)aKey
-//{
-//    if(anObject == nil)
-//    {
-//
-//    }
-//    else {
-//        [self m_setObject:anObject forKey:aKey];
-//    }
-//}
 
 - (void)addObject:(nullable id)anObject forKey:(nonnull id <NSCopying>)aKey
 {

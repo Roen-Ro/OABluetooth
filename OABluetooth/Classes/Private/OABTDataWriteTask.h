@@ -11,7 +11,7 @@
 @interface OABTDataWriteTask : NSObject
 
 @property (nullable, nonatomic, strong) NSData *pendingData; // data pending, need to be wrote
-@property (nullable, nonatomic, copy) void(^responseBlock)(BOOL success);
+@property (nullable, nonatomic, copy) void(^responseBlock)(NSError *error);
 @property (nonatomic) BOOL isWritting;
 @property (nonatomic) NSUInteger maxLen;
 

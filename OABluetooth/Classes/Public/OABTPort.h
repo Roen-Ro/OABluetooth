@@ -17,9 +17,8 @@
 
 
 /**
+  Create a OABTPort with a peripheral's serviceID,charateristicID,and descriptionID(optional), when a nil value is passed to descriptionID, the port represents some kind of CBCharacteristic; when a non null value is passed to descriptionID, the port represents some kind of CBDescription.
  通过BLE蓝牙的服务id，特征id和描述id（描述id可选）创建一个BLE服务端口，当descriptionID为nil的时候，代表的是一个CBCharacteristic端口信息，当descriptionID不为nil的时候，代表的是一个CBDescription端口信息
- Create a OABTPort with a peripheral's serviceID,charateristicID,and descriptionID(optional), when a nil value is passed to descriptionID, the port represents some kind of CBCharacteristic; when a non null value is passed to descriptionID, the port represents some kind of CBDescription.
-
  */
 +(nonnull instancetype)portWithServiceID:(nonnull NSString *)serviceID
                 characteristicID:(nonnull NSString *)charateristicID
@@ -27,8 +26,8 @@
 
 
 /**
+Create a port represents CBCharacteristic infomation
  创建并返回一个代表CBCharacteristic信息的端口
- Create a port represents CBCharacteristic infomation
  */
 +(nonnull instancetype)portWithServiceID:(nonnull NSString *)serviceID
                 characteristicID:(nonnull NSString *)charateristicID;

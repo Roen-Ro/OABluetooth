@@ -8,8 +8,15 @@
 #import "CBPeripheral+OABLE.h"
 #import "OABTCentralManager.h"
 #import "OABLPeripheralInterExtension.h"
+#import "OABTCentralManager+Private.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
+#define NO_OABTCENTRAL_ERROR [NSError errorWithDomain:NSLocalizedString(@"The peripheral is not discovered from a OABTCentralManager instance", nil) code:-110 userInfo:nil]
+
+#define ERROR_BLOCK_INVOKE_AND_RETURN(error)     if(!self.centralManager && completion)  { \
+                                                        completion(error); \
+                                                        return; \
+                                                    }
 
 @implementation CBPeripheral (OABLE)
 
@@ -21,15 +28,98 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 {
     return self.interRssiValue;
 }
+#pragma mark- discover
+-(void)discoverService:(nullable NSArray <NSString *> *)serviceIDs
+            completion:(nullable void (^)(NSError *error))completion {
+    
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
+    [self.centralManager discoverService:serviceIDs forPeripheral:self completion:completion];
+}
+
+
+-(void)discoverCharacteristics:(nullable NSArray <NSString *> *)charaterIDs
+                     ofService:(nonnull NSString *)serviceID
+                    completion:(nullable void (^)(NSError *error))completion {
+    
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
+    [self.centralManager discoverCharacteristics:charaterIDs ofService:serviceID forPeripheral:self completion:completion];
+}
+
+
+-(void)discoverDescriptorsForCharacteristic:(nonnull NSString *)charaterID
+                                  ofService:(nonnull NSString *)serviceID
+                                 completion:(nullable void (^)(NSError *error))completion {
+    
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
+    [self.centralManager discoverDescriptorsForCharacteristic:charaterID ofService:serviceID forPeripheral:self completion:completion];
+    
+}
+
+#pragma mark- inter OABTPort map
+
+-(void)inter_findCharacteristicForPort:(OABTPort *)port completion:(void (^)(NSError *error, CBCharacteristic *charateristic))completion {
+    
+    WEAK_SELF;
+    CBCharacteristic *c = [self discoveredCharacteristicWithUUID:port.charateristicID ofService:port.serviceID];
+    if(!c) {
+        [weakSelf.centralManager discoverCharacteristics:@[port.charateristicID] ofService:port.serviceID forPeripheral:self completion:^(NSError *error) {
+            if(completion) {
+                
+                if(error) {
+                    completion(error,nil);
+                }
+                else {
+                    CBCharacteristic *c1 = [self discoveredCharacteristicWithUUID:port.charateristicID ofService:port.serviceID];
+                    if(c1) {
+                        completion(nil,c1);
+                    }
+                    else {
+                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The characteris with uuid %@ in service %@ not found ", nil),port.charateristicID,port.serviceID];
+                        NSError *er = [NSError errorWithDomain:errMsg code:-112 userInfo:nil];
+                        completion(er,nil);
+                    }
+                }
+            }
+        }];
+    } else if(completion)  {
+        completion(nil,c);
+    }
+}
+
+-(void)inter_findDescriptorForPort:(OABTPort *)port completion:(void (^)(NSError *error, CBDescriptor *descriptor))completion {
+    
+    CBDescriptor *desc = [self discoveredDescriptorWithUUID:port.descriptionID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
+    if(desc) {
+        [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+            if(completion) {
+                if(error) {
+                    completion(error,nil);
+                } else {
+                    CBDescriptor *desc1 = [self discoveredDescriptorWithUUID:port.descriptionID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
+                    if(desc1) {
+                        completion(nil,desc1);
+                    } else {
+                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The descriptor with uuid %@ in characteris %@ of service %@ not found ", nil),port.descriptionID,port.charateristicID,port.serviceID];
+                        NSError *er = [NSError errorWithDomain:errMsg code:-113 userInfo:nil];
+                        completion(er,nil);
+                    }
+                }
+            }
+        }];
+    } else if(completion) {
+        completion(nil,desc);
+    }
+}
 
 #pragma mark- data transfer
-/**
- write data to a OABTPort no need to response, this is only available for CBCharacteristic port (correspoding writeWithoutResponseCharacteristic)
- 向一个OABTPort端口发送数据, 发送成功与否都不需要响应，对应writeWithoutResponseCharacteristic类型,只针对代表CBCharacteristic类型的端口有效
- */
+
 -(void)writeData:(nonnull NSData *)data toPort:(OABTPort *)port
 {
-    
+    WEAK_SELF;
+    [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+        if(charateristic)
+            [weakSelf.centralManager writeData:data forCharacteristic:charateristic];
+    }];
 }
 
 
@@ -39,39 +129,99 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
  */
 -(void)writeData:(nonnull NSData *)data
           toPort:(OABTPort *)port
-        response:(nullable void(^)(NSError *error))response
+        completion:(nullable void(^)(NSError *error))completion
 {
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
+    
+    WEAK_SELF;
+    if(port.descriptionID) {
+        [self inter_findDescriptorForPort:port completion:^(NSError *error, CBDescriptor *descriptor) {
+            if(descriptor) {
+                [weakSelf.centralManager writeData:data forDescriptor:descriptor response:completion];
+            }
+            else if(completion)
+                completion(error);
+        }];
+    }
+    else {
+        [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+            if(charateristic)
+                [weakSelf.centralManager writeData:data forCharacteristic:charateristic response:completion];
+            else if(completion)
+                completion(error);
+        }];
+    }
+}
+
+
+-(void)readDataFromPort:(OABTPort *)port completion:(nullable void(^)(id value, NSError *error))completion
+{
+    if(!self.centralManager && completion)
+        completion(nil,NO_OABTCENTRAL_ERROR);
+        
+    WEAK_SELF;
+    if(port.descriptionID) {
+        [self inter_findDescriptorForPort:port completion:^(NSError *error, CBDescriptor *descriptor) {
+            
+            if(descriptor) {
+                [weakSelf.centralManager readDataForDescriptor:descriptor completion:^(NSError *err) {
+                    if(completion) {
+                        completion(descriptor.value,err);
+                    }
+                }];
+            }
+            else if(completion)
+                completion(nil,error);
+            
+        }];
+        
+    } else {
+        [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+            if(charateristic) {
+                [weakSelf.centralManager readDataforCharacteristic:charateristic completion:^(NSError *err) {
+                    if(completion) {
+                        completion(charateristic.value,err);
+                    }
+                }];
+            } else if(completion)
+                completion(nil,error);
+        }];
+    }
     
 }
 
 
-/**
- Read data from a OABTPort
- 读取端口数据
- */
--(void)readDataFromPort:(OABTPort *)pot completion:(nullable void(^)(NSData *data, NSError *error))completionBlock
+-(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)port
 {
-    
+    WEAK_SELF;
+    [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+        [weakSelf.centralManager setDataNotifyBlock:block forCharacteristic:charateristic];
+    }];
 }
 
 
-/**
- Set the data notify block on port, this is only available for CBCharacteristic port
- 设置外设端口消息通知block，当外设指定端口有主动向主机发送数据的时候，设定的block会得到回调，只对代表CBCharacteristic类型的端口有效
- */
--(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)pot
+-(void)enableNotify:(BOOL)enable forPort:(OABTPort *)port completion:(void(^)(NSError *))completion
 {
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
     
+    WEAK_SELF;
+    [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+        if(completion) {
+            if(charateristic)
+                [weakSelf.centralManager enableNotify:enable forCharacteristic:charateristic completion:completion];
+            else
+                completion(error);
+        }
+    }];
 }
 
-
-/**
- Enable/disable data notify for a CBCharacteristic port (not available for CBDescription port)
- 开启/关闭端口监听功能，只针对CBCharacteristic类型端口有效
- */
--(void)enableNotify:(BOOL)enable forPort:(OABTPort *)pot completion:(void(^)(BOOL success))block
-{
+#pragma mark-
+-(void)readRssiWithCompletion:(nullable void (^)(int rssi, NSError *error))completion {
     
+    if(completion && !self.centralManager)
+        completion(0,NO_OABTCENTRAL_ERROR);
+    
+    [self.centralManager readRSSIForPeripheral:self completion:completion];
 }
 
 #pragma mark-

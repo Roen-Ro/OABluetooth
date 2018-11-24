@@ -22,8 +22,41 @@
 
 @property (nonatomic, readonly) int rssiValue;
 
+//======================discover services/characteristics/descriptions======================
 
-//==========================================================================================
+/**
+ Discover services in peripheral 发现外设中包含的服务
+
+ @param serviceIDs     A list of uuid strings representing the service types to be discovered. If nil, all services with in ther periperal will be discovered
+ @param completion      a call back block indicate the discover results.
+ */
+-(void)discoverService:(nullable NSArray <NSString *> *)serviceIDs
+            completion:(nullable void (^)(NSError *error))completion;
+
+/**
+ Discover specialfied charateristics for peripheral. 发现外设的指定服务的 特征
+ 
+ @param charaterIDs     A list of uuid strings representing the characteristic types in a service to be discovered. If nil,
+ *                                all characteristics with in the service represented by serviceID will be discovered.
+ @param serviceID       the service uuid string that represent a speciafied service type
+ @param completion      a call back block indicate the discover results.
+ */
+-(void)discoverCharacteristics:(nullable NSArray <NSString *> *)charaterIDs
+                     ofService:(nonnull NSString *)serviceID
+                    completion:(nullable void (^)(NSError *error))completion;
+
+/**
+ Discover descriptors 发现外设中的描述信息
+
+ @param charaterID  the characteristic type represented by the uuid string in which the descriptor(s) need to be discovered
+ @param serviceID   the service uuid string that represent a speciafied service type
+ @completion        block a call back block indicate the discover results.
+ */
+-(void)discoverDescriptorsForCharacteristic:(nonnull NSString *)charaterID
+                                  ofService:(nonnull NSString *)serviceID
+                                 completion:(nullable void (^)(NSError *error))completion;
+
+//=======================================data read/write/notify=============================
 /**
  write data to a OABTPort no need to response, this is only available for CBCharacteristic port (correspoding writeWithoutResponseCharacteristic)
  向一个OABTPort端口发送数据, 发送成功与否都不需要响应，对应writeWithoutResponseCharacteristic类型,只针对代表CBCharacteristic类型的端口有效
@@ -37,32 +70,37 @@
  */
 -(void)writeData:(nonnull NSData *)data
           toPort:(OABTPort *)port
-        response:(nullable void(^)(NSError *error))response;
-
-
+        completion:(nullable void(^)(NSError *error))completion;
 /**
- Read data from a OABTPort
+ Read data from a OABTPort,
  读取端口数据
+ 
+ @param port        see OABTPort
+ @param completionBlock     the read result call back block, the returned value's type is NSData for characteristic typ port. The corresponding value types for the various descriptors are detailed in @link CBUUID.h @/link. A non null error will be returned on failure. 读取结果回调，如果port代表的是一个CBCharacteristic,辣么value的类型是NSData，如果port代表的是CBDescriptor，辣么value的值是什么请参考@link CBUUID.h @/link.
  */
--(void)readDataFromPort:(OABTPort *)pot completion:(nullable void(^)(NSData *data, NSError *error))completionBlock;
+-(void)readDataFromPort:(OABTPort *)port completion:(nullable void(^)(id value, NSError *error))completionBlock;
 
 
 /**
- Set the data notify block on port, this is only available for CBCharacteristic port
+ Set the data notify block on port, this is only available for CBCharacteristic type port
  设置外设端口消息通知block，当外设指定端口有主动向主机发送数据的时候，设定的block会得到回调，只对代表CBCharacteristic类型的端口有效
  */
--(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)pot;
+-(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)port;
 
 
 /**
  Enable/disable data notify for a CBCharacteristic port (not available for CBDescription port)
  开启/关闭端口监听功能，只针对CBCharacteristic类型端口有效
  */
--(void)enableNotify:(BOOL)enable forPort:(OABTPort *)pot completion:(void(^)(BOOL success))block;
+-(void)enableNotify:(BOOL)enable forPort:(OABTPort *)port completion:(void(^)(NSError *))completion;
 
 
 
-//==========================================================================================
+//============================read rssi=====================================================
+
+-(void)readRssiWithCompletion:(nullable void (^)(int rssi, NSError *error))completion;
+
+//==============================retrive=====================================================
 
 -(nullable CBDescriptor *)discoveredDescriptorWithUUID:(nonnull NSString *)descriptorUUIDString
                                 characteristicWithUUID:(nonnull NSString *)characteristicUUIDString
@@ -77,7 +115,7 @@
 
 @interface CBCharacteristic (OABLE)
 
-@property (nonatomic, copy) NSString *propertiesDescription;
+@property (nonatomic, copy, readonly) NSString *propertiesDescription;
 
 @end
 
