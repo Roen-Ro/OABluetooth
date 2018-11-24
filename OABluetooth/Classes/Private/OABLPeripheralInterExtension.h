@@ -9,7 +9,7 @@
 
 @class OABTCentralManager;
 
-@interface CBCharacteristic (OABLInternal)
+@interface CBAttribute (OABLInternal)
 
 @property (nonatomic) BOOL finishedSubArributeDiscover;
 

@@ -55,6 +55,61 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
     
 }
 
+-(void)discoverAllServicesCharacteristicsAndDescriptorsWithCompletion:(nullable void (^)(NSError *error))completion {
+
+    ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
+    WEAK_SELF;
+    [self.centralManager discoverService:nil forPeripheral:self completion:^(NSError *error) {
+        if(error && completion) {
+            completion(error);
+        }
+        else {
+            for(CBService *s in weakSelf.services) {
+                [weakSelf.centralManager discoverCharacteristics:nil ofService:s.UUID.UUIDString forPeripheral:weakSelf completion:^(NSError *error) {
+                    if(error) {
+                        if(completion)
+                            completion(error);
+                    }
+                    else {
+                        for(CBCharacteristic *chra in s.characteristics) {
+                            [weakSelf.centralManager discoverDescriptorsForCharacteristic:chra.UUID.UUIDString ofService:s.UUID.UUIDString forPeripheral:self completion:^(NSError *error) {
+
+                                if(error && completion) {
+                                    completion(error);
+                                }
+                                else {
+
+                                    BOOL allDiscoverFinished = YES;
+                                    for(CBService *tSv in weakSelf.services)
+                                    {
+                                        if(!tSv.finishedSubArributeDiscover) {
+                                            allDiscoverFinished = NO;
+                                            break;
+                                        }
+                                        for(CBCharacteristic *tChara in tSv.characteristics)
+                                        {
+                                            if(!tChara.finishedSubArributeDiscover) {
+                                                allDiscoverFinished = NO;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if(allDiscoverFinished)
+                                        if(completion)
+                                            completion(nil);
+
+                                }
+                            }];
+                        }
+                    }
+                }];
+            }
+        }
+    }];
+
+}
+
 #pragma mark- inter OABTPort map
 
 -(void)inter_findCharacteristicForPort:(OABTPort *)port completion:(void (^)(NSError *error, CBCharacteristic *charateristic))completion {
@@ -88,18 +143,18 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 
 -(void)inter_findDescriptorForPort:(OABTPort *)port completion:(void (^)(NSError *error, CBDescriptor *descriptor))completion {
     
-    CBDescriptor *desc = [self discoveredDescriptorWithUUID:port.descriptionID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
+    CBDescriptor *desc = [self discoveredDescriptorWithUUID:port.descriptorID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
     if(desc) {
         [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
             if(completion) {
                 if(error) {
                     completion(error,nil);
                 } else {
-                    CBDescriptor *desc1 = [self discoveredDescriptorWithUUID:port.descriptionID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
+                    CBDescriptor *desc1 = [self discoveredDescriptorWithUUID:port.descriptorID characteristicWithUUID:port.charateristicID ofService:port.serviceID];
                     if(desc1) {
                         completion(nil,desc1);
                     } else {
-                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The descriptor with uuid %@ in characteris %@ of service %@ not found ", nil),port.descriptionID,port.charateristicID,port.serviceID];
+                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The descriptor with uuid %@ in characteris %@ of service %@ not found ", nil),port.descriptorID,port.charateristicID,port.serviceID];
                         NSError *er = [NSError errorWithDomain:errMsg code:-113 userInfo:nil];
                         completion(er,nil);
                     }
@@ -134,7 +189,7 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
     ERROR_BLOCK_INVOKE_AND_RETURN(NO_OABTCENTRAL_ERROR);
     
     WEAK_SELF;
-    if(port.descriptionID) {
+    if(port.descriptorID) {
         [self inter_findDescriptorForPort:port completion:^(NSError *error, CBDescriptor *descriptor) {
             if(descriptor) {
                 [weakSelf.centralManager writeData:data forDescriptor:descriptor response:completion];
@@ -160,7 +215,7 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
         completion(nil,NO_OABTCENTRAL_ERROR);
         
     WEAK_SELF;
-    if(port.descriptionID) {
+    if(port.descriptorID) {
         [self inter_findDescriptorForPort:port completion:^(NSError *error, CBDescriptor *descriptor) {
             
             if(descriptor) {

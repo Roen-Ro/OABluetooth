@@ -78,15 +78,9 @@
 
 - (IBAction)discoverService:(id)sender {
     
-//
-//    for(int i=0; i<1; i++)
-//    {
-//        NSLog(@"to discover %d",i);
-//        [self.centalManager discoverService:@[@"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"] forPeripheral:self.peripheral completion:^(NSError * _Nonnull error) {
-//
-//            NSLog(@"%d discoverService: error %@",i,error);
-//        }];
-//    }
+    [self.peripheral discoverAllServicesCharacteristicsAndDescriptorsWithCompletion:^(NSError *error) {
+        NSLog(@"discoverAllServicesCharacteristicsAndDescriptorsWithCompletion--error:%@ ",error);
+    }];
 
 }
 

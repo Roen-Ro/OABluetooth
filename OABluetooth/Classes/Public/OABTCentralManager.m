@@ -16,6 +16,7 @@
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
 #define PERIPHERAL_DISCONNECTED_ERROR [NSError errorWithDomain:@"peripheral not connected" code:-102 userInfo:nil]
+#define SERVICE_NOT_FOUND_ERROR(serviceID) [NSError errorWithDomain:[NSString stringWithFormat:@"service of %@ uuid not found",serviceID] code:-112 userInfo:nil]
 #define OABT_UNKNOW_ERROR [NSError errorWithDomain:@"unknown" code:-81 userInfo:nil]
 
 #define  DEFAULT_WRITE_LEN 125
@@ -82,7 +83,7 @@
             _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil
                                                                  options:options];
             
-            _state = _centralManager.state;
+            _state = (OABTCentralState)_centralManager.state;
         }
         
         [self inter_startTimer];
@@ -265,7 +266,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     if(_state == OABLECentralStateScanning)
         _state = OABTCentralStatePoweredOn;
     else
-        _state = _centralManager.state;
+        _state = (OABTCentralState)_centralManager.state;
     
     [self inter_invokeStateChangeBlock];
 }
@@ -486,7 +487,8 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     if(tService)
     {
        NSString *k = [self inter_discoverCharacteristics:charaterIDs ofService:tService completion:block];
-        [self.characteristicDiscoverKeyRecords addUniqueObject:k forKey:peripheral.identifier.UUIDString];
+        if(k)
+            [self.characteristicDiscoverKeyRecords addUniqueObject:k forKey:peripheral.identifier.UUIDString];
     }
     else
     {
@@ -498,7 +500,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
                 if(tService1)
                     [weakSelf inter_discoverCharacteristics:charaterIDs ofService:tService1 completion:block];
                 else if(block)
-                    block([NSError errorWithDomain:[NSString stringWithFormat:@"service of %@ uuid not found",serviceID] code:-112 userInfo:nil]);
+                    block(SERVICE_NOT_FOUND_ERROR(serviceID));
             }
             else {
                 if(block)
@@ -508,18 +510,26 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     }
 }
 
-//return the key in self.discoverCharateristicTaskkQueueMap
--(NSString *)inter_discoverCharacteristics:(nullable NSArray <NSString *> *)charaterIDs
+
+-(nullable NSString *)inter_discoverCharacteristics:(nullable NSArray <NSString *> *)charaterIDs
                      ofService:(nonnull CBService *)service
                     completion:(void (^)( NSError *error))block
 {
 
+    if(!service)
+    {
+        if(block)
+            block(SERVICE_NOT_FOUND_ERROR(service.UUID.UUIDString));
+        
+        return nil;
+    }
     OABTDiscoverTask *task = [[OABTDiscoverTask alloc] init];
     task.block = block;
     task.discoverIDs = charaterIDs;
     NSString *key = [self keyForServiceID:service.UUID.UUIDString ofPeripheral:service.peripheral];
     [self.discoverCharateristicTaskkQueueMap addObject:task forKey:key];
     NSArray *tasks = [self.discoverCharateristicTaskkQueueMap objectsForKey:key];
+    
    
     if(tasks.count <= 1)
         [self inter_discoverCharacteristicTask:task ofService:service];
@@ -530,7 +540,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 -(void)inter_discoverCharacteristicTask:(OABTDiscoverTask *)task ofService:(nonnull CBService *)service
 {
 #if DEBUG
-    NSLog(@"-->discoverCharacteristic:%@ for service:%@",task.discoverIDs,service);
+    NSLog(@"-->inter_discoverCharacteristicTask:%@ for service:%@",task.discoverIDs,service);
 #endif
     NSMutableArray *charaIds = [NSMutableArray arrayWithCapacity:task.discoverIDs.count];
     for(NSString *s in task.discoverIDs)
@@ -585,7 +595,11 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
                 if(!error)
                 {
                     CBService *sv = [peripheral discoveredServiceWithUUID:serviceID];
-                    [weakSelf inter_discoverDescriptorsForCharacteristic:charaterID ofService:sv forPeripheral:peripheral completion:block];
+                    if(sv)
+                        [weakSelf inter_discoverDescriptorsForCharacteristic:charaterID ofService:sv forPeripheral:peripheral completion:block];
+                    else if(block)
+                        block(SERVICE_NOT_FOUND_ERROR(serviceID));
+                        
                 }
                 else if(block)
                     block(error);
@@ -870,8 +884,10 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
 {
+    service.finishedSubArributeDiscover = YES;
+    
 #if DEBUG
-    NSMutableString *mStr = [NSMutableString stringWithFormat:@"\ndidDiscoverCharacteristicsForService:%@=================",service.UUID.UUIDString];
+    NSMutableString *mStr = [NSMutableString stringWithFormat:@"\n---------------------\ndidDiscoverCharacteristicsForService:%@=================",service.UUID.UUIDString];
 #endif
     for (CBCharacteristic *interestingCharacteristic in service.characteristics)
     {
@@ -899,11 +915,11 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
         
         interestingCharacteristic.interPropertiesDescription = [NSString stringWithString:mPString];
 #if DEBUG
-        [mStr appendFormat:@"\nCharacteristic:%@ \nproperties:%@\n\n",interestingCharacteristic.UUID.UUIDString,mPString];
+        [mStr appendFormat:@"\nCharacteristic:%@ \nproperties:%@\n+++\n",interestingCharacteristic.UUID.UUIDString,mPString];
 #endif
     }
 #if DEBUG
-    NSLog(@"%@",mStr);
+    NSLog(@"%@---------------------------\n",mStr);
 #endif
 
     // service 不能这么做，因为可以指定discover的特征ID
@@ -918,9 +934,12 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
             task.block(error);
         [self.discoverCharateristicTaskkQueueMap removeObject:task forKey:key];
     }
-    if(tasks.count > 1)
+    
+    //这里要重新读取一遍，因为在嵌套调用的时候，有可能在执行block的时候有创建了一个task，且对应的key也是一样的，这时候其实任务队列里面
+    tasks = [self.discoverCharateristicTaskkQueueMap objectsForKey:key];
+    if(tasks.count > 0)
     {
-        OABTDiscoverTask *task1 = [tasks objectAtIndex:1]; //tasks是拷贝出来的，且有一次对object的移除操作，所以这里index是1
+        OABTDiscoverTask *task1 = [tasks objectAtIndex:0]; //tasks是拷贝出来的，且有一次对object的移除操作，所以这里index是1
         [self inter_discoverCharacteristicTask:task1 ofService:service];
     }
     else

@@ -15,7 +15,7 @@
     self = [super init];
     _serviceID = [serviceID copy];
     _charateristicID = [charateristicID copy];
-    _descriptionID = [descriptionID copy];
+    _descriptorID = [descriptionID copy];
     return self;
     
 }

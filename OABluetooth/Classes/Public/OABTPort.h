@@ -35,7 +35,7 @@ Create a port represents CBCharacteristic infomation
 
 @property (nonnull, nonatomic, readonly) NSString *serviceID;
 @property (nonnull, nonatomic, readonly) NSString *charateristicID;
-@property (nullable, nonatomic, readonly) NSString *descriptionID;
+@property (nullable, nonatomic, readonly) NSString *descriptorID;
 
 @end
 

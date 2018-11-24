@@ -9,7 +9,7 @@
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
 @class OABTCentralManager;
-@implementation CBCharacteristic (OABLInternal)
+@implementation CBAttribute (OABLInternal)
 
 __SETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, setFinishedSubArributeDiscover:, numberWithBool:)
 __GETTER_PRIMITIVE(BOOL, finishedSubArributeDiscover, boolValue)

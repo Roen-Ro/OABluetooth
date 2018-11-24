@@ -22,7 +22,11 @@
 
 @property (nonatomic, readonly) int rssiValue;
 
+#pragma mark- discover
 //======================discover services/characteristics/descriptions======================
+// typically you don't need to use those discover methods in your business code,\
+the -writeData:xxx -readData:xxx etc methods will automatically do the discover work for you.
+//一般在读写数的情况下你不需要调用这些discoverXXX：的方法，下面的 -writeData:xxx -readData:xxx 等方法会在自动去完成这些发现服务/特征/描述的工作
 
 /**
  Discover services in peripheral 发现外设中包含的服务
@@ -56,6 +60,10 @@
                                   ofService:(nonnull NSString *)serviceID
                                  completion:(nullable void (^)(NSError *error))completion;
 
+//for debug purpose, to find out all the services, characteristics and descriptors for the periphral.
+-(void)discoverAllServicesCharacteristicsAndDescriptorsWithCompletion:(nullable void (^)(NSError *error))completion;
+
+#pragma mark- data write/read/notify/read rssi
 //=======================================data read/write/notify=============================
 /**
  write data to a OABTPort no need to response, this is only available for CBCharacteristic port (correspoding writeWithoutResponseCharacteristic)
@@ -95,11 +103,9 @@
 -(void)enableNotify:(BOOL)enable forPort:(OABTPort *)port completion:(void(^)(NSError *))completion;
 
 
-
-//============================read rssi=====================================================
-
 -(void)readRssiWithCompletion:(nullable void (^)(int rssi, NSError *error))completion;
 
+#pragma mark- retrieve
 //==============================retrive=====================================================
 
 -(nullable CBDescriptor *)discoveredDescriptorWithUUID:(nonnull NSString *)descriptorUUIDString
