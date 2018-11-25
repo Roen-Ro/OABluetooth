@@ -30,7 +30,7 @@ OABluetooth 还将所有的特征、描述都映射为一个通讯端口`OABTPor
  - 提供了完美的通讯<font color=red size=3>**"一条龙"**</font>服务
  - 支持长数据自动分包发送
  - 简单的接口, 所有通讯接口都是基于[CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral)分类实现
- - 免去了对服务/特征/描述维护的麻烦, 一切通讯都映射为端口
+ - 免去了对服务/特征/描述维护的麻烦, 所有通信都映射为端口
  - 简单易用！简单易用！简单易用! 重要的事情说三遍
 
 ## Useage
@@ -41,9 +41,9 @@ OABluetooth is very simple to use, all interfaces you nedd to use are defined in
 - `OABTPort` represents either a type of [CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic) or a type of[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor) used for communication with [CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral), see comment in `OABTPort.h` file
 
 ---
-OABluetooth 用起来非常简单, 要用到的所有的接口都定义在下面三个类/分类中
-- `OABTCentralManager` 是外设管理类, 负责管理外设的扫描、连接、以及状态管理，`OABTCentralManager.h`文件中对每一个接口都有详细说明
-- `CBPeripheral (OABLE)` 一个[CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral)分类, 负责所有数据读、写、通知等一切外设相关的通讯，`CBPeripheral+OABLE.h`文件对接口都有详细注释
+OABluetooth 用起来非常简单, 要用到的所有的接口都定义在下面的三个类/分类中
+- `OABTCentralManager` 是外设管理类, 负责管理外设的扫描、连接、以及状态管理，`OABTCentralManager.h`文件中对每一个接口都有详细说明
+- `CBPeripheral (OABLE)` 一个[CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral)分类, 实现了所有的数据读/写/通知等一切外设相关的通讯，`CBPeripheral+OABLE.h`文件对接口都有详细注释
 - `OABTPort` 通讯端口, 代表[CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic)或[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor), `OABTPort.h`中对如何定义一个端口有详细说明
 
 
