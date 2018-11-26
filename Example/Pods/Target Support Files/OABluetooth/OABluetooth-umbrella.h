@@ -11,7 +11,9 @@
 #endif
 
 #import "OABLPeripheralInterExtension.h"
+#import "OABTCentralManager+Private.h"
 #import "OABTDataWriteTask.h"
+#import "OABTDefines.h"
 #import "OABTDiscoverTask.h"
 #import "NSMutableDictionary+Appending.h"
 #import "NSObject+MultiDelegates.h"

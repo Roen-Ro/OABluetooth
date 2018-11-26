@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OABluetooth'
-  s.version          = '1.1.0'
-  s.summary          = 'A short description of OABluetooth.'
+  s.version          = '1.2.0'
+  s.summary          = 'Bluetooth low energy(BLE) service for ios and OSX based on CoreBluetooth'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  OABluetooth is a lightweight framework based on Apple's CoreBluetooth that can be applied both on ios and OSX, It can manage different kind of peripherals independently, peripheral auto reconnection on disconnected. support block call backs for envents and communitations.
+  OABluetooth map all type of services,characteristics and descriptors(which are represented by CBService,CBCharateristic and CBDescriptor) in to a OABTPort, you will have no more headaches to maintain these things. Comapared to connection->discover services->discover charateristics->[discover descriptores]->data transfer communication establish process based on CoreBluetooth， OABluetooth simplify it to connection->data transfer, all else will be done automatically. more features are listed here.
                        DESC
 
   s.homepage         = 'https://github.com/Roen-Ro/OABluetooth'

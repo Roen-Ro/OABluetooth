@@ -13,11 +13,10 @@
 #import "NSMutableDictionary+Appending.h"
 #import "OABLPeripheralInterExtension.h"
 #import "CBPeripheral+OABLE.h"
+#import "OABTDefines.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
 
-#define PERIPHERAL_DISCONNECTED_ERROR [NSError errorWithDomain:@"peripheral not connected" code:-102 userInfo:nil]
-#define SERVICE_NOT_FOUND_ERROR(serviceID) [NSError errorWithDomain:[NSString stringWithFormat:@"service of %@ uuid not found",serviceID] code:-112 userInfo:nil]
-#define OABT_UNKNOW_ERROR [NSError errorWithDomain:@"unknown" code:-81 userInfo:nil]
+
 
 #define  DEFAULT_WRITE_LEN 125
 
@@ -235,9 +234,9 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
         errorStr = NSLocalizedString(@"Bluetooth service unavailable", nil);
     else if(_state == OABTCentralStatePoweredOff)
         errorStr = NSLocalizedString(@"Bluetooth service is powered off", nil);
-        
+
     if(errorStr)
-        return errorStr;
+        return SCAN_START_ERROR(errorStr,@{@"CentralManagerState":[NSNumber numberWithInt:_state]});
 
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
     //  CBCentralManagerScanOptionSolicitedServiceUUIDsKey
@@ -402,7 +401,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     else if(peripheral.state == CBPeripheralStateDisconnecting)
     {
         if(block)
-            block([NSError errorWithDomain:@"peripheral is disconnecting" code:-101 userInfo:nil]);
+            block(PERIPHERAL_DISCONNECING_ERROR);
     }
     else
     {
@@ -632,7 +631,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
                 [peripheral discoverDescriptorsForCharacteristic:charc];
             }
             else if(block)
-                block([NSError errorWithDomain:@"Characteristic not found" code:-101 userInfo:nil]);
+                block(CHARAC_NOT_FOUND_ERROR(service.UUID.UUIDString,charaterID));
         }
         else if(block)
         {
@@ -699,9 +698,9 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
 #pragma mark- CBCentralManagerDelegate
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    if(!peripheral.name)
-        return;
-    
+//    if(!peripheral.name)
+//        return;
+//
     peripheral.interRssiValue = RSSI.intValue;
     peripheral.delegate = self;
     peripheral.centralManager = self;

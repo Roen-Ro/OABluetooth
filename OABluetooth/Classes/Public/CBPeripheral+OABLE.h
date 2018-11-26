@@ -65,9 +65,15 @@ the -writeData:xxx -readData:xxx etc methods will automatically do the discover 
 
 #pragma mark- data write/read/notify/read rssi
 //=======================================data read/write/notify=============================
+
 /**
  write data to a OABTPort no need to response, this is only available for CBCharacteristic port (correspoding writeWithoutResponseCharacteristic)
  向一个OABTPort端口发送数据, 发送成功与否都不需要响应，对应writeWithoutResponseCharacteristic类型,只针对代表CBCharacteristic类型的端口有效
+ 
+ Note: If data provided exceeds the max write length limit (defined by property dataWritePakcetMaxLengthLimit), it will be splited into small packets whose length will meet the max write length limit for writting, then all packtes will be written in sequence.
+ 
+ 注意：如果传的数据超过了写入外设数据的最大长度（dataWritePakcetMaxLengthLimit的设定值），这些数据将会自动拆分成一个个不超过这个长度限制的小数据包，然后再按照顺序依次向外设写入，直到所有的小的数据包都写入完成。
+ 
  */
 -(void)writeData:(nonnull NSData *)data toPort:(OABTPort *)port;
 
@@ -75,10 +81,16 @@ the -writeData:xxx -readData:xxx etc methods will automatically do the discover 
 /**
  write data to a OABTPort with response
  向一个OABTPort端口发送数据, 发送成功与否都在block回调得到结果
+ 
+ Note: If data provided exceeds the max write length limit (defined by property dataWritePakcetMaxLengthLimit), it will be splited into small packets whose length will meet the max write length limit for writting, then all packtes will be written in sequence. the completion block will be invoked on all packets' writting are finished, or on an error with any packet's writting.
+ 
+ 注意：如果传的数据超过了写入外设数据的最大长度（dataWritePakcetMaxLengthLimit的设定值），这些数据将会自动拆分成一个个不超过这个长度限制的小数据包，然后再按照顺序依次向外设写入，直到所有的小的数据包都写入完成后，或者中途某个小数据包写入出），completion block才会回调。
  */
 -(void)writeData:(nonnull NSData *)data
           toPort:(OABTPort *)port
         completion:(nullable void(^)(NSError *error))completion;
+
+
 /**
  Read data from a OABTPort,
  读取端口数据

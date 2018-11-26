@@ -8,6 +8,7 @@
 OABluetooth is a lightweight framework based on Apple's [CoreBluetooth](https://developer.apple.com/documentation/corebluetooth) that can be applied both on ios and OSX, It can manage different kind of peripherals independently, peripheral auto reconnection on disconnected. support block call backs for envents and communitations.  
 OABluetooth map all type of services,characteristics and descriptors(which are represented by [CBService](https://developer.apple.com/documentation/corebluetooth/cbservice),[CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic) and [CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor)) in to a `OABTPort`, you will have no more headaches to maintain these things. Comapared to *connection->discover services->discover charateristics->[discover descriptores]->data transfer* communication establish process based on [CoreBluetooth](https://developer.apple.com/documentation/corebluetooth)， OABluetooth simplify it to *connection->data transfer*, all else will be done automatically. more features are listed <a href="##Features">here</a>.  
 
+
 ---
 OABluetooth 是基于苹果[CoreBluetooth](https://developer.apple.com/documentation/corebluetooth)开发的轻量级蓝牙外设管理框架,可以同时支持ios和osx系统. OABluetooth 支持对不同类型设备列表的分开管理，断开后自动重连。  
 OABluetooth 还将所有的特征、描述都映射为一个通讯端口`OABTPort`，使你不需要再为维护不同的[CBService](https://developer.apple.com/documentation/corebluetooth/cbservice)/[CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic)/[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor)而感到头痛, 重要的是！相较于传统的 *连接->发现服务->发现特征->[发现描述]->通讯* 的基于[CoreBluetooth](https://developer.apple.com/documentation/corebluetooth)的通讯建立过程, OABluetooth 为此提供了完美的<font color=red size=3>**"一条龙"**</font>服务, 建立连接后直接通讯就可以了, 其余工作统统都自动完成。更多功能且看<a href="## Features">功能清单</a>。
@@ -36,7 +37,7 @@ OABluetooth 还将所有的特征、描述都映射为一个通讯端口`OABTPor
 ## Useage
 
 OABluetooth is very simple to use, all interfaces you nedd to use are defined in the 3 classes(category) below:
-- `OABTCentralManager`: a class manage peripheral's scan, connection/disconnection, event notify, all featrues and methods are well commented in `OABTCentralManager.h`
+- `OABTCentralManager`: a class manage peripheral's scan, connection/disconnection, event notify. All featrues and methods are well commented in `OABTCentralManager.h`
 - `CBPeripheral (OABLE)` the [CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral) category implements methods for data write/read/notify and some other useful methods, apis in `CBPeripheral+OABLE.h` are well commented
 - `OABTPort` represents either a type of [CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic) or a type of[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor) used for communication with [CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral), see comment in `OABTPort.h` file
 

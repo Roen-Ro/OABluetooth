@@ -10,8 +10,9 @@
 #import "OABLPeripheralInterExtension.h"
 #import "OABTCentralManager+Private.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
+#import "OABTDefines.h"
 
-#define NO_OABTCENTRAL_ERROR [NSError errorWithDomain:NSLocalizedString(@"The peripheral is not discovered from a OABTCentralManager instance", nil) code:-110 userInfo:nil]
+
 
 #define ERROR_BLOCK_INVOKE_AND_RETURN(error)     if(!self.centralManager && completion)  { \
                                                         completion(error); \
@@ -129,9 +130,7 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
                         completion(nil,c1);
                     }
                     else {
-                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The characteris with uuid %@ in service %@ not found ", nil),port.charateristicID,port.serviceID];
-                        NSError *er = [NSError errorWithDomain:errMsg code:-112 userInfo:nil];
-                        completion(er,nil);
+                        completion(CHARAC_NOT_FOUND_ERROR(port.charateristicID,port.serviceID),nil);
                     }
                 }
             }
@@ -154,9 +153,7 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
                     if(desc1) {
                         completion(nil,desc1);
                     } else {
-                        NSString *errMsg = [NSString stringWithFormat:NSLocalizedString(@"The descriptor with uuid %@ in characteris %@ of service %@ not found ", nil),port.descriptorID,port.charateristicID,port.serviceID];
-                        NSError *er = [NSError errorWithDomain:errMsg code:-113 userInfo:nil];
-                        completion(er,nil);
+                        completion(DES_NOT_FOUND_ERROR(port.serviceID,port.charateristicID,port.descriptorID),nil);
                     }
                 }
             }

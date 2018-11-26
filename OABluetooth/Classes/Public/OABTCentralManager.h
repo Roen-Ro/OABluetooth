@@ -11,7 +11,7 @@
 #import "NSObject+MultiDelegates.h"
 
 
-#define WEAK_SELF __weak typeof(self) weakSelf = self
+
 
 typedef enum {
     OABTCentralStateUnknow = 0,
@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class OABTCentralManager;
 
+//Use delgate or blocks according to your preferences
 //根据你个人喜好，可以选择使用block或delegate方式
 @protocol OABlePeripheralManagerDelegate <NSObject>
 
@@ -50,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  *  @class OABLECentralManager
  *
- *  @discussion Manage peripherals' connection, discovery and data communications with specialfied OABleDiscoverOption.
+ *  @discussion Manage peripherals' scan, connection.
  */
 @interface OABTCentralManager : NSObject<CBCentralManagerDelegate,CBPeripheralDelegate>
 
@@ -60,7 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  designated initializer
- @param advertiseID 需要扫描的外设广播id,只有带此广播id的外设才会被扫描到，如果传入nil的话，表示扫描所有类型的外设
+ @param advertiseID     the uuid string representing the service advertising by peripherals to scan for, nil for all kinds of peripherals
+    需要扫描的外设广播id,只有带此广播id的外设才会被扫描到，如果传入nil的话，表示扫描所有类型的外设
  */
 -(instancetype)initWitPeripheralAdvertiseID:(nullable NSString *)advertiseID;
 
@@ -100,28 +102,53 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^onNewDataNotify)(CBCharacteristic *characteristic);
 
 #pragma mark- scan and connection
-//-centralManager:didDiscoverPeripheral: delegate method will be invoked on every new peripheral discovered
--(NSString *)scanPeripherals;
+//
+
+/**
+ 
+ 
+ */
+
+/**
+ Start to scan for peripherals according to 'advertiseID' provided in the initializer -initWitPeripheralAdvertiseID:
+ -centralManager:didDiscoverPeripheral: delegate method or ^onNewPeripheralsDiscovered() block will be invoked on every new peripheral discovered
+
+ @return nil if the scan process can be started, else return an error to indicate the failure.
+ */
+-(NSError *)scanPeripherals;
+
+/**
+ stop peripheral scan
+ -centralManager:didChangeStateForPeripheral: delegate methods or ^onPeripheralStateChange() block will be invoked
+ */
 -(void)stopScanPeripherals;
 @property (nonatomic, copy, readonly) NSArray <CBPeripheral *>* discoveredPeripherals;
 
 //外设连接/发现, peripheral connect/discover
 @property (nonatomic, copy, readonly) NSArray <CBPeripheral *> *connectedPeripherals;//已经连接的外设
 
+/**
+ Connect peripheral
+ 
+ -centralManager:didChangeStateForPeripheral: delegate method or ^onPeripheralStateChange() block  will be invoked on every peripheral's connection
+ */
 -(void)connectPeripheral:(nonnull CBPeripheral *)peripheral
               completion:(nullable void (^)(NSError *error))block;
 
 //断开连接 没有涉及block回调，是因为还有被动断开的情况，所以集中在delegate方法中处理\
--centralManager:didChangeStateForPeripheral: delegate method will be invoked on every peripheral disconnected
+
+
+/**
+ Disconnect peripheral
+
+ -centralManager:didChangeStateForPeripheral: delegate method or ^onPeripheralStateChange() block  will be invoked on every peripheral disconnected
+ */
 -(void)disConnectperipheral:(nonnull CBPeripheral *)peripheral;
 
 
 @end
 
 
-
-
-//===================================================================
 
 NS_ASSUME_NONNULL_END
 
