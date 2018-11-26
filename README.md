@@ -22,7 +22,7 @@ OABluetooth 还将所有的特征、描述都映射为一个通讯端口`OABTPor
  - Greately simplify the communication process
  - Auto divide large data into small packets for writting.
  - Simple to use with [CBPeripheral](https://developer.apple.com/documentation/corebluetooth/cbperipheral) category
- - No need to maintain [CBService](https://developer.apple.com/documentation/corebluetooth/cbservice)/[CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic)/[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor)) any more  
+ - No need to maintain [CBService](https://developer.apple.com/documentation/corebluetooth/cbservice)/[CBCharateristic](https://developer.apple.com/documentation/corebluetooth/cbcharacteristic)/[CBDescriptor](https://developer.apple.com/documentation/corebluetooth/cbdescriptor) any more  
  ---
 
  - 支持同时管理多个不同类型的BLE外设列表
