@@ -23,4 +23,6 @@
 
 @property (nonatomic) int interRssiValue;
 
+@property (nonatomic) NSDictionary *interAdertisementData;
+
 @end

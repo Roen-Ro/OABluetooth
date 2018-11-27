@@ -8,7 +8,7 @@
 
 #import "BleScanTableViewController.h"
 #import "OABTCentralManager.h"
-#import "BleViewController.h"
+#import "BlePeripheralViewController.h"
 #import "ProgressButton.h"
 
 @interface BleScanTableViewController ()<OABlePeripheralManagerDelegate>
@@ -132,7 +132,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CBPeripheral *per = [self.deviceList objectAtIndex:indexPath.row];
-    BleViewController *vc = [[BleViewController alloc] initWithPeripheral:per andManager:self.centralManager];
+    BlePeripheralViewController *vc = [[BlePeripheralViewController alloc] initWithPeripheral:per andManager:self.centralManager];
     [self.navigationController pushViewController:vc animated:YES];
     
 }

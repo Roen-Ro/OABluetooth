@@ -26,11 +26,12 @@ __GETTER(NSString, interPropertiesDescription)
 __SETTER_PRIMITIVE(int, interRssiValue, setInterRssiValue:, numberWithInt:)
 __GETTER_PRIMITIVE(int, interRssiValue, intValue)
 
-__SETTER_WEAK_CUSTOMIZE(centralManager, setCentralManager:, {
-    if(centralManager)
-        self.delegate = (OABTCentralManager *)centralManager;
-})
+__SETTER_WEAK_CUSTOMIZE(centralManager, setCentralManager:)
 __GETTER_WEAK(OABTCentralManager, centralManager)
+
+
+__SETTER(interAdertisementData, setInterAdertisementData:, OBJC_ASSOCIATION_RETAIN)
+__GETTER(NSDictionary, interAdertisementData)
 
 @end
 

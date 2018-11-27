@@ -7,41 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07DD32EEE860E32B04AE656D429589AA /* OABLPeripheralInterExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7423BC1112BF7F95551FEC5011714879 /* OABLPeripheralInterExtension.m */; };
-		0EF9D84EAFD47CF7EF6DD04040AD797A /* OABTPort.h in Headers */ = {isa = PBXBuildFile; fileRef = BC95C3AB5242C86E3B86D45EB2E19DA0 /* OABTPort.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DBF58C65AF01CE6F0B67922047FAC7 /* ObjcExtensionProperty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF63D0414EF8DEB94B1CE7AD5112D10D /* ObjcExtensionProperty.framework */; };
-		1489308C8AE180B7B3C6C5C7199988D3 /* OABTCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A89BFB63E168C8F851BC28143A3E1 /* OABTCentralManager.m */; };
 		2652B21196A5E0DF5355075840BED73C /* Pods-OABluetooth_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BB94EF4FF19A016EAA0320D3A276C /* Pods-OABluetooth_Example-dummy.m */; };
 		28299BBECCF580919E50DCDCCF47B7BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09A92F04B9995B7D204913808F15214 /* Foundation.framework */; };
 		2A417361C75BDE1E1C951DD9179E6911 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CA2A25BCFD8A9C8E9FB5D7D655FF2D /* CoreBluetooth.framework */; };
-		2C583247B43C57B20756CA23E5C9C0BF /* OABTCentralManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 508DDBF472354F80A09DF3C9C9897C1E /* OABTCentralManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C8B5CF0ACE79BBF46C1DCC1AEC91A37 /* ObjcExtensionProperty-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9594D5D80F21EE8E8A9D160EB8D63C /* ObjcExtensionProperty-dummy.m */; };
-		3973A1740975F75F42A4E499E2C15C72 /* NSObject+MultiDelegates.m in Sources */ = {isa = PBXBuildFile; fileRef = A53BB838068282D9AECD9065C8460896 /* NSObject+MultiDelegates.m */; };
 		46AF3BCADB58773B8DA746365E3AF89B /* WeakReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 641B7C21AA38971666364A9CA17E0A23 /* WeakReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4847153D3DA26954966C9691DA4B081D /* CBPeripheral+OABLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BDA917A1E2DC441F798375A0C9896DF /* CBPeripheral+OABLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		488241D74191C1527CA9364C6BF7768E /* OABLPeripheralInterExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75E368215E5D7E49CDCEFCC5CBEF98 /* OABLPeripheralInterExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5C8089560AB3D7AD01DAF7E4BDF7F5 /* OABTCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD959D0C5050D9B9F3BF37D78C7A580 /* OABTCentralManager.m */; };
 		4E9C79EA934856C98C0E3BB2A1771D29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09A92F04B9995B7D204913808F15214 /* Foundation.framework */; };
 		50312B5A007FEF8F896A677D53A1AADA /* ObjcExtensionProperty-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF5798AB01EFAD444B1B656D85B96F2 /* ObjcExtensionProperty-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50CDE1A1FA19041BBDBAD4F844E30B32 /* Pods-OABluetooth_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 30562E3BD3D56F2F2397AAFBEBE7A769 /* Pods-OABluetooth_Tests-dummy.m */; };
-		521EC52CC93563E7F28F267D41A0A4BF /* OABTPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 285B554D29C04840F563C9F350DE3F15 /* OABTPort.m */; };
-		542F595BCC47BF0486A00D3457B0AAB9 /* CBPeripheral+OABLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDCADC5E9A977920E5FC4081B2BEB99 /* CBPeripheral+OABLE.m */; };
 		5A39FD72264B96EF118D8DCC82857855 /* WeakReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CE8E4C80B687B3FD6F6CEB34D145EC /* WeakReference.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		5DDD1D5115CD3B975745BABA3F3D9184 /* OABTDiscoverTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDFFB5215A25D66EF294AF8E2252344 /* OABTDiscoverTask.m */; };
+		5D597F4CFAAB57BA46DA4189C0C96688 /* NSMutableDictionary+Appending.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC76365DFF895BBA1C9518F979894B5 /* NSMutableDictionary+Appending.m */; };
+		5D67761ABB43DD1343698A337CC5CF11 /* OABTCentralManager+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1BF931ED617372CCF97729264E2BF4 /* OABTCentralManager+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DF3BCD360AE261A80EAB7FA46259A9B /* NSObject+MultiDelegates.m in Sources */ = {isa = PBXBuildFile; fileRef = E77521773D11A514D73D68984187F093 /* NSObject+MultiDelegates.m */; };
+		6CE6E415171DD45E86C09C81D7008A3A /* OABTPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 2741FFDE3DB3EF35B992858346FA6E50 /* OABTPort.m */; };
+		721E11CD554A74E4A90BD53A64B02D96 /* CBPeripheral+OABLE.m in Sources */ = {isa = PBXBuildFile; fileRef = C77EF504CE0B8C91FF1CA8EF6F3F7AB6 /* CBPeripheral+OABLE.m */; };
 		76CD166466D449C6A6017230DA79E66E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09A92F04B9995B7D204913808F15214 /* Foundation.framework */; };
-		8133D58EDAC7F9B152176C0C6C098F49 /* NSMutableDictionary+Appending.m in Sources */ = {isa = PBXBuildFile; fileRef = 61077BEB0712AE43492971DE44FD02A8 /* NSMutableDictionary+Appending.m */; };
-		8452DB6480E8348EAAA2526663F6FE18 /* OABTDataWriteTask.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B516BE76B99197F0B87231C8052BCA /* OABTDataWriteTask.m */; };
-		86A3FB5BEF6D30C705F35EBB8545AA54 /* OABluetooth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB5878993B271AB8DBBC056730E809F /* OABluetooth-dummy.m */; };
-		8D39F2D3BAC511323DBF7AAEA0C644D1 /* OABTCentralManager+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CCEBF49DB2AEFB3F96787CBE5E32FDF /* OABTCentralManager+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8D69E4D4F2EC42C06053BA9DF2399BEA /* OABTDiscoverTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14D23D38E382FA8FD2EA82EC71BBD5 /* OABTDiscoverTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A41B90C8B489E9DBDB23D227968C7398 /* OABTDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = CFD1045523B8DE153F2017FF5B2317F1 /* OABTDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A4E70E655C54F02D6DF37ECA9E680105 /* NSObject+MultiDelegates.h in Headers */ = {isa = PBXBuildFile; fileRef = 05F363A20C2AE899E72A66343DE683AC /* NSObject+MultiDelegates.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83DBE633F5D055E7619C726C180B53B1 /* OABLPeripheralInterExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CE38DB8F6203DDE86C73EBFCF67409EE /* OABLPeripheralInterExtension.m */; };
+		8765502E22E6DD0EE6E847D2427ACD8B /* OABTCentralManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F94AE7D811FB207A701F9307CE13240 /* OABTCentralManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D4A3CF6C7A5207BC9463CDBEE5A56BB /* OABTDataWriteTask.m in Sources */ = {isa = PBXBuildFile; fileRef = CCCDD5D83E35D6AFE575FBDDB8AF8B47 /* OABTDataWriteTask.m */; };
+		91062FE5A04D285748AE7C8FC5F1F794 /* OABTDiscoverTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FF976C45E79DB2C5BF3F4737B0CB443A /* OABTDiscoverTask.m */; };
+		921C5B74959F75DFE8EDE6E08E103DC3 /* OABTDiscoverTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 18504EDB559A41440CB4ED3E605B7B39 /* OABTDiscoverTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95E5F39FA476FBB18490E1D7E9CFA917 /* OABTPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E3B48A0F7FD289BA03BCDA7A8530DD0 /* OABTPort.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9972EB15AB78F23C9ECCD0F3049AFBF3 /* OABluetooth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39420AF19ABFF9A08E9584C343AF2C44 /* OABluetooth-dummy.m */; };
+		AC00F891FF957D1EF02C9BB1B4C3EFCC /* OABTDataWriteTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 800B5F8A09B4E05AAB62BF98C90424B2 /* OABTDataWriteTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2786D25DC64AC0911A8F2F0A7E8A132 /* Pods-OABluetooth_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C0FB0C6205A199B77790D2C2A840E12 /* Pods-OABluetooth_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE4810A8ADA758E7D4C964669AFD7606 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09A92F04B9995B7D204913808F15214 /* Foundation.framework */; };
-		CFF8A97E9DDE6BC4306F42A8596AF31E /* OABTDataWriteTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E75D1A2A193F759E8C952D8590CF5FE /* OABTDataWriteTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D3CF5D515BD9788958DF0BB0C6D12D3E /* OABluetooth-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 725395ABDBA30594AB2744767F934BBB /* OABluetooth-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2CB3160712E01EAB96A5A6080EB2C47 /* NSMutableDictionary+Appending.h in Headers */ = {isa = PBXBuildFile; fileRef = D26E2C35AEEDDB4CAC2F64F3E1C543D5 /* NSMutableDictionary+Appending.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD4E639B1C127038E2B9CCFFEAFA6D2E /* OABluetooth-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F807F900819381C29B1E2D39459B55E5 /* OABluetooth-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0245135CA55A08E4669E479D3EA5CCE /* OABLPeripheralInterExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AA51FAE9BC11029D648A472065CF3DF /* OABLPeripheralInterExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3DDE6F9C5C0E158DCBFFEE221A52A37 /* Pods-OABluetooth_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F7A3331C6D53628CF9660643C36759EB /* Pods-OABluetooth_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D903A8834258650D9F40071EF9EEF162 /* NSMutableDictionary+Appending.h in Headers */ = {isa = PBXBuildFile; fileRef = 693303679E12C0E497105C9DC8875770 /* NSMutableDictionary+Appending.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D6CD1C168744047F82C60FCD3E43D91D /* OABTDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 830B4CED6E49EC14740170069C25172B /* OABTDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3A31B05B2136A9AEEEFEBD0858FE831 /* ObjcExtensionProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E30E3E2092D285336A307F5907B3499 /* ObjcExtensionProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9113B500D89678BF8AC147665699E69 /* NSObject+MultiDelegates.h in Headers */ = {isa = PBXBuildFile; fileRef = 49C2F1B444FBA1924DD4F9A554430F4E /* NSObject+MultiDelegates.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3A81861CEDBA8182A4E11C37EB3C8F9 /* CBPeripheral+OABLE.h in Headers */ = {isa = PBXBuildFile; fileRef = CCD52B763EA8C199BA067FE0BC3643C2 /* CBPeripheral+OABLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,65 +76,65 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		006CFA01E8A869FF597299A01A28E861 /* OABluetooth.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = OABluetooth.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		05F363A20C2AE899E72A66343DE683AC /* NSObject+MultiDelegates.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSObject+MultiDelegates.h"; sourceTree = "<group>"; };
-		0F187B26AB9FFBA03D9707E2C5242E9B /* OABluetooth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OABluetooth.xcconfig; sourceTree = "<group>"; };
+		0FC76365DFF895BBA1C9518F979894B5 /* NSMutableDictionary+Appending.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+Appending.m"; path = "OABluetooth/Classes/Public/AssistObject/NSMutableDictionary+Appending.m"; sourceTree = "<group>"; };
+		18504EDB559A41440CB4ED3E605B7B39 /* OABTDiscoverTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABTDiscoverTask.h; path = OABluetooth/Classes/Private/OABTDiscoverTask.h; sourceTree = "<group>"; };
 		1C9594D5D80F21EE8E8A9D160EB8D63C /* ObjcExtensionProperty-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ObjcExtensionProperty-dummy.m"; sourceTree = "<group>"; };
-		1CCEBF49DB2AEFB3F96787CBE5E32FDF /* OABTCentralManager+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OABTCentralManager+Private.h"; sourceTree = "<group>"; };
 		25E57C620CD66C76E0CF4DE369F0A8A9 /* Pods_OABluetooth_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_OABluetooth_Tests.framework; path = "Pods-OABluetooth_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		285B554D29C04840F563C9F350DE3F15 /* OABTPort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = OABTPort.m; sourceTree = "<group>"; };
-		2D16F74EE81832FA2FD6F9DCE50C74A7 /* OABluetooth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OABluetooth-prefix.pch"; sourceTree = "<group>"; };
+		2741FFDE3DB3EF35B992858346FA6E50 /* OABTPort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OABTPort.m; path = OABluetooth/Classes/Public/OABTPort.m; sourceTree = "<group>"; };
+		2E3B48A0F7FD289BA03BCDA7A8530DD0 /* OABTPort.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABTPort.h; path = OABluetooth/Classes/Public/OABTPort.h; sourceTree = "<group>"; };
 		30562E3BD3D56F2F2397AAFBEBE7A769 /* Pods-OABluetooth_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-OABluetooth_Tests-dummy.m"; sourceTree = "<group>"; };
-		35B332EC057B2BAC95C8F9FACCE1CE07 /* OABluetooth-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "OABluetooth-Info.plist"; sourceTree = "<group>"; };
+		34B9CEE399784508BB3EFD0651E95876 /* OABluetooth-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "OABluetooth-Info.plist"; sourceTree = "<group>"; };
 		3878BB5E9BB9F8FD95D3019AAA148FB8 /* ObjcExtensionProperty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ObjcExtensionProperty.framework; path = ObjcExtensionProperty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		39420AF19ABFF9A08E9584C343AF2C44 /* OABluetooth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "OABluetooth-dummy.m"; sourceTree = "<group>"; };
 		3E92B261D682905CF2FD0A3ECA89A80F /* Pods-OABluetooth_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-OABluetooth_Example.modulemap"; sourceTree = "<group>"; };
+		3F94AE7D811FB207A701F9307CE13240 /* OABTCentralManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABTCentralManager.h; path = OABluetooth/Classes/Public/OABTCentralManager.h; sourceTree = "<group>"; };
 		406722F4603E485F838B75A41B8737E9 /* Pods-OABluetooth_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-OABluetooth_Example-frameworks.sh"; sourceTree = "<group>"; };
 		41CA2A25BCFD8A9C8E9FB5D7D655FF2D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
+		4894B09C9B47C97599F82296F3AAE197 /* OABluetooth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OABluetooth.xcconfig; sourceTree = "<group>"; };
 		48ECCC65E7E6FD91E21A72713B16278D /* Pods-OABluetooth_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OABluetooth_Tests-Info.plist"; sourceTree = "<group>"; };
-		4C14D23D38E382FA8FD2EA82EC71BBD5 /* OABTDiscoverTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABTDiscoverTask.h; sourceTree = "<group>"; };
-		508DDBF472354F80A09DF3C9C9897C1E /* OABTCentralManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABTCentralManager.h; sourceTree = "<group>"; };
+		49C2F1B444FBA1924DD4F9A554430F4E /* NSObject+MultiDelegates.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+MultiDelegates.h"; path = "OABluetooth/Classes/Public/AssistObject/NSObject+MultiDelegates.h"; sourceTree = "<group>"; };
+		5AA51FAE9BC11029D648A472065CF3DF /* OABLPeripheralInterExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABLPeripheralInterExtension.h; path = OABluetooth/Classes/Private/OABLPeripheralInterExtension.h; sourceTree = "<group>"; };
 		5AAA115FA58FCE23DBF236987797BD07 /* Pods-OABluetooth_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OABluetooth_Example.release.xcconfig"; sourceTree = "<group>"; };
 		5B65CF8D358DE6CEE91C7DBB31D87F41 /* Pods-OABluetooth_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OABluetooth_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5C0FB0C6205A199B77790D2C2A840E12 /* Pods-OABluetooth_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-OABluetooth_Tests-umbrella.h"; sourceTree = "<group>"; };
-		5DDCADC5E9A977920E5FC4081B2BEB99 /* CBPeripheral+OABLE.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CBPeripheral+OABLE.m"; sourceTree = "<group>"; };
 		5E30E3E2092D285336A307F5907B3499 /* ObjcExtensionProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ObjcExtensionProperty.h; path = ObjcExtensionProperty/Classes/ObjcExtensionProperty.h; sourceTree = "<group>"; };
-		5E75D1A2A193F759E8C952D8590CF5FE /* OABTDataWriteTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABTDataWriteTask.h; sourceTree = "<group>"; };
-		5EB5878993B271AB8DBBC056730E809F /* OABluetooth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "OABluetooth-dummy.m"; sourceTree = "<group>"; };
-		61077BEB0712AE43492971DE44FD02A8 /* NSMutableDictionary+Appending.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Appending.m"; sourceTree = "<group>"; };
 		641B7C21AA38971666364A9CA17E0A23 /* WeakReference.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeakReference.h; path = ObjcExtensionProperty/Classes/WeakReference.h; sourceTree = "<group>"; };
 		67FC66306A99C5C76C8338F8B05409E2 /* Pods-OABluetooth_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OABluetooth_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		693303679E12C0E497105C9DC8875770 /* NSMutableDictionary+Appending.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Appending.h"; sourceTree = "<group>"; };
-		6E025ECAF2F8CE74D683450DC0640CDC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		714BB94EF4FF19A016EAA0320D3A276C /* Pods-OABluetooth_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-OABluetooth_Example-dummy.m"; sourceTree = "<group>"; };
-		725395ABDBA30594AB2744767F934BBB /* OABluetooth-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OABluetooth-umbrella.h"; sourceTree = "<group>"; };
 		73648E3F19E95F51B6BD48AD7B49CF98 /* Pods-OABluetooth_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OABluetooth_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		7423BC1112BF7F95551FEC5011714879 /* OABLPeripheralInterExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = OABLPeripheralInterExtension.m; sourceTree = "<group>"; };
+		800B5F8A09B4E05AAB62BF98C90424B2 /* OABTDataWriteTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABTDataWriteTask.h; path = OABluetooth/Classes/Private/OABTDataWriteTask.h; sourceTree = "<group>"; };
 		81568E2C564DD311CB30DA86E2C27277 /* Pods-OABluetooth_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-OABluetooth_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		898A89BFB63E168C8F851BC28143A3E1 /* OABTCentralManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = OABTCentralManager.m; sourceTree = "<group>"; };
-		8BDA917A1E2DC441F798375A0C9896DF /* CBPeripheral+OABLE.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CBPeripheral+OABLE.h"; sourceTree = "<group>"; };
-		8E75E368215E5D7E49CDCEFCC5CBEF98 /* OABLPeripheralInterExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABLPeripheralInterExtension.h; sourceTree = "<group>"; };
+		819E8FACF6CD0FC3795B0C9870B5D76D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		830B4CED6E49EC14740170069C25172B /* OABTDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OABTDefines.h; path = OABluetooth/Classes/Private/OABTDefines.h; sourceTree = "<group>"; };
 		8E7A1C719DBB656C68C48C09FBF486E7 /* ObjcExtensionProperty-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ObjcExtensionProperty-prefix.pch"; sourceTree = "<group>"; };
 		8EC30C77071D1D4A1118753F4D427F8A /* Pods-OABluetooth_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-OABluetooth_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9457ED8A0C4689AB26F594E31A6E7995 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		98CE8E4C80B687B3FD6F6CEB34D145EC /* WeakReference.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = WeakReference.m; path = ObjcExtensionProperty/Classes/WeakReference.m; sourceTree = "<group>"; };
-		9FDFFB5215A25D66EF294AF8E2252344 /* OABTDiscoverTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = OABTDiscoverTask.m; sourceTree = "<group>"; };
 		A0E6A1C4CD3FC6C66FDE8FC066CCD4EB /* ObjcExtensionProperty.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ObjcExtensionProperty.modulemap; sourceTree = "<group>"; };
-		A4B516BE76B99197F0B87231C8052BCA /* OABTDataWriteTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = OABTDataWriteTask.m; sourceTree = "<group>"; };
-		A53BB838068282D9AECD9065C8460896 /* NSObject+MultiDelegates.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MultiDelegates.m"; sourceTree = "<group>"; };
 		A70B5A864BA35C7A02A615CE1267D049 /* Pods-OABluetooth_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OABluetooth_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		AA99F8F3DD32F2EAD6A86C8D58E3F19E /* OABluetooth.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = OABluetooth.modulemap; sourceTree = "<group>"; };
 		B39A8551B27AAB94A08B74070CD6ABB7 /* Pods_OABluetooth_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_OABluetooth_Example.framework; path = "Pods-OABluetooth_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA738D827117A0DABD02C7ABBDD16BC4 /* OABluetooth.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = OABluetooth.modulemap; sourceTree = "<group>"; };
-		BC95C3AB5242C86E3B86D45EB2E19DA0 /* OABTPort.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABTPort.h; sourceTree = "<group>"; };
+		B991953CD8CB15308DC2F3618CE79719 /* OABluetooth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OABluetooth-prefix.pch"; sourceTree = "<group>"; };
+		BA1BF931ED617372CCF97729264E2BF4 /* OABTCentralManager+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "OABTCentralManager+Private.h"; path = "OABluetooth/Classes/Private/OABTCentralManager+Private.h"; sourceTree = "<group>"; };
+		BAD959D0C5050D9B9F3BF37D78C7A580 /* OABTCentralManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OABTCentralManager.m; path = OABluetooth/Classes/Public/OABTCentralManager.m; sourceTree = "<group>"; };
+		BFC52A69BCF6FDC02F8BEFB51532C107 /* OABluetooth.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = OABluetooth.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C654161F9B1AFB8D8DC809826BF35EF2 /* OABluetooth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = OABluetooth.framework; path = OABluetooth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C66395B0345DC78712F09396C0CDAFD9 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		C77EF504CE0B8C91FF1CA8EF6F3F7AB6 /* CBPeripheral+OABLE.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "CBPeripheral+OABLE.m"; path = "OABluetooth/Classes/Public/CBPeripheral+OABLE.m"; sourceTree = "<group>"; };
+		CCCDD5D83E35D6AFE575FBDDB8AF8B47 /* OABTDataWriteTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OABTDataWriteTask.m; path = OABluetooth/Classes/Private/OABTDataWriteTask.m; sourceTree = "<group>"; };
+		CCD52B763EA8C199BA067FE0BC3643C2 /* CBPeripheral+OABLE.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "CBPeripheral+OABLE.h"; path = "OABluetooth/Classes/Public/CBPeripheral+OABLE.h"; sourceTree = "<group>"; };
 		CE061B5EC4568D462EA1652092F1331B /* Pods-OABluetooth_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OABluetooth_Example-Info.plist"; sourceTree = "<group>"; };
+		CE38DB8F6203DDE86C73EBFCF67409EE /* OABLPeripheralInterExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OABLPeripheralInterExtension.m; path = OABluetooth/Classes/Private/OABLPeripheralInterExtension.m; sourceTree = "<group>"; };
 		CF63D0414EF8DEB94B1CE7AD5112D10D /* ObjcExtensionProperty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjcExtensionProperty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CFD1045523B8DE153F2017FF5B2317F1 /* OABTDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = OABTDefines.h; sourceTree = "<group>"; };
+		D26E2C35AEEDDB4CAC2F64F3E1C543D5 /* NSMutableDictionary+Appending.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMutableDictionary+Appending.h"; path = "OABluetooth/Classes/Public/AssistObject/NSMutableDictionary+Appending.h"; sourceTree = "<group>"; };
 		DD6CB46F2A2916C185CA73BDE9D1BAD4 /* Pods-OABluetooth_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OABluetooth_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E09A92F04B9995B7D204913808F15214 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E77521773D11A514D73D68984187F093 /* NSObject+MultiDelegates.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MultiDelegates.m"; path = "OABluetooth/Classes/Public/AssistObject/NSObject+MultiDelegates.m"; sourceTree = "<group>"; };
 		EF68EE9BFCF4C6A7AEAC54002B8082E7 /* Pods-OABluetooth_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-OABluetooth_Tests.modulemap"; sourceTree = "<group>"; };
 		F554F48006F818DA97382F11C76EA505 /* ObjcExtensionProperty.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ObjcExtensionProperty.xcconfig; sourceTree = "<group>"; };
 		F7A3331C6D53628CF9660643C36759EB /* Pods-OABluetooth_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-OABluetooth_Example-umbrella.h"; sourceTree = "<group>"; };
+		F807F900819381C29B1E2D39459B55E5 /* OABluetooth-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OABluetooth-umbrella.h"; sourceTree = "<group>"; };
+		FF976C45E79DB2C5BF3F4737B0CB443A /* OABTDiscoverTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OABTDiscoverTask.m; path = OABluetooth/Classes/Private/OABTDiscoverTask.m; sourceTree = "<group>"; };
 		FFE01F4F8525D040E35275187DAF86BD /* ObjcExtensionProperty-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ObjcExtensionProperty-Info.plist"; sourceTree = "<group>"; };
 		FFF5798AB01EFAD444B1B656D85B96F2 /* ObjcExtensionProperty-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ObjcExtensionProperty-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +177,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000EF745D387270C7FBBD9417321EC4F /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				CCD52B763EA8C199BA067FE0BC3643C2 /* CBPeripheral+OABLE.h */,
+				C77EF504CE0B8C91FF1CA8EF6F3F7AB6 /* CBPeripheral+OABLE.m */,
+				3F94AE7D811FB207A701F9307CE13240 /* OABTCentralManager.h */,
+				BAD959D0C5050D9B9F3BF37D78C7A580 /* OABTCentralManager.m */,
+				2E3B48A0F7FD289BA03BCDA7A8530DD0 /* OABTPort.h */,
+				2741FFDE3DB3EF35B992858346FA6E50 /* OABTPort.m */,
+				F383EE5434182EC790D1B38DBD25B684 /* Assists */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
 		0A853D79C9B2DC38F643A88DDE290125 /* Pods-OABluetooth_Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +208,21 @@
 			path = "Target Support Files/Pods-OABluetooth_Example";
 			sourceTree = "<group>";
 		};
+		232BFCE1674060629BD90C68A447591E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				5AA51FAE9BC11029D648A472065CF3DF /* OABLPeripheralInterExtension.h */,
+				CE38DB8F6203DDE86C73EBFCF67409EE /* OABLPeripheralInterExtension.m */,
+				BA1BF931ED617372CCF97729264E2BF4 /* OABTCentralManager+Private.h */,
+				800B5F8A09B4E05AAB62BF98C90424B2 /* OABTDataWriteTask.h */,
+				CCCDD5D83E35D6AFE575FBDDB8AF8B47 /* OABTDataWriteTask.m */,
+				830B4CED6E49EC14740170069C25172B /* OABTDefines.h */,
+				18504EDB559A41440CB4ED3E605B7B39 /* OABTDiscoverTask.h */,
+				FF976C45E79DB2C5BF3F4737B0CB443A /* OABTDiscoverTask.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
 		24765CD0B0BD40B494C710A80A20B952 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,19 +232,14 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		253F695C584EC93F93B446463660CA58 /* Public */ = {
+		2CF715DCE64CDB0D8E756BD460F7A299 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				8BDA917A1E2DC441F798375A0C9896DF /* CBPeripheral+OABLE.h */,
-				5DDCADC5E9A977920E5FC4081B2BEB99 /* CBPeripheral+OABLE.m */,
-				508DDBF472354F80A09DF3C9C9897C1E /* OABTCentralManager.h */,
-				898A89BFB63E168C8F851BC28143A3E1 /* OABTCentralManager.m */,
-				BC95C3AB5242C86E3B86D45EB2E19DA0 /* OABTPort.h */,
-				285B554D29C04840F563C9F350DE3F15 /* OABTPort.m */,
-				CDAAD4360947474FDC70820748C794CA /* AssistObject */,
+				819E8FACF6CD0FC3795B0C9870B5D76D /* LICENSE */,
+				BFC52A69BCF6FDC02F8BEFB51532C107 /* OABluetooth.podspec */,
+				9457ED8A0C4689AB26F594E31A6E7995 /* README.md */,
 			);
-			name = Public;
-			path = OABluetooth/Classes/Public;
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		3C99E5CCBBB04D959D958A70A273FE50 /* Pods-OABluetooth_Tests */ = {
@@ -234,22 +258,6 @@
 			path = "Target Support Files/Pods-OABluetooth_Tests";
 			sourceTree = "<group>";
 		};
-		3CE6D7FA76CEC94D1353197C6ED9E1FF /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				8E75E368215E5D7E49CDCEFCC5CBEF98 /* OABLPeripheralInterExtension.h */,
-				7423BC1112BF7F95551FEC5011714879 /* OABLPeripheralInterExtension.m */,
-				1CCEBF49DB2AEFB3F96787CBE5E32FDF /* OABTCentralManager+Private.h */,
-				5E75D1A2A193F759E8C952D8590CF5FE /* OABTDataWriteTask.h */,
-				A4B516BE76B99197F0B87231C8052BCA /* OABTDataWriteTask.m */,
-				CFD1045523B8DE153F2017FF5B2317F1 /* OABTDefines.h */,
-				4C14D23D38E382FA8FD2EA82EC71BBD5 /* OABTDiscoverTask.h */,
-				9FDFFB5215A25D66EF294AF8E2252344 /* OABTDiscoverTask.m */,
-			);
-			name = Private;
-			path = OABluetooth/Classes/Private;
-			sourceTree = "<group>";
-		};
 		46CD6E90487C2C3F254161F3919A43CA /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,20 +270,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/ObjcExtensionProperty";
-			sourceTree = "<group>";
-		};
-		4EF3D91307E9DF169DE300642F8FE90B /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				BA738D827117A0DABD02C7ABBDD16BC4 /* OABluetooth.modulemap */,
-				0F187B26AB9FFBA03D9707E2C5242E9B /* OABluetooth.xcconfig */,
-				5EB5878993B271AB8DBBC056730E809F /* OABluetooth-dummy.m */,
-				35B332EC057B2BAC95C8F9FACCE1CE07 /* OABluetooth-Info.plist */,
-				2D16F74EE81832FA2FD6F9DCE50C74A7 /* OABluetooth-prefix.pch */,
-				725395ABDBA30594AB2744767F934BBB /* OABluetooth-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/OABluetooth";
 			sourceTree = "<group>";
 		};
 		508B34F6E2493F2D6BD77563690E0A04 /* iOS */ = {
@@ -322,34 +316,38 @@
 			);
 			sourceTree = "<group>";
 		};
-		CDAAD4360947474FDC70820748C794CA /* AssistObject */ = {
+		97403641AA84DFF4C462F3270AA17FB2 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				693303679E12C0E497105C9DC8875770 /* NSMutableDictionary+Appending.h */,
-				61077BEB0712AE43492971DE44FD02A8 /* NSMutableDictionary+Appending.m */,
-				05F363A20C2AE899E72A66343DE683AC /* NSObject+MultiDelegates.h */,
-				A53BB838068282D9AECD9065C8460896 /* NSObject+MultiDelegates.m */,
+				AA99F8F3DD32F2EAD6A86C8D58E3F19E /* OABluetooth.modulemap */,
+				4894B09C9B47C97599F82296F3AAE197 /* OABluetooth.xcconfig */,
+				39420AF19ABFF9A08E9584C343AF2C44 /* OABluetooth-dummy.m */,
+				34B9CEE399784508BB3EFD0651E95876 /* OABluetooth-Info.plist */,
+				B991953CD8CB15308DC2F3618CE79719 /* OABluetooth-prefix.pch */,
+				F807F900819381C29B1E2D39459B55E5 /* OABluetooth-umbrella.h */,
 			);
-			name = AssistObject;
-			path = AssistObject;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/OABluetooth";
+			sourceTree = "<group>";
+		};
+		9F9529248B9CAB6C5E5DCE8C37D5B5A0 /* OABluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				2CF715DCE64CDB0D8E756BD460F7A299 /* Pod */,
+				232BFCE1674060629BD90C68A447591E /* Private */,
+				000EF745D387270C7FBBD9417321EC4F /* Public */,
+				97403641AA84DFF4C462F3270AA17FB2 /* Support Files */,
+			);
+			name = OABluetooth;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		DD7986BB22DDAACD2BF8E046622F62EF /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F353B8BA78ACB29D8377DF4FD68FCBB2 /* OABluetooth */,
+				9F9529248B9CAB6C5E5DCE8C37D5B5A0 /* OABluetooth */,
 			);
 			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		DDEAAC52E49E462EC78D907E31F80278 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				C66395B0345DC78712F09396C0CDAFD9 /* LICENSE */,
-				006CFA01E8A869FF597299A01A28E861 /* OABluetooth.podspec */,
-				6E025ECAF2F8CE74D683450DC0640CDC /* README.md */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		ED7FF3769985FDD1017B8DFD8D8F89FD /* Frameworks */ = {
@@ -361,16 +359,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F353B8BA78ACB29D8377DF4FD68FCBB2 /* OABluetooth */ = {
+		F383EE5434182EC790D1B38DBD25B684 /* Assists */ = {
 			isa = PBXGroup;
 			children = (
-				DDEAAC52E49E462EC78D907E31F80278 /* Pod */,
-				3CE6D7FA76CEC94D1353197C6ED9E1FF /* Private */,
-				253F695C584EC93F93B446463660CA58 /* Public */,
-				4EF3D91307E9DF169DE300642F8FE90B /* Support Files */,
+				D26E2C35AEEDDB4CAC2F64F3E1C543D5 /* NSMutableDictionary+Appending.h */,
+				0FC76365DFF895BBA1C9518F979894B5 /* NSMutableDictionary+Appending.m */,
+				49C2F1B444FBA1924DD4F9A554430F4E /* NSObject+MultiDelegates.h */,
+				E77521773D11A514D73D68984187F093 /* NSObject+MultiDelegates.m */,
 			);
-			name = OABluetooth;
-			path = ../..;
+			name = Assists;
 			sourceTree = "<group>";
 		};
 		F3E6705B8FA7CC30CDDB52EBDEE6321A /* Pods */ = {
@@ -392,21 +389,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		76AAADE959A6E739E9DDB521EA00BDB3 /* Headers */ = {
+		8721415A2B3C3904B4610747A64B64C2 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4847153D3DA26954966C9691DA4B081D /* CBPeripheral+OABLE.h in Headers */,
-				D903A8834258650D9F40071EF9EEF162 /* NSMutableDictionary+Appending.h in Headers */,
-				A4E70E655C54F02D6DF37ECA9E680105 /* NSObject+MultiDelegates.h in Headers */,
-				488241D74191C1527CA9364C6BF7768E /* OABLPeripheralInterExtension.h in Headers */,
-				D3CF5D515BD9788958DF0BB0C6D12D3E /* OABluetooth-umbrella.h in Headers */,
-				8D39F2D3BAC511323DBF7AAEA0C644D1 /* OABTCentralManager+Private.h in Headers */,
-				2C583247B43C57B20756CA23E5C9C0BF /* OABTCentralManager.h in Headers */,
-				CFF8A97E9DDE6BC4306F42A8596AF31E /* OABTDataWriteTask.h in Headers */,
-				A41B90C8B489E9DBDB23D227968C7398 /* OABTDefines.h in Headers */,
-				8D69E4D4F2EC42C06053BA9DF2399BEA /* OABTDiscoverTask.h in Headers */,
-				0EF9D84EAFD47CF7EF6DD04040AD797A /* OABTPort.h in Headers */,
+				F3A81861CEDBA8182A4E11C37EB3C8F9 /* CBPeripheral+OABLE.h in Headers */,
+				C2CB3160712E01EAB96A5A6080EB2C47 /* NSMutableDictionary+Appending.h in Headers */,
+				E9113B500D89678BF8AC147665699E69 /* NSObject+MultiDelegates.h in Headers */,
+				D0245135CA55A08E4669E479D3EA5CCE /* OABLPeripheralInterExtension.h in Headers */,
+				CD4E639B1C127038E2B9CCFFEAFA6D2E /* OABluetooth-umbrella.h in Headers */,
+				5D67761ABB43DD1343698A337CC5CF11 /* OABTCentralManager+Private.h in Headers */,
+				8765502E22E6DD0EE6E847D2427ACD8B /* OABTCentralManager.h in Headers */,
+				AC00F891FF957D1EF02C9BB1B4C3EFCC /* OABTDataWriteTask.h in Headers */,
+				D6CD1C168744047F82C60FCD3E43D91D /* OABTDefines.h in Headers */,
+				921C5B74959F75DFE8EDE6E08E103DC3 /* OABTDiscoverTask.h in Headers */,
+				95E5F39FA476FBB18490E1D7E9CFA917 /* OABTPort.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,8 +450,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F07D93A7BBE831337423D536A53ED9FB /* Build configuration list for PBXNativeTarget "OABluetooth" */;
 			buildPhases = (
-				76AAADE959A6E739E9DDB521EA00BDB3 /* Headers */,
-				5B6C4E6AD709686442624931E1030156 /* Sources */,
+				8721415A2B3C3904B4610747A64B64C2 /* Headers */,
+				ACAB8769D56F19931A9CED29A662C8EC /* Sources */,
 				07979BAFCD92A1089449CCFADB90AF4B /* Frameworks */,
 				9488608A097543B1D24AFCBEBD0E9F07 /* Resources */,
 			);
@@ -576,19 +573,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5B6C4E6AD709686442624931E1030156 /* Sources */ = {
+		ACAB8769D56F19931A9CED29A662C8EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				542F595BCC47BF0486A00D3457B0AAB9 /* CBPeripheral+OABLE.m in Sources */,
-				8133D58EDAC7F9B152176C0C6C098F49 /* NSMutableDictionary+Appending.m in Sources */,
-				3973A1740975F75F42A4E499E2C15C72 /* NSObject+MultiDelegates.m in Sources */,
-				07DD32EEE860E32B04AE656D429589AA /* OABLPeripheralInterExtension.m in Sources */,
-				86A3FB5BEF6D30C705F35EBB8545AA54 /* OABluetooth-dummy.m in Sources */,
-				1489308C8AE180B7B3C6C5C7199988D3 /* OABTCentralManager.m in Sources */,
-				8452DB6480E8348EAAA2526663F6FE18 /* OABTDataWriteTask.m in Sources */,
-				5DDD1D5115CD3B975745BABA3F3D9184 /* OABTDiscoverTask.m in Sources */,
-				521EC52CC93563E7F28F267D41A0A4BF /* OABTPort.m in Sources */,
+				721E11CD554A74E4A90BD53A64B02D96 /* CBPeripheral+OABLE.m in Sources */,
+				5D597F4CFAAB57BA46DA4189C0C96688 /* NSMutableDictionary+Appending.m in Sources */,
+				5DF3BCD360AE261A80EAB7FA46259A9B /* NSObject+MultiDelegates.m in Sources */,
+				83DBE633F5D055E7619C726C180B53B1 /* OABLPeripheralInterExtension.m in Sources */,
+				9972EB15AB78F23C9ECCD0F3049AFBF3 /* OABluetooth-dummy.m in Sources */,
+				4C5C8089560AB3D7AD01DAF7E4BDF7F5 /* OABTCentralManager.m in Sources */,
+				8D4A3CF6C7A5207BC9463CDBEE5A56BB /* OABTDataWriteTask.m in Sources */,
+				91062FE5A04D285748AE7C8FC5F1F794 /* OABTDiscoverTask.m in Sources */,
+				6CE6E415171DD45E86C09C81D7008A3A /* OABTPort.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,7 +864,7 @@
 		};
 		93903CB79BCA20CD2925C33533C38051 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F187B26AB9FFBA03D9707E2C5242E9B /* OABluetooth.xcconfig */;
+			baseConfigurationReference = 4894B09C9B47C97599F82296F3AAE197 /* OABluetooth.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -898,7 +895,7 @@
 		};
 		AB62076194DE8A55AE8F933ABABB1002 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F187B26AB9FFBA03D9707E2C5242E9B /* OABluetooth.xcconfig */;
+			baseConfigurationReference = 4894B09C9B47C97599F82296F3AAE197 /* OABluetooth.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

@@ -15,11 +15,11 @@
 #import "OABTDataWriteTask.h"
 #import "OABTDefines.h"
 #import "OABTDiscoverTask.h"
-#import "NSMutableDictionary+Appending.h"
-#import "NSObject+MultiDelegates.h"
 #import "CBPeripheral+OABLE.h"
 #import "OABTCentralManager.h"
 #import "OABTPort.h"
+#import "NSMutableDictionary+Appending.h"
+#import "NSObject+MultiDelegates.h"
 
 FOUNDATION_EXPORT double OABluetoothVersionNumber;
 FOUNDATION_EXPORT const unsigned char OABluetoothVersionString[];

@@ -22,6 +22,8 @@
 
 @property (nonatomic, readonly) int rssiValue;
 
+@property (nonatomic, readonly) NSDictionary *advertisementData;
+
 #pragma mark- discover
 //======================discover services/characteristics/descriptions======================
 // typically you don't need to use those discover methods in your business code,\

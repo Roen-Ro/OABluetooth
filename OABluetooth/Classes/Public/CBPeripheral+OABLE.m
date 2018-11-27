@@ -29,6 +29,12 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 {
     return self.interRssiValue;
 }
+
+
+-(NSDictionary *)advertisementData {
+    return self.interAdertisementData;
+}
+
 #pragma mark- discover
 -(void)discoverService:(nullable NSArray <NSString *> *)serviceIDs
             completion:(nullable void (^)(NSError *error))completion {

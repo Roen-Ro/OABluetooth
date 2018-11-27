@@ -10,9 +10,6 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "NSObject+MultiDelegates.h"
 
-
-
-
 typedef enum {
     OABTCentralStateUnknow = 0,
     OABTCentralStateResetting,
@@ -24,6 +21,7 @@ typedef enum {
     
 }OABTCentralState;
 
+#define ENABLE_OABT_LOG 0
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -24,6 +24,7 @@
 		9F3265E821A574E200D86BD2 /* BleScanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3265E421A574E200D86BD2 /* BleScanTableViewController.m */; };
 		9F3265E921A574E200D86BD2 /* BleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3265E521A574E200D86BD2 /* BleViewController.m */; };
 		9F3265EA21A574E200D86BD2 /* BleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3265E621A574E200D86BD2 /* BleViewController.xib */; };
+		9FE5998821ABE6D000456F14 /* BlePeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5998721ABE6D000456F14 /* BlePeripheralViewController.m */; };
 		BF5365FE9F532C6B9F4079D1 /* Pods_OABluetooth_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB71FB3F5C112335CD1390A7 /* Pods_OABluetooth_Tests.framework */; };
 		D921521B1F31C685B3EBD055 /* Pods_OABluetooth_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31E3F7AFDBF4C9630257616 /* Pods_OABluetooth_Example.framework */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,8 @@
 		9F3265E621A574E200D86BD2 /* BleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BleViewController.xib; sourceTree = "<group>"; };
 		9F3265E721A574E200D86BD2 /* BleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleViewController.h; sourceTree = "<group>"; };
 		9FDA3E8DB3E820C88BA463C6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		9FE5998621ABE6D000456F14 /* BlePeripheralViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlePeripheralViewController.h; sourceTree = "<group>"; };
+		9FE5998721ABE6D000456F14 /* BlePeripheralViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlePeripheralViewController.m; sourceTree = "<group>"; };
 		AB71FB3F5C112335CD1390A7 /* Pods_OABluetooth_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B411742E1640EDA5FA37A478 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D31E3F7AFDBF4C9630257616 /* Pods_OABluetooth_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OABluetooth_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +146,8 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				9F3265E321A574E200D86BD2 /* BleScanTableViewController.h */,
 				9F3265E421A574E200D86BD2 /* BleScanTableViewController.m */,
+				9FE5998621ABE6D000456F14 /* BlePeripheralViewController.h */,
+				9FE5998721ABE6D000456F14 /* BlePeripheralViewController.m */,
 				9F3265E721A574E200D86BD2 /* BleViewController.h */,
 				9F3265E521A574E200D86BD2 /* BleViewController.m */,
 				9F3265E621A574E200D86BD2 /* BleViewController.xib */,
@@ -391,6 +396,7 @@
 				6003F59E195388D20070C39A /* OAAppDelegate.m in Sources */,
 				9F3265E921A574E200D86BD2 /* BleViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				9FE5998821ABE6D000456F14 /* BlePeripheralViewController.m in Sources */,
 				9F3265E821A574E200D86BD2 /* BleScanTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

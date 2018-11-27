@@ -225,7 +225,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 
 
 #pragma mark- scan
--(NSString *)scanPeripherals
+-(NSError *)scanPeripherals
 {
     _scanCountDown = self.scanDuration;
     
@@ -315,7 +315,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 //for internal calls
 -(void)inter_connectPeripheral:(CBPeripheral *)peripheral
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"inter_connectPeripheral :%@",peripheral.name);
 #endif
     
@@ -332,7 +332,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 //for internal calls
 -(void)inter_disConnectperipheral:(CBPeripheral *)peripheral
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"inter_disConnectperipheral :%@",peripheral.name);
 #endif
     
@@ -538,7 +538,7 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
 
 -(void)inter_discoverCharacteristicTask:(OABTDiscoverTask *)task ofService:(nonnull CBService *)service
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"-->inter_discoverCharacteristicTask:%@ for service:%@",task.discoverIDs,service);
 #endif
     NSMutableArray *charaIds = [NSMutableArray arrayWithCapacity:task.discoverIDs.count];
@@ -704,6 +704,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
     peripheral.interRssiValue = RSSI.intValue;
     peripheral.delegate = self;
     peripheral.centralManager = self;
+    peripheral.interAdertisementData = advertisementData;
     //情况比较复杂，有时候发现的相同的设备是同一个对象实例，有的时候是identifier相同，但是不同的对象实例
     if(![_discoveredPeripherals containsObject:peripheral])
     {
@@ -717,7 +718,7 @@ __GETTER_LAZY(NSMutableDictionary, readRssiBlockMap, [NSMutableDictionary dictio
             }
         }
         
-#if DEBUG
+#if ENABLE_OABT_LOG
         NSLog(@"\n\n****detected NEW device*******\nuuid:%@\n name:%@ advertisementData:%@\n********\n\n",peripheral.identifier.UUIDString,peripheral.name,advertisementData);
 #endif
         
@@ -741,7 +742,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary *)state
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"willRestoreState: %@",state);
 #endif
     
@@ -803,7 +804,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"%s %@ ",__PRETTY_FUNCTION__,peripheral.name);
 #endif
     
@@ -814,7 +815,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"%s %@ error:%@",__PRETTY_FUNCTION__,peripheral.name,error.localizedDescription);
 #endif
     
@@ -832,7 +833,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"%s %@ error:%@",__PRETTY_FUNCTION__,peripheral.name,error.localizedDescription);
 #endif
     //分主动和被动断开两种情况 主动断开error为nil，被动断开errocode = 6
@@ -874,7 +875,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 #pragma mark- CBPeripheralDelegate
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"didDiscoverServices: %zu services discovered %@, erro: %@ ",peripheral.services.count,peripheral.services, error.description);
 #endif
     
@@ -885,7 +886,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 {
     service.finishedSubArributeDiscover = YES;
     
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSMutableString *mStr = [NSMutableString stringWithFormat:@"\n---------------------\ndidDiscoverCharacteristicsForService:%@=================",service.UUID.UUIDString];
 #endif
     for (CBCharacteristic *interestingCharacteristic in service.characteristics)
@@ -913,11 +914,11 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
             [mPString appendString:@"IndicateEncryptionRequired|"];
         
         interestingCharacteristic.interPropertiesDescription = [NSString stringWithString:mPString];
-#if DEBUG
+#if ENABLE_OABT_LOG
         [mStr appendFormat:@"\nCharacteristic:%@ \nproperties:%@\n+++\n",interestingCharacteristic.UUID.UUIDString,mPString];
 #endif
     }
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"%@---------------------------\n",mStr);
 #endif
 
@@ -950,7 +951,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"didDiscoverDescriptorsForCharacteristic:%@ descroptros:%@ error:%@",characteristic,characteristic.descriptors,error);
 #endif
     
@@ -968,7 +969,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 // This method is invoked after a @link readValueForCharacteristic: @/link call, or upon receipt of a notification/indication.
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"UPDATE VALUE-> didUpdateValueForCharacteristic:%@ isNotifying:%d error:%@",characteristic.UUID.UUIDString,characteristic.isNotifying,error);
 #endif
     
@@ -1005,7 +1006,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 //This method returns the result of a {@link writeValue:forCharacteristic:type:} call, when the <code>CBCharacteristicWriteWithResponse</code> type is used.
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"writeResponse-> didWriteValueForCharacteristic error:%@",error);
 #endif
     
@@ -1128,7 +1129,7 @@ forCharacteristic:(CBCharacteristic *)chara
     }
     else
     {
-#if DEBUG
+#if ENABLE_OABT_LOG
         NSLog(@"%@ does not support CBCharacteristicPropertyWriteWithoutResponse",chara);
 #endif
     }
@@ -1417,9 +1418,10 @@ forCharacteristic:(CBCharacteristic *)chara
 
 -(void)dealloc
 {
-#if DEBUG
+#if ENABLE_OABT_LOG
     NSLog(@"DEALLOC --> %@",NSStringFromClass([self class]));
 #endif
 }
+
 
 @end

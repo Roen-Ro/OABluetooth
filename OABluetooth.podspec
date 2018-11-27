@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OABluetooth'
-  s.version          = '1.2.0'
+  s.version          = '1.2.1'
   s.summary          = 'Bluetooth low energy(BLE) service for ios and OSX based on CoreBluetooth'
 
 # This description is used to generate tags and improve search results.
@@ -33,6 +33,8 @@ s.ios.deployment_target = '8.0'
 
 s.source_files = 'OABluetooth/Classes/**/*'
 s.public_header_files = 'Pod/Classes/Public/*.h'
+s.private_header_files = 'Pod/Classes/Private/*.h'
+
 
 s.frameworks = 'CoreBluetooth'
 s.dependency 'ObjcExtensionProperty'

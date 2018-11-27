@@ -1,5 +1,14 @@
 PODS:
-  - OABluetooth (1.1.0):
+  - OABluetooth (1.2.0):
+    - OABluetooth/Private (= 1.2.0)
+    - OABluetooth/Public (= 1.2.0)
+    - ObjcExtensionProperty
+  - OABluetooth/Private (1.2.0):
+    - ObjcExtensionProperty
+  - OABluetooth/Public (1.2.0):
+    - OABluetooth/Public/Assists (= 1.2.0)
+    - ObjcExtensionProperty
+  - OABluetooth/Public/Assists (1.2.0):
     - ObjcExtensionProperty
   - ObjcExtensionProperty (2.0.2)
 
@@ -15,7 +24,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  OABluetooth: f566a75a991650ad46459b3ca6e1caeb34b2398e
+  OABluetooth: 9dc6b2a178311f8ec26af722509c90b43778d231
   ObjcExtensionProperty: b3650d20bcc15e8b45be0c16404b1782a779c0d3
 
 PODFILE CHECKSUM: 4562ab5a3347e87c0111b9b7694a4b2c539e7ac1
