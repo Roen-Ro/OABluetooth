@@ -779,7 +779,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    _state = _centralManager.state;
+    _state = (OABTCentralState)_centralManager.state;
     if (@available(iOS 10.0, *)) {
         if(_centralManager.state == CBManagerStatePoweredOn)
             [self scanPeripherals];
@@ -891,26 +891,27 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 #endif
     for (CBCharacteristic *interestingCharacteristic in service.characteristics)
     {
+
         NSMutableString *mPString = [NSMutableString string];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyBroadcast)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyBroadcast)
             [mPString appendString:@"Broadcast|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyRead)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyRead)
             [mPString appendString:@"Read|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyWriteWithoutResponse)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyWriteWithoutResponse)
             [mPString appendString:@"WriteWithoutResponse|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyWrite)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyWrite)
             [mPString appendString:@"Write|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyNotify)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyNotify)
             [mPString appendString:@"Notify|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyIndicate)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyIndicate)
             [mPString appendString:@"Indicate|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyAuthenticatedSignedWrites)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyAuthenticatedSignedWrites)
             [mPString appendString:@"AuthenticatedSignedWrites|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyExtendedProperties)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyExtendedProperties)
             [mPString appendString:@"ExtendedProperties|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyNotifyEncryptionRequired)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyNotifyEncryptionRequired)
             [mPString appendString:@"NotifyEncryptionRequired|"];
-        if(interestingCharacteristic.properties|CBCharacteristicPropertyIndicateEncryptionRequired)
+        if(interestingCharacteristic.properties&CBCharacteristicPropertyIndicateEncryptionRequired)
             [mPString appendString:@"IndicateEncryptionRequired|"];
         
         interestingCharacteristic.interPropertiesDescription = [NSString stringWithString:mPString];
@@ -970,7 +971,7 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
 #if ENABLE_OABT_LOG
-    NSLog(@"UPDATE VALUE-> didUpdateValueForCharacteristic:%@ isNotifying:%d error:%@",characteristic.UUID.UUIDString,characteristic.isNotifying,error);
+    NSLog(@"UPDATE VALUE-> didUpdateValueForCharacteristic:%@ isNotifying:%d error:%@ value:%zu",characteristic.UUID.UUIDString,characteristic.isNotifying,error,characteristic.value.length);
 #endif
     
     NSString *aKey = [self keyForCharacteristic:characteristic];

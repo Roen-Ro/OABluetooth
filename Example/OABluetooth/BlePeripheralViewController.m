@@ -35,8 +35,8 @@
     
     self.connectBtn = [[ProgressButton alloc] initWithFrame:CGRectMake(0, 0, 96, 30)];
     [self.connectBtn addTarget:self action:@selector(connectSwitch:) forControlEvents:UIControlEventTouchUpInside];
-    [self.connectBtn setTitle:@"连接" forState:UIControlStateNormal];
-    [self.connectBtn setTitle:@"断开" forState:UIControlStateSelected];
+    [self.connectBtn setTitle:@"Connect" forState:UIControlStateNormal];
+    [self.connectBtn setTitle:@"Disconnect" forState:UIControlStateSelected];
     [self.connectBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.connectBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
     [self updateConnectionBtn];
@@ -138,7 +138,7 @@
         cell.detailTextLabel.numberOfLines = 3;
         cell.detailTextLabel.minimumScaleFactor = 0.5;
         cell.textLabel.minimumScaleFactor = 0.5;
-        cell.textLabel.font = [UIFont systemFontOfSize:12.0];
+        cell.textLabel.font = [UIFont systemFontOfSize:14.0];
         cell.textLabel.textColor = [UIColor blackColor];
         cell.detailTextLabel.textColor = [UIColor grayColor];
     }
@@ -146,11 +146,51 @@
     CBService *service = [self.peripheral.services objectAtIndex:indexPath.section];
     CBCharacteristic *charac = [service.characteristics objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"Characteristic uuid:%@\n",charac.UUID.UUIDString];
+    cell.textLabel.text = [NSString stringWithFormat:@"Characteristic uuid:\n%@",charac.UUID.UUIDString];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"properties:%@",charac.propertiesDescription];
     
 
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CBService *service = [self.peripheral.services objectAtIndex:indexPath.section];
+    CBCharacteristic *charac = [service.characteristics objectAtIndex:indexPath.row];
+    
+    //Note: in your project code, you don't need to get the serviceID and characteristicID from a discovered service and characteristic,\
+    you just need to write code like:\
+    *port = [OABTPort portWithServiceID:@"180A" characteristicID:@"2A23"];
+     OABTPort *port = [OABTPort portWithServiceID:service.UUID.UUIDString characteristicID:charac.UUID.UUIDString];
+    
+    char *s = "hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use! hello this is OABluetooth, welcome to use!";
+    
+    UIAlertController *alc = [UIAlertController alertControllerWithTitle:nil message:@"Choose the operation" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *act1 = [UIAlertAction actionWithTitle:@"Read" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       
+        [self.peripheral readDataFromPort:port completion:^(id value, NSError *error) {
+            NSLog(@"Read data %@ error:%@",value,error);
+        }];
+    }];
+    
+    UIAlertAction *act2 = [UIAlertAction actionWithTitle:@"Write with Response" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.peripheral writeData:[NSData dataWithBytes:s length:strlen(s)] toPort:port completion:^(NSError *error) {
+            NSLog(@"Write with response error:%@",error);
+        }];
+    }];
+    
+    UIAlertAction *act3 = [UIAlertAction actionWithTitle:@"Write without Response" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.peripheral writeData:[NSData dataWithBytes:s length:strlen(s)] toPort:port];
+    }];
+    
+    [alc addAction:act1];
+    [alc addAction:act2];
+    [alc addAction:act3];
+    
+    [self presentViewController:alc animated:YES completion:nil];
 }
 
 @end
