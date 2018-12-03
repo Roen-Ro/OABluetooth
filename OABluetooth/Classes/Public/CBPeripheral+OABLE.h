@@ -26,7 +26,7 @@
 
 #pragma mark- discover
 //======================discover services/characteristics/descriptions======================
-// typically you don't need to use those discover methods in your business code,\
+// Typically you don't need to use those discover methods in your business code,\
 the -writeData:xxx -readData:xxx etc methods will automatically do the discover work for you.
 //一般在读写数的情况下你不需要调用这些discoverXXX：的方法，下面的 -writeData:xxx -readData:xxx 等方法会在自动去完成这些发现服务/特征/描述的工作
 

@@ -3,7 +3,6 @@
 //  OutdoorAssistantApplication
 //
 //  Created by 罗亮富 on 2018/11/10.
-//  Copyright © 2018年 Lolaage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -41,8 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 //invoked whenever connection state changed.
 -(void)centralManager:(OABTCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral;
 
-//when ever notify data received
--(void)centralManager:(OABTCentralManager *)manager didReceiveDatafromCharacteristic:(CBCharacteristic *)charateristic;
 
 @end
 
@@ -97,15 +94,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^onBluetoothStateChange)(OABTCentralState state);
 @property (nonatomic, copy) void (^onNewPeripheralsDiscovered)(NSArray <CBPeripheral *> *peripherals);
 @property (nonatomic, copy) void (^onPeripheralStateChange)(CBPeripheral *peripheral);
-@property (nonatomic, copy) void (^onNewDataNotify)(CBCharacteristic *characteristic);
 
 #pragma mark- scan and connection
-//
-
-/**
- 
- 
- */
 
 /**
  Start to scan for peripherals according to 'advertiseID' provided in the initializer -initWitPeripheralAdvertiseID:
@@ -120,10 +110,9 @@ NS_ASSUME_NONNULL_BEGIN
  -centralManager:didChangeStateForPeripheral: delegate methods or ^onPeripheralStateChange() block will be invoked
  */
 -(void)stopScanPeripherals;
-@property (nonatomic, copy, readonly) NSArray <CBPeripheral *>* discoveredPeripherals;
 
-//外设连接/发现, peripheral connect/discover
-@property (nonatomic, copy, readonly) NSArray <CBPeripheral *> *connectedPeripherals;//已经连接的外设
+@property (nonatomic, copy, readonly) NSArray <CBPeripheral *>* discoveredPeripherals;
+@property (nonatomic, copy, readonly) NSArray <CBPeripheral *> *connectedPeripherals;
 
 /**
  Connect peripheral
@@ -133,12 +122,11 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)connectPeripheral:(nonnull CBPeripheral *)peripheral
               completion:(nullable void (^)(NSError *error))block;
 
-//断开连接 没有涉及block回调，是因为还有被动断开的情况，所以集中在delegate方法中处理\
-
 
 /**
  Disconnect peripheral
 
+ 断开连接 的接口不设计block回调，是因为断开连接的状态有被动和主动两种方式，程序员可以选择在设置^onPeripheralStateChange中处理，或在delegate方法中处理
  -centralManager:didChangeStateForPeripheral: delegate method or ^onPeripheralStateChange() block  will be invoked on every peripheral disconnected
  */
 -(void)disConnectperipheral:(nonnull CBPeripheral *)peripheral;

@@ -54,10 +54,6 @@
         [weakSelf updateList];
     }];
     
-    [self.centralManager setOnNewDataNotify:^(CBCharacteristic * _Nonnull characteristic) {
-        //handle received data
-    }];
-    
     [self.centralManager scanPeripherals];
     
     [self updateState];

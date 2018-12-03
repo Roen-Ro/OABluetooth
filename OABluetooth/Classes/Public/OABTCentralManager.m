@@ -3,7 +3,6 @@
 //  OutdoorAssistantApplication
 //
 //  Created by 罗亮富 on 2018/11/10.
-//  Copyright © 2018年 Lolaage. All rights reserved.
 //
 
 #import <objc/runtime.h>
@@ -981,14 +980,14 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
         if(blk)
             blk(characteristic);
         
-        WEAK_SELF;
-        [self emunateDelegatesWithBlock:^(id<OABlePeripheralManagerDelegate> delegate, BOOL *stop) {
-            if([delegate respondsToSelector:@selector(centralManager:didReceiveDatafromCharacteristic:)])
-                [delegate centralManager:weakSelf didReceiveDatafromCharacteristic:characteristic];
-        }];
-        
-        if(self.onNewDataNotify)
-            self.onNewDataNotify(characteristic);
+//        WEAK_SELF;
+//        [self emunateDelegatesWithBlock:^(id<OABlePeripheralManagerDelegate> delegate, BOOL *stop) {
+//            if([delegate respondsToSelector:@selector(centralManager:didReceiveDatafromCharacteristic:)])
+//                [delegate centralManager:weakSelf didReceiveDatafromCharacteristic:characteristic];
+//        }];
+//
+//        if(self.onNewDataNotify)
+//            self.onNewDataNotify(characteristic);
     }
     else //read value
     {
