@@ -8,9 +8,10 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "OABTPort.h"
 
+
+
 @class OABTCentralManager;
 @interface CBPeripheral (OABLE)
-
 
 /**
  the max data bytes length limit for writing to characteristics and descriptors, default is 125(bytes), all data with length greater than this value will be splitted into smaller pakcetes for writing tasks.
@@ -23,6 +24,8 @@
 @property (nonatomic, readonly) int rssiValue;
 
 @property (nonatomic, readonly) NSDictionary *advertisementData;
+
+@property (nonatomic) void (^cnnectionStateChangeBlock)(CBPeripheral *peripheral);
 
 #pragma mark- discover
 //======================discover services/characteristics/descriptions======================
@@ -104,10 +107,19 @@ the -writeData:xxx -readData:xxx etc methods will automatically do the discover 
 
 
 /**
- Set the data notify block on port, this is only available for CBCharacteristic type port
- 设置外设端口消息通知block，当外设指定端口有主动向主机发送数据的时候，设定的block会得到回调，只对代表CBCharacteristic类型的端口有效
+ Set the data notify block on port, this is only available for CBCharacteristic type port.
+ If nil is passed for 'port' then block will be invocked for all kinds of OABTPort notify.
+ 
+ Note: If you have write some code in previouse like [self setOnDataNotifyBlock:someBlock forPort:port] to monitor notify data,
+ You should remove the block by writting code like [self setOnDataNotifyBlock:nil forPort:port] if you don't need the notify data any more.
+ 
+ 设置外设端口消息通知block，当外设指定端口有主动向主机发送数据的时候，设定的block会得到回调，只对代表CBCharacteristic类型的端口有效；
+ 当port传入参数为nil的时候，代表监听外设的所有端口通知
+ 
+ 注意：当不需要监听某个端口的通知的时候，你需要通过像 [self setOnDataNotifyBlock:nil forPort:port] 这么一段代码，来移除你之前设定的block
+ 
  */
--(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)port;
+-(void)setOnDataNotifyBlock:(void(^)(OABTPort *port, NSData *data))block forPort:(nullable OABTPort *)port;
 
 
 /**

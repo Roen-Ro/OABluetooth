@@ -27,6 +27,8 @@
 
 //-----end----
 
+#ifndef WEAK_SELF
 #define WEAK_SELF __weak typeof(self) weakSelf = self
+#endif
 
 #endif /* OABTDefines_h */

@@ -25,6 +25,20 @@
 __SETTER_PRIMITIVE(unsigned int, dataWritePakcetMaxLengthLimit,setDataWritePakcetMaxLengthLimit:,numberWithInt:)
 __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intValue)
 
+
+-(void)setCnnectionStateChangeBlock:(void (^)(CBPeripheral *peripheral))cnnectionStateChangeBlock {
+
+    IMP key = class_getMethodImplementation([self class],@selector(cnnectionStateChangeBlock));
+    objc_setAssociatedObject(self, key, cnnectionStateChangeBlock, OBJC_ASSOCIATION_RETAIN);
+    
+    [self.centralManager addDelegate:(id<OABlePeripheralManagerDelegate>)self];
+}
+
+-(void (^)(CBPeripheral *peripheral))cnnectionStateChangeBlock {
+    IMP key = class_getMethodImplementation([self class],@selector(cnnectionStateChangeBlock));
+    return objc_getAssociatedObject(self, key);
+}
+
 -(int)rssiValue
 {
     return self.interRssiValue;
@@ -34,6 +48,15 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 -(NSDictionary *)advertisementData {
     return self.interAdertisementData;
 }
+
+#pragma mark-
+-(void)centralManager:(OABTCentralManager *)manager didChangeStateForPeripheral:(CBPeripheral *)peripheral {
+    if(peripheral == self) {
+        if(self.cnnectionStateChangeBlock)
+            self.cnnectionStateChangeBlock(self);
+    }
+}
+
 
 #pragma mark- discover
 -(void)discoverService:(nullable NSArray <NSString *> *)serviceIDs
@@ -249,12 +272,35 @@ __GETTER_PRIMITIVE_DEFAULT(unsigned int,dataWritePakcetMaxLengthLimit,125,intVal
 }
 
 
--(void)setOnDataNotifyBlock:(void(^)(NSData *data))block forPort:(OABTPort *)port
+-(void)setOnDataNotifyBlock:(void(^)(OABTPort *port, NSData *data))block forPort:(OABTPort *)port
 {
-    WEAK_SELF;
-    [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
-        [weakSelf.centralManager setDataNotifyBlock:block forCharacteristic:charateristic];
-    }];
+     WEAK_SELF;
+    if(port) {
+        [self inter_findCharacteristicForPort:port completion:^(NSError *error, CBCharacteristic *charateristic) {
+            if(!error && charateristic) {
+                if(block) {
+                    [weakSelf.centralManager setDataNotifyBlock:^(CBCharacteristic *characteristic) {
+                        block(port, charateristic.value);
+                    } forCharacteristic:charateristic];
+                }
+                else {
+                    [weakSelf.centralManager setDataNotifyBlock:nil forCharacteristic:charateristic];
+                }
+
+            }
+        }];
+    }
+    else {
+        if(block) {
+            [self.centralManager setDataNotifyBlock:^(CBCharacteristic *characteristic) {
+                OABTPort *port = [OABTPort portWithServiceID:characteristic.service.UUID.UUIDString characteristicID:characteristic.UUID.UUIDString];
+                block(port,characteristic.value);
+            } forPeripheral:self];
+        }
+        else {
+            [self.centralManager setDataNotifyBlock:nil forPeripheral:self];
+        }
+    }
 }
 
 

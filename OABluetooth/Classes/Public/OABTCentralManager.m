@@ -14,7 +14,7 @@
 #import "CBPeripheral+OABLE.h"
 #import "OABTDefines.h"
 #import <ObjcExtensionProperty/ObjcExtensionProperty.h>
-
+#import "OABTCentralManager+Private.h"
 
 
 #define  DEFAULT_WRITE_LEN 125
@@ -96,7 +96,8 @@ __GETTER_LAZY(NSMutableDictionary, discoverServiceTaskkQueue, [NSMutableDictiona
 __GETTER_LAZY(NSMutableDictionary, discoverCharateristicTaskkQueueMap, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, discoverDescriptorBlockQueueMap, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, writeCharcWithResponseTaskQueueMap, [NSMutableDictionary dictionaryWithCapacity:3])
-__GETTER_LAZY(NSMutableDictionary, dataNotifyBlockMap, [NSMutableDictionary dictionaryWithCapacity:3])
+__GETTER_LAZY(NSMutableDictionary, periDataNotifyBlockMap, [NSMutableDictionary dictionaryWithCapacity:3])
+__GETTER_LAZY(NSMutableDictionary, charcDataNotifyBlockMap, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, charcDataReadBlockMap, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, notifySettingBlockMap, [NSMutableDictionary dictionaryWithCapacity:3])
 __GETTER_LAZY(NSMutableDictionary, descriptorReadBlockMapQueue, [NSMutableDictionary dictionaryWithCapacity:3])
@@ -970,15 +971,22 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
 #if ENABLE_OABT_LOG
-    NSLog(@"UPDATE VALUE-> didUpdateValueForCharacteristic:%@ isNotifying:%d error:%@ value:%zu",characteristic.UUID.UUIDString,characteristic.isNotifying,error,characteristic.value.length);
+    NSLog(@"UPDATE VALUE-> didUpdateValueForCharacteristic:%@ isNotifying:%d error:%@ value length:%zu",characteristic.UUID.UUIDString,characteristic.isNotifying,error,characteristic.value.length);
 #endif
     
     NSString *aKey = [self keyForCharacteristic:characteristic];
     if(characteristic.isNotifying) // notify value
     {
-        void (^blk)(CBCharacteristic *) = [self.dataNotifyBlockMap objectForKey:aKey];
-        if(blk)
-            blk(characteristic);
+        void (^charcBlk)(CBCharacteristic *) = [self.charcDataNotifyBlockMap objectForKey:aKey];
+        if(charcBlk)
+            charcBlk(characteristic);
+    
+        void (^perBlk)(CBCharacteristic *) = [self.periDataNotifyBlockMap objectForKey:peripheral.identifier.UUIDString];
+        if(perBlk)
+            perBlk(characteristic);
+        
+        if(self.onNewDataNotify)
+            self.onNewDataNotify(characteristic);
         
 //        WEAK_SELF;
 //        [self emunateDelegatesWithBlock:^(id<OABlePeripheralManagerDelegate> delegate, BOOL *stop) {
@@ -986,8 +994,6 @@ __GETTER_LAZY(NSMutableArray, connectingPeripheralsOnRestoreState, [NSMutableArr
 //                [delegate centralManager:weakSelf didReceiveDatafromCharacteristic:characteristic];
 //        }];
 //
-//        if(self.onNewDataNotify)
-//            self.onNewDataNotify(characteristic);
     }
     else //read value
     {
@@ -1191,12 +1197,28 @@ forCharacteristic:(CBCharacteristic *)chara
 }
 
 
--(void)setDataNotifyBlock:(void(^)(NSData *data))block forCharacteristic:(CBCharacteristic *)chara
+-(void)setDataNotifyBlock:(void(^)(CBCharacteristic *charac))block forCharacteristic:(CBCharacteristic *)chara
 {
-    if(block)
-        [self.dataNotifyBlockMap setObject:block forKey:[self keyForCharacteristic:chara]];
+    if(!chara)
+        return;
     
-    [chara.service.peripheral setNotifyValue:YES forCharacteristic:chara];
+    if(block)
+        [self.charcDataNotifyBlockMap setObject:block forKey:[self keyForCharacteristic:chara]];
+    else
+        [self.charcDataNotifyBlockMap removeObjectForKey:[self keyForCharacteristic:chara]];
+    
+   // [chara.service.peripheral setNotifyValue:YES forCharacteristic:chara];
+}
+
+-(void)setDataNotifyBlock:(void(^)(CBCharacteristic *characteristic))block forPeripheral:(nonnull CBPeripheral *)peripheral
+{
+    if(!peripheral)
+        return;
+    if(block)
+        [self.periDataNotifyBlockMap setObject:block forKey:peripheral.identifier.UUIDString];
+    else
+        [self.periDataNotifyBlockMap removeObjectForKey:peripheral.identifier.UUIDString];
+    
 }
 
 -(void)enableNotify:(BOOL)enable forCharacteristic:(CBCharacteristic *)chara completion:(void(^)(NSError *))block

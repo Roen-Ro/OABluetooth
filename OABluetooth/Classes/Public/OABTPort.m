@@ -31,4 +31,23 @@
     return [[OABTPort alloc] initWithServiceID:serviceID characteristicID:charateristicID descriptionID:nil];
 }
 
+-(BOOL)isEqual:(id)object {
+    
+    if(self == object)
+        return YES;
+    if([object isKindOfClass:[OABTPort class]])
+    {
+        OABTPort *otherPort = (OABTPort *)object;
+    
+        if([self.serviceID isEqualToString:otherPort.serviceID]
+           && [self.charateristicID isEqualToString:otherPort.charateristicID]) {
+            
+            if((!self.descriptorID && !otherPort.descriptorID)
+               ||([self.descriptorID isEqualToString:otherPort.descriptorID]))
+                return YES;
+        }
+    }
+    return NO;
+}
+
 @end

@@ -1,5 +1,5 @@
 //
-//  OABTCentralManager+DiscoverAndDataTransfer.h
+//  OABTCentralManager+Private.h
 //  OABluetooth
 //
 //  Created by 罗亮富 on 2018/11/24.
@@ -39,8 +39,13 @@
 //read data from readCharacteristic
 -(void)readDataforCharacteristic:(nonnull CBCharacteristic *)chara completion:(void(^)(NSError *))completionBlock;
 
-//set data notify block for given CBCharacteristic
--(void)setDataNotifyBlock:(void(^)(NSData *data))block forCharacteristic:(CBCharacteristic *)chara;
+//Set data notify block for given CBCharacteristic
+-(void)setDataNotifyBlock:(void(^)(CBCharacteristic *characteristic))block forCharacteristic:(CBCharacteristic *)chara;
+
+//Set all characteristics' data notify block for peripheral
+-(void)setDataNotifyBlock:(void(^)(CBCharacteristic *characteristic))block forPeripheral:(nonnull CBPeripheral *)peripheral;
+
+@property (nonatomic, copy) void (^onNewDataNotify)(CBCharacteristic *characteristic);
 
 //enable/disable data notify for characteristic, block will be invokded on completion to indicate success or failure
 -(void)enableNotify:(BOOL)enable
