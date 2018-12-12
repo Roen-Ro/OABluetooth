@@ -206,6 +206,15 @@ __GETTER_LAZY(NSMutableDictionary, descriptorsWriteKeyRecords, [NSMutableDiction
     }
 }
 
+-(nullable NSSet <NSString *> *)autoConnectionPeripheralUUids {
+    NSString *path = [self autoConnectionsavePath];
+    NSMutableSet *set = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if(set.count > 0)
+        return [NSSet setWithSet:set];
+    else
+        return nil;
+}
+
 -(NSString *)autoConnectionsavePath
 {
     static NSURL *docUrl;

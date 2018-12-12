@@ -66,12 +66,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark- auto connection 自动重连
 
- //defualt YES,whether to automatically reconnect to passively disconnected peripherals 是否在被动断开后自动重连
+/**
+ defualt YES,whether to automatically reconnect to detected peripherals 是否在断开后自动重连
+ see -addPeripheralToAutoReconnection: and -removeperipheralFromAutoReconnection:
+ */
 @property (nonatomic, getter = isAutoReconnectionEnabled) BOOL enableAutoReconnection;
 @property (nonatomic) unsigned int autoReconnectionInterval; //default is 5 second
 
+
+/**
+ auto connection list adding/removing
+ When enableAutoReconnection set to YES, peripherals that were added to autoconnection through -addPeripheralToAutoReconnection: will auto reconnected on detection.
+ You can disable auto connection for specific peripheral throung -removeperipheralFromAutoReconnection: All set enableAutoReconnection to NO for all peripherals.
+ 
+ 当 enableAutoReconnection 设置为YES的时候, 通过 -addPeripheralToAutoReconnection:方法添加的外设，在被扫描到后将会自动连接, 你也可以通过-removeperipheralFromAutoReconnection：
+ 方法移除对指定设备的自动重连；或者将enableAutoReconnection设置为NO来取消所有设备的自动重连
+ */
 -(void)addPeripheralToAutoReconnection:(nonnull CBPeripheral *)peripheral;
 -(void)removeperipheralFromAutoReconnection:(nonnull CBPeripheral *)peripheral;
+
+-(nullable NSSet <NSString *> *)autoConnectionPeripheralUUids;
 
 #pragma mark- auto scan 自动扫描
 
