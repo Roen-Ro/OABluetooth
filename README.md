@@ -62,7 +62,7 @@ pod 'OABluetooth'
 
 ## Author
 
-Roen(罗亮富）, babyluyi@163.com
+Roen(罗亮富）, zxllf23@163.com
 
 ## License
 
